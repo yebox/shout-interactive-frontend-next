@@ -13,7 +13,7 @@ const TabCard = ({ color, text, btnColor, link }) => {
         backgroundColor: color,
         background: `${color == "#3CC13B" ? "url(/images/bg-green.png)" : "url(/images/bg-blue.png)"}`,
       }}
-      className="p-[1.8rem] py-[2.2rem] rounded-3xl"
+      className="p-[1.8rem] py-[2.2rem] rounded-3xl !bg-cover bg-no-repeat"
     >
       <div className="flex justify-between">
         <CountDown></CountDown>
