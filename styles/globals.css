@@ -25,6 +25,8 @@
 
 html {
   font-size: 62.5%;
+  height: 100vh;
+  width: 100vw;
 
 }
 
@@ -42,6 +44,7 @@ body {
   color: var(--color-gray-dark-2);
   font-weight: 400;
   font-family: 'SF Pro Display', sans-serif !important;
+  letter-spacing: .5px !important;
 
   /* font-family: -apple-system, BlinkMacSystemFont, sans-serif; */
 
@@ -57,7 +60,7 @@ a {
 *::after {
   margin: 0;
   padding: 0;
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 .scroll_hide::-webkit-scrollbar {

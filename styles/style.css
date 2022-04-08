@@ -1,0 +1,60 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?7tsfea');
+  src:  url('fonts/icomoon.eot?7tsfea#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?7tsfea') format('truetype'),
+    url('fonts/icomoon.woff?7tsfea') format('woff'),
+    url('fonts/icomoon.svg?7tsfea#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-calendar-header:before {
+  content: "\e900";
+}
+.icon-chevron-left-primary:before {
+  content: "\e901";
+}
+.icon-chevron-right:before {
+  content: "\e902";
+}
+.icon-coin:before {
+  content: "\e903";
+}
+.icon-edit:before {
+  content: "\e904";
+}
+.icon-gift-box:before {
+  content: "\e905";
+}
+.icon-music:before {
+  content: "\e906";
+}
+.icon-play:before {
+  content: "\e907";
+}
+.icon-share:before {
+  content: "\e908";
+}
+.icon-trophy-star:before {
+  content: "\e909";
+}
+.icon-users-profile:before {
+  content: "\e90a";
+}

@@ -1,7 +1,7 @@
 import LoadingButton from "@mui/lab/LoadingButton";
 import Link from "next/link";
 
-const BtnPrimary = ({ text, loading, handleClick, link = "" }) => {
+const BtnPrimary = ({ text, loading, handleClick, link = "", color = "#110066" }) => {
   return (
     <div className="w-full">
       <Link href={link}>
@@ -9,7 +9,7 @@ const BtnPrimary = ({ text, loading, handleClick, link = "" }) => {
           disableElevation
           sx={{
             "&.MuiLoadingButton-root.MuiLoadingButton-loading": { color: "#F0F2F4" },
-            bgcolor: "#110066 !important",
+            bgcolor: `${color} !important`,
             whiteSpace: "nowrap",
             borderRadius: "8px",
             textTransform: "none",
