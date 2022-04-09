@@ -5,6 +5,7 @@ module.exports = {
       colors: {
         "my-border-color--1": "#DFE4E8",
         primary: "var(--color-primary)",
+        "see-through": "rgba(96, 100, 106, 0.4)",
 
         "primary-lightest-2": "#E1F7FF",
 
