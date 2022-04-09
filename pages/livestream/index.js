@@ -77,7 +77,7 @@ const Livestream = () => {
         </section>
 
         {/* Chatbox Section */}
-        <section className="max-h-[50vh] min-h-[10rem] relative mt-auto flex flex-col items-center left-0">
+        <section className="max-h-[50vh] min-h-[10rem] mt-auto flex flex-col items-center fixed bottom-4 left-0 w-full px-[1.6rem]">
           {/* Chats */}
           <div ref={chatBoxRef} className="w-full overflow-scroll scroll_hide pb-[5.5rem] snap-mandatory snap-y snap-start ">
             {chats.map((chat, i) => {
