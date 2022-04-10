@@ -6,6 +6,7 @@ import TabCard from "../../components/Parties/Tab-Card";
 import FixedBtnLayout from "../../components/Layouts/FixedBtnLayout";
 import Container from "../../components/Layouts/Container";
 import Link from "next/link";
+import HeadersV1 from "../../components/Headers/Headers-v1";
 
 const Parties = () => {
   const [value, setValue] = React.useState(0);
@@ -17,13 +18,10 @@ const Parties = () => {
   return (
     <>
       <FixedBtnLayout text={"Create Party"} btnColor={"#3CC13B"}>
-        <header className="flex items-center justify-between px-[1.4rem] py-[1.2rem] border-b flex-shrink-0 flex-grow-0">
-          <Link href={"/"}>
-            <i className="icon-chevron-left-primary text-primary text-[1.8rem] cursor-pointer"></i>
-          </Link>
-          <span className="subheader_heavy">🎉 Shout! Party</span>
+        <HeadersV1 link={"/"} text={"🎉 Shout! Party"}>
           <img src="/images/calendar-header.svg"></img>
-        </header>
+        </HeadersV1>
+
         <div className=" shrink-0 flex-grow-0">
           <Tabs sx={{ "justify-content": "space-between" }} value={value} onChange={handleChange} centered>
             <Tab label="My invites" />

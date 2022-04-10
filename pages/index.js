@@ -19,10 +19,12 @@ export default function Home() {
         <header className="flex items-center my-[2.4rem]">
           <h2 className="headline_heavy text-primary whitespace-nowrap overflow-hidden text-ellipsis">Hi, Chuks</h2>
           <div className="flex items-center ml-auto">
-            <div className="p-[.952rem] flex items-center bg-gray-lighter rounded-2xl">
-              <Image src="/images/coin.svg" height={24} width={24} alt="coins"></Image>
-              <span className="subheader_heavy !text-gray-darker ml-[.5rem]">5.1M</span>
-            </div>
+            <Link href={"/wallet"}>
+              <div className="p-[.952rem] flex items-center bg-gray-lighter rounded-2xl cursor-pointer">
+                <Image src="/images/coin.svg" height={24} width={24} alt="coins"></Image>
+                <span className="subheader_heavy !text-gray-darker ml-[.5rem]">5.1M</span>
+              </div>
+            </Link>
             <div className="p-[.952rem] flex items-center bg-gray-lighter rounded-2xl ml-[1.6rem]">
               <i className="icon-gift-box text-[2.4rem] text-[#FA4A0C]"></i>
               {/* <Image src="/images/gift-box.svg" height={24} width={24} alt="coins"></Image> */}
