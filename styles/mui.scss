@@ -68,3 +68,8 @@ div.MuiFormControl-root.MuiTextField-root {
     z-index: 1;
   }
 }
+
+// Drawer
+.MuiDrawer-root .MuiPaper-root {
+  border-radius: 2rem 2rem 0 0;
+}

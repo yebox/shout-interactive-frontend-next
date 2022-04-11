@@ -10,14 +10,16 @@ import Container from "../../components/Layouts/Container";
 import BaseLayout from "../../components/Layouts/Layout";
 import BtnPrimary from "../../components/Buttons/BtnPrimary";
 
-const ActivityBox = ({ text, icon, color }) => {
+const ActivityBox = ({ text, icon, color, link = "/parties/id" }) => {
   return (
-    <div style={{ background: color }} className=" rounded-[1.3rem] py-[1.6rem] px-[1.2rem] flex items-center">
-      <span className="bg-white h-[3.2rem] w-[3.2rem] grid place-items-center rounded-full mr-[1.8rem]">
-        <i style={{ color: color }} className={`${icon} text-[1.7rem]`}></i>
-      </span>
-      <span className="text-white body_heavy">{text}</span>
-    </div>
+    <Link href={link}>
+      <div style={{ background: color }} className=" rounded-[1.3rem] py-[1.6rem] px-[1.2rem] flex items-center cursor-pointer">
+        <span className="bg-white h-[3.2rem] w-[3.2rem] grid place-items-center rounded-full mr-[1.8rem]">
+          <i style={{ color: color }} className={`${icon} text-[1.7rem]`}></i>
+        </span>
+        <span className="text-white body_heavy">{text}</span>
+      </div>
+    </Link>
   );
 };
 
@@ -67,8 +69,8 @@ const PartyDetail = () => {
           <Container>
             <p className="subheader_heavy mb-3">Activities</p>
             <div className="grid grid-cols-2 gap-4">
-              <ActivityBox color={"#FA9330"} icon="icon-users-profile" text="Guestlist"></ActivityBox>
-              <ActivityBox color={"#FA4A0C"} icon="icon-gift-box" text="Gift goal"></ActivityBox>
+              <ActivityBox color={"#FA9330"} icon="icon-users-profile" text="Guestlist" link="/guest-list"></ActivityBox>
+              <ActivityBox color={"#FA4A0C"} icon="icon-gift-box" text="Gift goal" link="/gift-goal"></ActivityBox>
               <ActivityBox color={"#B57BFF"} icon="icon-music" text="Musicpost"></ActivityBox>
               <ActivityBox color="#110066" icon="icon-share" text="Share"></ActivityBox>
             </div>
