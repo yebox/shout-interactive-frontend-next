@@ -7,6 +7,7 @@ import FixedBtnLayout from "../../components/Layouts/FixedBtnLayout";
 import Container from "../../components/Layouts/Container";
 import Link from "next/link";
 import HeadersV1 from "../../components/Headers/Headers-v1";
+import BtnPrimary from "../../components/Buttons/BtnPrimary";
 
 const Parties = () => {
   const [value, setValue] = React.useState(0);
@@ -17,7 +18,7 @@ const Parties = () => {
 
   return (
     <>
-      <FixedBtnLayout text={"Create Party"} btnColor={"#3CC13B"}>
+      <BaseLayout text={"Create Party"} btnColor={"#3CC13B"}>
         <HeadersV1 mb={false} link={"/"} text={"🎉 Shout! Party"}>
           <Link href={"/calendar"}>
             <img src="/images/calendar-header.svg"></img>
@@ -44,7 +45,10 @@ const Parties = () => {
             </div>
           </Container>
         </div>
-      </FixedBtnLayout>
+        <div className=" fixed z-40 bottom-[2.4rem] w-full left-1/2 -translate-x-1/2 px-[1.6rem] max-w-[70rem] mx-auto">
+          <BtnPrimary text={"Create"} color={"#14B363"} link="/parties/new"></BtnPrimary>
+        </div>
+      </BaseLayout>
     </>
   );
 };
