@@ -1,0 +1,252 @@
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0) rotate(-5deg);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0) rotate(5deg);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+@keyframes swell {
+    0% {
+        -webkit-transform: scale(3);
+        ;
+        transform: scale(3);
+        /* visibility: visible; */
+    }
+
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+@keyframes shake2 {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+@keyframes slideInLeft {
+    0% {
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%);
+        visibility: visible;
+    }
+
+    100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    0% {
+        -webkit-transform: translateX(50%);
+        transform: translateX(50%);
+        visibility: visible;
+    }
+
+    100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+}
+
+@keyframes pop-champ {
+    0% {
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%);
+        visibility: visible;
+    }
+
+    100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+}
+
+.shoutimage {
+    position: absolute;
+    right: -5px;
+    bottom: -1px;
+    width: 310px;
+    animation: pop-champ 1s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    transform: translate3d(0, 0, 0);
+    animation-iteration-count: 1;
+    /* z-index: 10; */
+}
+
+.swell {
+    animation: swell 1.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both !important;
+}
+
+.shake {
+    animation: shake 1s cubic-bezier(0.36, 0.07, 0.19, 0.97) both !important;
+    animation-iteration-count: 1 !important;
+}
+
+.shake2 {
+    animation: shake2 1s cubic-bezier(0.36, 0.07, 0.19, 0.97) both !important;
+    animation-iteration-count: 1 !important;
+}
+
+.shakeInfinite {
+    animation: shake2 1s cubic-bezier(0.36, 0.07, 0.19, 0.97) both !important;
+    animation-iteration-count: infinite !important;
+    animation-delay: 4s !important;
+}
+
+.wobble {
+    -webkit-animation-name: wobble;
+    animation-name: wobble;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@keyframes pulse {
+    0% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+
+    50% {
+        -webkit-transform: scale3d(1.05, 1.05, 1.05);
+        transform: scale3d(1.05, 1.05, 1.05);
+    }
+
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+.playimg {
+    position: absolute;
+    right: -46px;
+    bottom: 0px;
+    width: 230px;
+    /* animation: pulse 1s both; */
+    /* transform: translate3d(0, 0, 0); */
+    /* animation-iteration-count: 1; */
+    /* z-index: 10; */
+    animation: slideInLeft 1.2s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    transform: translate3d(0, 0, 0);
+    animation-iteration-count: 1;
+    /* animation-delay: 1s; */
+}
+
+.homecard>.partytext {
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+}
+
+.partytext h2 {
+    margin: 0;
+}
+
+.splay {
+    background: url(/assest/images/Shoutassets/shout-play-bg.png);
+    background-color: #14b363;
+    background-size: cover;
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: cover;
+}
+
+@keyframes rubberBand {
+    0% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+
+    30% {
+        -webkit-transform: scale3d(1.25, 0.75, 1);
+        transform: scale3d(1.25, 0.75, 1);
+    }
+
+    40% {
+        -webkit-transform: scale3d(0.75, 1.25, 1);
+        transform: scale3d(0.75, 1.25, 1);
+    }
+
+    50% {
+        -webkit-transform: scale3d(1.15, 0.85, 1);
+        transform: scale3d(1.15, 0.85, 1);
+    }
+
+    65% {
+        -webkit-transform: scale3d(0.95, 1.05, 1);
+        transform: scale3d(0.95, 1.05, 1);
+    }
+
+    75% {
+        -webkit-transform: scale3d(1.05, 0.95, 1);
+        transform: scale3d(1.05, 0.95, 1);
+    }
+
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+.sauction {
+    background: url(/assest/images/Shoutassets/celeb-auction-bg.png);
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: cover;
+    background-color: #110066;
+}
+
+.auctionImg {
+    position: absolute;
+    right: -27px;
+    bottom: 0px;
+    width: 230px;
+    /* animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; */
+    /* animation-iteration-count: infinite; */
+    /* z-index: 10; */
+    animation: slideInRight 1s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    transform: translate3d(0, 0, 0);
+    animation-iteration-count: 1;
+    animation-delay: .5s;
+}

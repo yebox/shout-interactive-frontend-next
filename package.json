@@ -20,7 +20,8 @@
     "react-countdown": "^2.3.2",
     "react-dom": "18.0.0",
     "sass": "^1.50.0",
-    "date-fns": "^2.27.0"
+    "date-fns": "^2.27.0",
+    "react-dom-confetti": "^0.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.4",

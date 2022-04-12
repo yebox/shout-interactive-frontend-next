@@ -1,11 +1,35 @@
 import Head from "next/head";
 import Image from "next/image";
+import Confetti from "react-dom-confetti";
 import Carousel from "../components/Landing/Carousel";
 import BaseLayout from "../components/Layouts/Layout";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const config = {
+    angle: 90,
+    spread: 350,
+    startVelocity: 40,
+    elementCount: 200,
+    dragFriction: 0.12,
+    duration: 10000,
+    stagger: 3,
+    width: "15px",
+    height: "10px",
+    perspective: "500px",
+    colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"],
+  };
+
+  const [splash, setSplash] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setSplash(!splash);
+    }, 1500);
+  }, []);
+
   return (
     <BaseLayout>
       <Head>
@@ -43,9 +67,16 @@ export default function Home() {
         <div className=" grid grid-cols-2 gap-6 mt-7">
           {/* Big Card */}
           <Link href={"/parties"}>
-            <div className=" rounded-[1.3rem] relative bg-[#FA4A0C] px-6 pb-[1.6rem] pt-[5.6rem] cursor-pointer hover:scale-[1.04] transition-all col-span-2 shadow">
+            <div className={`rounded-[1.3rem] relative bg-[#FA4A0C] px-6 pb-[1.6rem] pt-[6.6rem] cursor-pointer hover:scale-[1.04] transition-all col-span-2 shadow overflow-hidden swell`}>
               <h2 className="title_heavy !text-white ">Shout! Party</h2>
               <p className="caption_light !text-white">Party with your friends everyday!</p>
+              <div style={{ marginLeft: "336px" }}>
+                <Confetti active={splash} config={config} />
+              </div>
+              <div className={`shoutimage flex ${splash ? "shake" : ""} `}>
+                {/* <Image height={214} width={370} src={"/images/shout-bottle.png"}></Image> */}
+                <img src={"/images/shout-bottle.png"}></img>
+              </div>
               <button className="absolute top-1/2 -translate-y-1/2 right-[1.4rem] ">
                 {/* <img src="/images/chevron-right.svg"></img> */}
                 <i className="icon-chevron-right text-white text-[1.4rem]"></i>
@@ -55,9 +86,12 @@ export default function Home() {
 
           {/* Smaller Cards */}
           <Link href={"/parties"}>
-            <div className=" rounded-[1.3rem] relative bg-[#14B363] px-6 pb-[1.6rem] pt-[5.6rem] cursor-pointer hover:scale-[1.04] transition-all shadow">
+            <div className={` rounded-[1.3rem] relative bg-[#14B363] px-6 pb-[1.6rem] pt-[5.6rem] cursor-pointer hover:scale-[1.04] transition-all shadow overflow-hidden swell`}>
               <h2 className="body_heavy !text-white ">Shout! Party</h2>
               <p className="small_light max-w-[11rem] !text-white">Party with your friends everyday!</p>
+              <div className=" absolute bottom-0 right-0  playimg flex">
+                <Image height={114} width={282} src={"/images/shout-games.png"}></Image>
+              </div>
               <button className="absolute top-1/2 -translate-y-1/2 right-[1.4rem] ">
                 {/* <img src="/images/chevron-right.svg"></img> */}
                 <i className="icon-chevron-right text-white text-[1.4rem]"></i>
@@ -65,11 +99,13 @@ export default function Home() {
             </div>
           </Link>
           <Link href={"/parties"}>
-            <div className=" rounded-[1.3rem] relative bg-[#110066] px-6 pb-[1.6rem] pt-[5.6rem] cursor-pointer hover:scale-[1.04] transition-all shadow">
+            <div className={` rounded-[1.3rem] relative bg-[#110066] px-6 pb-[1.6rem] pt-[5.6rem] cursor-pointer hover:scale-[1.04] transition-all shadow overflow-hidden swell`}>
               <h2 className="body_heavy !text-white ">Shout! Party</h2>
               <p className="small_light !text-white max-w-[11rem]">Party with your friends everyday!</p>
+              <div className=" absolute bottom-0 right-0  auctionImg flex">
+                <Image height={114} width={260} src={"/images/shout-award.png"}></Image>
+              </div>
               <button className="absolute top-1/2 -translate-y-1/2 right-[1.4rem] ">
-                {/* <img src="/images/chevron-right.svg"></img> */}
                 <i className="icon-chevron-right text-white text-[1.4rem]"></i>
               </button>
             </div>
