@@ -24,9 +24,9 @@
 
 @keyframes swell {
     0% {
-        -webkit-transform: scale(3);
+        -webkit-transform: scale(1.1);
         ;
-        transform: scale(3);
+        transform: scale(1.1);
         /* visibility: visible; */
     }
 
@@ -111,7 +111,7 @@
 }
 
 .swell {
-    animation: swell 1.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both !important;
+    animation: swell 1s cubic-bezier(0.36, 0.07, 0.19, 0.97) both !important;
 }
 
 .shake {
