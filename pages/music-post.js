@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import BaseLayout from "../components/Layouts/Layout";
 import { Checkbox } from "@mui/material";
@@ -17,6 +17,29 @@ const MusicPost = () => {
     { name: "Move", artist: "Bad Boy Timz" },
   ]);
   const [isDrawerOpened, setIsDrawerOpened] = useState(false);
+  const [selectedIsEmpty, setSelectedIsEmpty] = useState(true);
+  const [count, setCount] = useState(0);
+  const [total, setTotal] = useState(null);
+  const [btnDisabled, setBtnDisabled] = useState(true);
+
+  useEffect(() => {
+    setTotal(allSongs.length);
+  }, []);
+
+  const updateCount = (type) => {
+    if (count == total - 1) {
+      setBtnDisabled(false);
+    }
+    if (type == "inc") {
+      if (count < total) {
+        setCount((el) => ++el);
+      }
+    } else {
+      if (count > 0) {
+        setCount((el) => --el);
+      }
+    }
+  };
 
   const toggleDrawer = (event) => {
     if (event && event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
@@ -25,21 +48,39 @@ const MusicPost = () => {
     setIsDrawerOpened((val) => !val);
   };
 
+  const checkIsSelectedEmpty = (songs) => {
+    let empty = true;
+    songs.forEach((el) => {
+      console.log("el is", el);
+      if (el != null) {
+        empty = false;
+      }
+    });
+
+    console.log("is selected emppty", empty);
+    return empty;
+  };
+
   const onSelectSong = (song, i) => {
     setSelectedSongs((list) => {
       list[i] = song;
       console.log("newSelected is", [...list]);
       return [...list];
     });
+    setSelectedIsEmpty(false);
+    updateCount("inc");
   };
 
   const onRemoveSong = (i) => {
     // const newFriends = selectedFriends.filter((el, elI) => elI != i);
     const newSongs = [...selectedSongs];
     newSongs[i] = null;
+    setBtnDisabled(true);
 
-    console.log("on remove index", i);
+    console.log("on remove index", newSongs);
     setSelectedSongs(newSongs);
+    setSelectedIsEmpty(checkIsSelectedEmpty(newSongs));
+    updateCount();
   };
 
   return (
@@ -69,33 +110,51 @@ const MusicPost = () => {
         </div>
 
         {/* Allsongs */}
-        {allSongs.map((e, i) => {
-          return (
-            <button onClick={() => {}} className="flex items-center mb-[1.8rem] last:mb-0 w-full" key={i}>
-              <div className=" mr-[.8rem]">
-                <MyAvatar alt={e.name} src="/broken-image.jpg" />
-              </div>
-              <div className="flex flex-col self-start mr-auto">
-                <span className="body_heavy mb-[.2rem] text-black-default text-left">{e.name}</span>
-                <span className="small_light text-left">{e.artist}</span>
-              </div>
-              <Checkbox
-                // checked={isChecked}
-                onChange={(event) => {
-                  // setChecked(event.target.checked);
-                  console.log("check change,", event.target.checked);
-                  if (event.target.checked) {
-                    onSelectSong(allSongs[i], i);
-                  } else {
-                    onRemoveSong(i);
-                  }
-                }}
-                inputProps={{ "aria-label": "controlled" }}
-                sx={{ "& .MuiSvgIcon-root": { fontSize: 20, fill: "#110066" } }}
-              />
-            </button>
-          );
-        })}
+        <div className="pb-8 h-[28rem] scroll_hide overflow-scroll">
+          {allSongs.map((e, i) => {
+            return (
+              <button onClick={() => {}} className="flex items-center mb-[1.8rem] last:mb-0 last:pb-8  w-full" key={i}>
+                <div className=" mr-[.8rem]">
+                  <MyAvatar alt={e.name} src="/broken-image.jpg" />
+                </div>
+                <div className="flex flex-col self-start mr-auto">
+                  <span className="body_heavy mb-[.2rem] text-black-default text-left">{e.name}</span>
+                  <span className="small_light text-left">{e.artist}</span>
+                </div>
+                <Checkbox
+                  // checked={isChecked}
+                  onChange={(event) => {
+                    // setChecked(event.target.checked);
+                    console.log("check change,", event.target.checked);
+                    if (event.target.checked) {
+                      onSelectSong(allSongs[i], i);
+                    } else {
+                      onRemoveSong(i);
+                    }
+                  }}
+                  inputProps={{ "aria-label": "controlled" }}
+                  sx={{ "& .MuiSvgIcon-root": { fontSize: 20, fill: "#110066" } }}
+                />
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-full p-[1.6rem]">
+          <BtnPrimary
+            color="#14B363"
+            disabled={btnDisabled}
+            text={
+              btnDisabled ? (
+                <div>
+                  {count} of {total} selected
+                </div>
+              ) : (
+                "Submit"
+              )
+            }
+          ></BtnPrimary>
+        </div>
       </Drawer>
 
       {/* Main */}
@@ -104,7 +163,7 @@ const MusicPost = () => {
       </HeadersV1>
 
       {/* Empty State */}
-      {!selectedSongs.length && (
+      {selectedIsEmpty && (
         <div className="grid place-content-center place-items-center mt-[9.2rem] relative">
           <Image width={88} height={88} alt="musical-notes" src={"/images/musical-notes.png"}></Image>
           <h2 className="headline_heavy text-black-default mb-[.8rem] mt-[3.2rem]">No Songs</h2>
@@ -119,7 +178,7 @@ const MusicPost = () => {
       )}
 
       {/* Selected Songs */}
-      {selectedSongs.length > 0 && (
+      {!selectedIsEmpty && (
         <div className="mt-[2.8rem]">
           <Container>
             <h2 className="title_heavy text-black-default">Your selected songs</h2>
