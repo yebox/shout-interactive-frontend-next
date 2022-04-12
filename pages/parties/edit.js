@@ -43,7 +43,7 @@ const Edit = () => {
         <div className="pb-[14.8rem]"></div>
       </Container>
       <FixedBottom>
-        <div className="flex items-center gap-[1.6rem]">
+        <div className="flex items-center gap-[1.6rem] bg-white">
           <BtnOutlined variant="outlined" text={"Cancel"} link="/parties"></BtnOutlined>
           <BtnPrimary text={"Update"} link="/parties/edit"></BtnPrimary>
         </div>
