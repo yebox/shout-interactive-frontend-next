@@ -119,7 +119,7 @@ const MusicPost = () => {
       )}
 
       {/* Selected Songs */}
-      {selectedSongs.length && (
+      {selectedSongs.length > 0 && (
         <div className="mt-[2.8rem]">
           <Container>
             <h2 className="title_heavy text-black-default">Your selected songs</h2>
@@ -127,15 +127,17 @@ const MusicPost = () => {
             {/* selected songs */}
             {selectedSongs.map((e, i) => {
               return (
-                <button onClick={() => {}} className="flex items-center mb-[1.8rem] last:mb-0 w-full" key={i}>
-                  <div className=" mr-[.8rem]">
-                    <MyAvatar alt={e.name} src="/broken-image.jpg" />
-                  </div>
-                  <div className="flex flex-col self-start mr-auto">
-                    <span className="body_heavy mb-[.2rem] text-black-default text-left">{e.name}</span>
-                    <span className="small_light text-left">{e.artist}</span>
-                  </div>
-                </button>
+                e && (
+                  <button onClick={() => {}} className="flex items-center mb-[1.8rem] last:mb-0 w-full" key={i}>
+                    <div className=" mr-[.8rem]">
+                      <MyAvatar alt={e.name} src="/broken-image.jpg" />
+                    </div>
+                    <div className="flex flex-col self-start mr-auto">
+                      <span className="body_heavy mb-[.2rem] text-black-default text-left">{e.name}</span>
+                      <span className="small_light text-left">{e.artist}</span>
+                    </div>
+                  </button>
+                )
               );
             })}
           </Container>
