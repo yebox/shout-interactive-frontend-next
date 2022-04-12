@@ -2,7 +2,7 @@ import { red } from "@mui/material/colors";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { makeStyles } from "@material-ui/core";
-import useState from "react";
+import { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,14 +13,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MySelect = ({ handleChange, label }) => {
+const MySelect = ({ handleChange = () => {}, label }) => {
   const [val, setVal] = useState(10);
   const classes = useStyles();
 
   const selectStyle = {
     overflow: "hidden",
     bgcolor: "#fff",
-    maxWidth: "375px",
+    // maxWidth: "375px",
     width: "100%",
     height: "48px",
     borderRadius: "16px",
@@ -34,7 +34,7 @@ const MySelect = ({ handleChange, label }) => {
     },
     "& .MuiSelect-select": {
       bgcolor: "white",
-      background: "url(/icons/angle-down.svg) ",
+      background: "url(/images/angle-down.svg) ",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "96%",
       px: "11px",
@@ -49,7 +49,7 @@ const MySelect = ({ handleChange, label }) => {
     "&.MuiInputBase-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#110066", borderWidth: "1px" },
   };
   return (
-    <div className={classes.root}>
+    <div className={classes.root + " mb-[1.6rem]"}>
       <label className="caption_heavy text-black-default flex mb-[8px]">{label}</label>
 
       <Select

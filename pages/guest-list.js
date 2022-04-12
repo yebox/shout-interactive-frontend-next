@@ -47,7 +47,7 @@ const GuestList = () => {
       const newList = list;
       newList[i] = friend;
       console.log(newList);
-      return newList;
+      return [...newList];
     });
   };
 
@@ -124,9 +124,14 @@ const GuestList = () => {
                     <div key={i} className="relative">
                       <MyAvatar></MyAvatar>
                       <span className="small_light text-black-light block max-w-[40px] text-ellipsis overflow-hidden">{fr?.username}</span>
-                      <button onClick={() => {}} className=" absolute -top-1 -right-2 rounded-full bg-[#F03738] w-[1.8rem] h-[1.8rem] cursor-pointer">
+                      {/* <button
+                        onClick={() => {
+                          onRemoveFriend(i);
+                        }}
+                        className=" absolute -top-1 -right-2 rounded-full bg-[#F03738] w-[1.8rem] h-[1.8rem] cursor-pointer"
+                      >
                         <i className="icon-cancel text-white"></i>
-                      </button>
+                      </button> */}
                     </div>
                   )
                 );
@@ -146,6 +151,7 @@ const GuestList = () => {
                 <button
                   onClick={() => {
                     // toggleSelectFriend(i);
+                    // toggleSelectFriend(i);
 
                     // setIsChecked((val) => !val);
                     console.log(friendsList[i].checked);
@@ -163,7 +169,7 @@ const GuestList = () => {
                     <span className="small_light text-left">{e.username}</span>
                   </div>
                   <Checkbox
-                    // checked={isChecked}
+                    checked={friendsList[i].checked}
                     onChange={(event) => {
                       // setChecked(event.target.checked);
                       console.log("check change,", event.target.checked);

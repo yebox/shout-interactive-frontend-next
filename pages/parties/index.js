@@ -18,8 +18,10 @@ const Parties = () => {
   return (
     <>
       <FixedBtnLayout text={"Create Party"} btnColor={"#3CC13B"}>
-        <HeadersV1 link={"/"} text={"🎉 Shout! Party"}>
-          <img src="/images/calendar-header.svg"></img>
+        <HeadersV1 mb={false} link={"/"} text={"🎉 Shout! Party"}>
+          <Link href={"/calendar"}>
+            <img src="/images/calendar-header.svg"></img>
+          </Link>
         </HeadersV1>
 
         <div className=" shrink-0 flex-grow-0">

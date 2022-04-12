@@ -1,9 +1,9 @@
 import React from "react";
 import Link from "next/link";
 
-const HeadersV1 = ({ text, children, link, withborder = true, theme }) => {
+const HeadersV1 = ({ text, children, link, withborder = true, theme, mb = true }) => {
   return (
-    <header className={`flex items-center justify-between px-[1.4rem] py-[1.2rem] ${withborder == true ? " border-b" : " "}  flex-shrink-0 flex-grow-0`}>
+    <header className={`flex items-center ${mb ? "mb-[1.6rem] " : ""} justify-between px-[1.4rem] py-[1.2rem] ${withborder == true ? " border-b" : " "}  flex-shrink-0 flex-grow-0`}>
       <Link href={link}>
         <i className={`icon-chevron-left-primary text-black-default text-[1.8rem] cursor-pointer ${theme == "white" ? " !text-white" : ""}`}></i>
       </Link>

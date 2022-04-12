@@ -6,7 +6,7 @@ import { TextField } from "@mui/material";
 import { red } from "@mui/material/colors";
 import Label from "./Label";
 
-const Calender = ({ label }) => {
+const Calendar = ({ label }) => {
   const [value, setValue] = useState(new Date());
 
   const inputStyle = {
@@ -17,7 +17,7 @@ const Calender = ({ label }) => {
     backgroundPosition: "96%",
     "& .MuiOutlinedInput-root": {
       borderRadius: "16px",
-      maxWidth: "375px",
+      // maxWidth: "375px",
       width: "100%",
       height: "48px",
       // background: "url(/icons/angle-down.svg) ",
@@ -72,4 +72,4 @@ const Calender = ({ label }) => {
   );
 };
 
-export default Calender;
+export default Calendar;
