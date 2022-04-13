@@ -9,7 +9,7 @@ const ModalContainer = ({ children, icon, headerText, onClose, actionText, onAct
         {/* modal header */}
         <div className="flex items-center mb-[60px]">
           {/* <span className="rou rounded-full w-[28px] h-[28px] bg-primary-lightest-2 flex justify-center items-center">{icon}</span> */}
-          <p className="title_heavy text-black-default mr-auto">{headerText}</p>
+          <p className="title_heavy text-black-default mr-3">{headerText}</p>
           <span onClick={toggle} className="icon-cancel text-black-default text-[11px]  ml-[auto] cursor-pointer"></span>
         </div>
 
