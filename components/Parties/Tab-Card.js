@@ -39,7 +39,7 @@ const TabCard = ({ color, text, btnColor, link, partyLink = "https://link" }) =>
     <>
       {/* <Dialog sx={{ "& .MuiDialog-paper": { borderRadius: "1.4rem" } }} onClose={toggle} open={open}> */}
       <ModalContainer actionText="Copy" toggle={toggle} onClose={toggle} open={open} headerText="Share Shout Link" icon={<span className="icon-share text-[15px] font-bold"></span>}>
-        <h3>{partyLink}</h3>
+        <h3 className="caption_heavy text-black-default">{partyLink}</h3>
       </ModalContainer>
       {/* </Dialog> */}
       {/* Notification  */}
