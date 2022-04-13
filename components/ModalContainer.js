@@ -8,8 +8,8 @@ const ModalContainer = ({ children, icon, headerText, onClose, actionText, onAct
       <div className="px-[24px] py-[32px] rounded-[8px] md:w-[423px]">
         {/* modal header */}
         <div className="flex items-center mb-[60px]">
-          <span className="rou rounded-full w-[28px] h-[28px] bg-primary-lightest-2 flex justify-center items-center">{icon}</span>
-          <p className="title_heavy text-black-default ml-[12.5px]">{headerText}</p>
+          {/* <span className="rou rounded-full w-[28px] h-[28px] bg-primary-lightest-2 flex justify-center items-center">{icon}</span> */}
+          {/* <p className="title_heavy text-black-default ml-[12.5px]">{headerText}</p> */}
           <span onClick={toggle} className="icon-cancel text-black-default text-[11px]  ml-[auto] cursor-pointer"></span>
         </div>
 
