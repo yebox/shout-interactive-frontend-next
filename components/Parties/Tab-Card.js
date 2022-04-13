@@ -20,6 +20,9 @@ const TabCard = ({ color, text, btnColor, link, partyLink = "https://link" }) =>
     const result = await shareLink(data);
     if (result == "success") {
       setNotifOpen(true);
+      setTimeout(() => {
+        setNotifOpen(false);
+      }, 4000);
       // alert("Link shared successfully!");
     } else {
       // alert("An error has occured:-Cannot share file");
@@ -40,7 +43,7 @@ const TabCard = ({ color, text, btnColor, link, partyLink = "https://link" }) =>
       </ModalContainer>
       {/* </Dialog> */}
       {/* Notification  */}
-      <Notification duration={3000} open={notifOpen} icon={<i className="icon-add-user"></i>} title={"Share Shout Link"} message="Shared successfully" color="#FA9330"></Notification>
+      <Notification open={notifOpen} icon={<i className="icon-add-user"></i>} title={"Share Shout Link"} message="Shared successfully" color="#FA9330"></Notification>
       <div
         style={{
           backgroundColor: color,
