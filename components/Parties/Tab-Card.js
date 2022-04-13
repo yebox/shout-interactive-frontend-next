@@ -22,7 +22,7 @@ const TabCard = ({ color, text, btnColor, link, partyLink = "https://link" }) =>
       setNotifOpen(true);
       // alert("Link shared successfully!");
     } else {
-      alert("An error has occured:-Cannot share file");
+      // alert("An error has occured:-Cannot share file");
       toggle();
     }
   };
