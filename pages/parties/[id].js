@@ -9,6 +9,7 @@ import Video from "../../components/Parties/Video";
 import Container from "../../components/Layouts/Container";
 import BaseLayout from "../../components/Layouts/Layout";
 import BtnPrimary from "../../components/Buttons/BtnPrimary";
+import FixedBottom from "../../components/Layouts/FixedBottom";
 
 const ActivityBox = ({ text, icon, color, link = "/parties/id" }) => {
   return (
@@ -87,9 +88,9 @@ const PartyDetail = () => {
           </Container>
         </section>
 
-        <div className=" fixed z-40 bottom-[2.4rem] w-full left-1/2 -translate-x-1/2 px-[1.6rem] max-w-[70rem] mx-auto">
+        <FixedBottom>
           <BtnPrimary text={"Join Party"} color={"#14B363"} link="/livestream"></BtnPrimary>
-        </div>
+        </FixedBottom>
       </BaseLayout>
       {/* </FixedBtnLayout> */}
     </>

@@ -8,6 +8,7 @@ import Container from "../../components/Layouts/Container";
 import Link from "next/link";
 import HeadersV1 from "../../components/Headers/Headers-v1";
 import BtnPrimary from "../../components/Buttons/BtnPrimary";
+import FixedBottom from "../../components/Layouts/FixedBottom";
 
 const Parties = () => {
   const [value, setValue] = React.useState(0);
@@ -45,9 +46,10 @@ const Parties = () => {
             </div>
           </Container>
         </div>
-        <div className=" fixed z-40 bottom-[2.4rem] w-full left-1/2 -translate-x-1/2 px-[1.6rem] max-w-[70rem] mx-auto">
+
+        <FixedBottom>
           <BtnPrimary text={"Create"} color={"#14B363"} link="/parties/new"></BtnPrimary>
-        </div>
+        </FixedBottom>
       </BaseLayout>
     </>
   );

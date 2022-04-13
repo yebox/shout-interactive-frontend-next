@@ -22,7 +22,7 @@ const New = () => {
 
   return (
     <BaseLayout>
-      <HeadersV1 link={"/parties/id"} text={"New shout! party"}>
+      <HeadersV1 link={"/parties"} text={"New shout! party"}>
         <div></div>
       </HeadersV1>
       <Container>
