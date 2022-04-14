@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import BaseLayout from "../../components/Layouts/Layout";
@@ -9,13 +9,58 @@ import Link from "next/link";
 import HeadersV1 from "../../components/Headers/Headers-v1";
 import BtnPrimary from "../../components/Buttons/BtnPrimary";
 import FixedBottom from "../../components/Layouts/FixedBottom";
+import useLoadData from "../../hooks/useLoadData";
+import { baseInstance } from "../../axios";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser, getAuthStatus, getUser } from "../../store/user";
+import { useRouter } from "next/router";
+import { getPartiesLoadedStatus, loadAllParties, getShoutParties, getIndividualParties } from "../../store/party";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 const Parties = () => {
   const [value, setValue] = React.useState(0);
+  const [loading, setLoadin] = useState(false);
+  const { getData } = useLoadData();
+  const user = useSelector(getUser);
+  const authenticated = useSelector(getAuthStatus);
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const allPartyLoaded = useSelector(getPartiesLoadedStatus);
+  const shoutParties = useSelector(getShoutParties);
+  const individualParties = useSelector(getIndividualParties);
+  const { getLocalStorage } = useLocalStorage();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    const authToken = getLocalStorage("shout-token");
+    if (!authenticated && authToken) {
+      dispatch(fetchUser(authToken));
+    }
+    if (!authenticated && !authToken) {
+      router.replace("/");
+    }
+    if (authenticated && !allPartyLoaded) {
+      console.log("authenticated and all party not loaded");
+      dispatch(loadAllParties(user.user.id));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (authenticated && !allPartyLoaded) {
+      console.log("execuring auh load paty");
+      dispatch(loadAllParties(user.user.id));
+    }
+    // console.log("ALl loaded paaraty is ", allPartyLoaded);
+  }, [authenticated]);
+
+  useEffect(() => {
+    console.log("All parties loaded", allPartyLoaded);
+    console.log("Shout Parties", shoutParties);
+    console.log("Individual Parties", individualParties);
+  }, [allPartyLoaded]);
 
   return (
     <>
