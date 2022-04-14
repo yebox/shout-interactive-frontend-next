@@ -119,8 +119,14 @@ export const loadAllInvites = (id) => {
       dispatch({ type: TOGGLE_INVITES_LOADED, payload: true });
       dispatch({ type: TOGGLE_INVITES_IS_LOADING, payload: false });
     } catch (error) {
-      console.log("An error occured", error);
-      dispatch({ type: TOGGLE_INVITES_LOADED, payload: false });
+      console.log("An error occured in load all invites", error.response);
+      if ((error.response.status = 400)) {
+        console.log("a 400 error has occured");
+        // No Invites response from the server
+        dispatch({ type: TOGGLE_INVITES_LOADED, payload: true });
+      } else {
+        dispatch({ type: TOGGLE_INVITES_LOADED, payload: false });
+      }
       dispatch({ type: TOGGLE_INVITES_IS_LOADING, payload: false });
     }
   };

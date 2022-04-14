@@ -23,6 +23,7 @@ import {
   getInvitesLoadedStatus,
   getIsInvitesLoadingStatus,
   loadAllInvites,
+  getInvitesParties,
 } from "../../store/party";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import PartiesSkeleton from "../../components/Skeleton/Parties";
@@ -39,6 +40,7 @@ const Parties = () => {
   const isPartiesLoading = useSelector(getIsPartiesLoadingStatus);
   const invitesLoaded = useSelector(getInvitesLoadedStatus);
   const isInvitesLoading = useSelector(getIsInvitesLoadingStatus);
+  const invitesParties = useSelector(getInvitesParties);
   const shoutParties = useSelector(getShoutParties);
   const individualParties = useSelector(getIndividualParties);
   const { getLocalStorage } = useLocalStorage();
@@ -102,12 +104,20 @@ const Parties = () => {
 
         {isPartiesLoading && !activeTab && <PartiesSkeleton></PartiesSkeleton>}
         {!isPartiesLoading && !allPartyLoaded && <p>Problem loading parties</p>}
+        {!isPartiesLoading && allPartyLoaded && shoutParties.length == 0 && individualParties.length == 0 && activeTab == 1 ? <p>No Parties</p> : ""}
 
         {isInvitesLoading && activeTab == 1 ? <PartiesSkeleton></PartiesSkeleton> : ""}
         {!isInvitesLoading && !invitesLoaded && activeTab == 1 ? <p>Problem loading Invites</p> : ""}
+        {!isInvitesLoading && invitesLoaded && invitesParties.length == 0 && activeTab == 1 ? (
+          <Container>
+            <p>No Invites</p>
+          </Container>
+        ) : (
+          ""
+        )}
 
         {/* All Parties Tab */}
-        {allPartyLoaded && activeTab == 0 ? (
+        {allPartyLoaded && (shoutParties.length > 0 || individualParties.length > 0) && activeTab == 0 ? (
           <div className=" overflow-scroll scroll_hide pb-[8rem] pt-[1.4rem]">
             <Container>
               <div>
@@ -138,27 +148,15 @@ const Parties = () => {
           ""
         )}
         {/* All Invites Tab */}
-        {invitesLoaded && activeTab == 1 ? (
+        {invitesLoaded && invitesParties.length > 0 && activeTab == 1 ? (
           <div className=" overflow-scroll scroll_hide pb-[8rem] pt-[1.4rem]">
             <Container>
               <div>
                 <h2 className="subheader_heavy mb-[.8rem]">Featured Parties</h2>
-                {shoutParties.map((party, i) => {
+                {invitesParties.map((party, i) => {
                   return (
                     <div className="mb-[2.2rem]" key={i}>
                       <TabCard color={"#3CC13B"} text={party.name} link="/parties/id"></TabCard>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Upcoming Parties */}
-              <div className="mt-[1.8rem]">
-                <h2 className="subheader_heavy mb-[.8rem]">Upcoming Parties</h2>
-                {individualParties.map((party, i) => {
-                  return (
-                    <div className="mb-[2.2rem]" key={i}>
-                      <TabCard key={i} color={"#110066"} text={party.name} btnColor={"#3CC13B"} link="/parties/id"></TabCard>{" "}
                     </div>
                   );
                 })}
