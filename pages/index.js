@@ -12,7 +12,7 @@ import { baseInstance } from "../axios";
 import { fetchUser, getAuthStatus, getUser, loadUser } from "../store/user";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import HomeSkeleton from "../components/Skeleton/home";
+import HomeSkeleton from "../components/Skeleton/Home";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 export default function Home() {
