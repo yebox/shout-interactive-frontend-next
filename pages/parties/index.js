@@ -14,11 +14,21 @@ import { baseInstance } from "../../axios";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser, getAuthStatus, getUser } from "../../store/user";
 import { useRouter } from "next/router";
-import { getPartiesLoadedStatus, loadAllParties, getShoutParties, getIndividualParties } from "../../store/party";
+import {
+  getPartiesLoadedStatus,
+  loadAllParties,
+  getShoutParties,
+  getIndividualParties,
+  getIsPartiesLoadingStatus,
+  getInvitesLoadedStatus,
+  getIsInvitesLoadingStatus,
+  loadAllInvites,
+} from "../../store/party";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import PartiesSkeleton from "../../components/Skeleton/Parties";
 
 const Parties = () => {
-  const [value, setValue] = React.useState(0);
+  const [activeTab, setActiveTab] = useState(0);
   const [loading, setLoadin] = useState(false);
   const { getData } = useLoadData();
   const user = useSelector(getUser);
@@ -26,12 +36,16 @@ const Parties = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const allPartyLoaded = useSelector(getPartiesLoadedStatus);
+  const isPartiesLoading = useSelector(getIsPartiesLoadingStatus);
+  const invitesLoaded = useSelector(getInvitesLoadedStatus);
+  const isInvitesLoading = useSelector(getIsInvitesLoadingStatus);
   const shoutParties = useSelector(getShoutParties);
   const individualParties = useSelector(getIndividualParties);
   const { getLocalStorage } = useLocalStorage();
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    console.log("New Value is ", newValue);
+    setActiveTab(newValue);
   };
 
   useEffect(() => {
@@ -46,12 +60,20 @@ const Parties = () => {
       console.log("authenticated and all party not loaded");
       dispatch(loadAllParties(user.user.id));
     }
+    if (authenticated && !invitesLoaded) {
+      console.log("authenticated and all invites not loaded");
+      dispatch(loadAllInvites(user.user.id));
+    }
   }, []);
 
   useEffect(() => {
     if (authenticated && !allPartyLoaded) {
       console.log("execuring auh load paty");
       dispatch(loadAllParties(user.user.id));
+    }
+    if (authenticated && !invitesLoaded) {
+      console.log("authenticated and all invites not loaded");
+      dispatch(loadAllInvites(user.user.id));
     }
     // console.log("ALl loaded paaraty is ", allPartyLoaded);
   }, [authenticated]);
@@ -72,25 +94,80 @@ const Parties = () => {
         </HeadersV1>
 
         <div className=" shrink-0 flex-grow-0">
-          <Tabs sx={{ "justify-content": "space-between" }} value={value} onChange={handleChange} centered>
-            <Tab label="My invites" />
+          <Tabs sx={{ "justify-content": "space-between" }} value={activeTab} onChange={handleChange} centered>
             <Tab label="My parties" />
+            <Tab label="My invites" />
           </Tabs>
         </div>
-        <div className=" overflow-scroll scroll_hide pb-[8rem] pt-[1.4rem]">
-          <Container>
-            <div>
-              <h2 className="subheader_heavy mb-[.8rem]">Featured Parties</h2>
-              <TabCard color={"#3CC13B"} text="Shout general party" link="/parties/id"></TabCard>
-            </div>
 
-            {/* Upcoming Parties */}
-            <div className="mt-[1.8rem]">
-              <h2 className="subheader_heavy mb-[.8rem]">Upcoming Parties</h2>
-              <TabCard color={"#110066"} text="David Asiegbunam’s Birthday 🎉 " btnColor={"#3CC13B"} link="/parties/id"></TabCard>
-            </div>
-          </Container>
-        </div>
+        {isPartiesLoading && !activeTab && <PartiesSkeleton></PartiesSkeleton>}
+        {!isPartiesLoading && !allPartyLoaded && <p>Problem loading parties</p>}
+
+        {isInvitesLoading && activeTab == 1 ? <PartiesSkeleton></PartiesSkeleton> : ""}
+        {!isInvitesLoading && !invitesLoaded && activeTab == 1 ? <p>Problem loading Invites</p> : ""}
+
+        {/* All Parties Tab */}
+        {allPartyLoaded && activeTab == 0 ? (
+          <div className=" overflow-scroll scroll_hide pb-[8rem] pt-[1.4rem]">
+            <Container>
+              <div>
+                <h2 className="subheader_heavy mb-[.8rem]">Featured Parties</h2>
+                {shoutParties.map((party, i) => {
+                  return (
+                    <div className="mb-[2.2rem]" key={i}>
+                      <TabCard color={"#3CC13B"} text={party.name} link="/parties/id"></TabCard>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Upcoming Parties */}
+              <div className="mt-[1.8rem]">
+                <h2 className="subheader_heavy mb-[.8rem]">Upcoming Parties</h2>
+                {individualParties.map((party, i) => {
+                  return (
+                    <div className="mb-[2.2rem]" key={i}>
+                      <TabCard key={i} color={"#110066"} text={party.name} btnColor={"#3CC13B"} link="/parties/id"></TabCard>{" "}
+                    </div>
+                  );
+                })}
+              </div>
+            </Container>
+          </div>
+        ) : (
+          ""
+        )}
+        {/* All Invites Tab */}
+        {invitesLoaded && activeTab == 1 ? (
+          <div className=" overflow-scroll scroll_hide pb-[8rem] pt-[1.4rem]">
+            <Container>
+              <div>
+                <h2 className="subheader_heavy mb-[.8rem]">Featured Parties</h2>
+                {shoutParties.map((party, i) => {
+                  return (
+                    <div className="mb-[2.2rem]" key={i}>
+                      <TabCard color={"#3CC13B"} text={party.name} link="/parties/id"></TabCard>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Upcoming Parties */}
+              <div className="mt-[1.8rem]">
+                <h2 className="subheader_heavy mb-[.8rem]">Upcoming Parties</h2>
+                {individualParties.map((party, i) => {
+                  return (
+                    <div className="mb-[2.2rem]" key={i}>
+                      <TabCard key={i} color={"#110066"} text={party.name} btnColor={"#3CC13B"} link="/parties/id"></TabCard>{" "}
+                    </div>
+                  );
+                })}
+              </div>
+            </Container>
+          </div>
+        ) : (
+          ""
+        )}
 
         <FixedBottom>
           <BtnPrimary text={"Create"} color={"#14B363"} link="/parties/new"></BtnPrimary>

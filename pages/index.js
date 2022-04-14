@@ -39,7 +39,7 @@ export default function Home() {
   const { getLocalStorage } = useLocalStorage();
 
   const [splash, setSplash] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Delays the confeti animation
@@ -86,6 +86,9 @@ export default function Home() {
   }, [router.query]);
   useEffect(() => {
     console.log("user chage", user);
+    if (user.user) {
+      setLoading(false);
+    }
   }, [user]);
 
   return (
@@ -150,7 +153,9 @@ export default function Home() {
 
             {/* Smaller Cards */}
             <Link href={"/parties"}>
-              <div className={` rounded-[1.3rem] relative bg-[#14B363] px-6 pb-[1.6rem] pt-[5.6rem] cursor-pointer hover:scale-[1.04] transition-all shadow overflow-hidden swell`}>
+              <div
+                className={` rounded-[1.3rem] relative bg-[url(/images/bg-green.png)]  bg-cover bg-[#14B363] px-6 pb-[1.6rem] pt-[5.6rem] cursor-pointer hover:scale-[1.04] transition-all shadow overflow-hidden swell`}
+              >
                 <h2 className="body_heavy !text-white ">Shout! Party</h2>
                 <p className="small_light max-w-[11rem] !text-white">Party with your friends everyday!</p>
                 <div className=" absolute bottom-0 right-0  playimg flex">
@@ -163,7 +168,9 @@ export default function Home() {
               </div>
             </Link>
             <Link href={"/parties"}>
-              <div className={` rounded-[1.3rem] relative bg-[#110066] px-6 pb-[1.6rem] pt-[5.6rem] cursor-pointer hover:scale-[1.04] transition-all shadow overflow-hidden swell`}>
+              <div
+                className={` rounded-[1.3rem] relative bg-[url(/images/bg-blue.png)] bg-cover bg-[#110066] px-6 pb-[1.6rem] pt-[5.6rem] cursor-pointer hover:scale-[1.04] transition-all shadow overflow-hidden swell`}
+              >
                 <h2 className="body_heavy !text-white ">Shout! Party</h2>
                 <p className="small_light !text-white max-w-[11rem]">Party with your friends everyday!</p>
                 <div className=" absolute bottom-0 right-0  auctionImg flex">
