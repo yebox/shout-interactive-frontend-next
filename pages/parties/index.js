@@ -110,7 +110,7 @@ const Parties = () => {
         {!isInvitesLoading && !invitesLoaded && activeTab == 1 ? <p>Problem loading Invites</p> : ""}
         {!isInvitesLoading && invitesLoaded && invitesParties.length == 0 && activeTab == 1 ? (
           <Container>
-            <p>You have not created any party yet!</p>
+            <p>No Parties</p>
           </Container>
         ) : (
           ""
