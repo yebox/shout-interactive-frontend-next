@@ -97,8 +97,8 @@ const Parties = () => {
 
         <div className=" shrink-0 flex-grow-0">
           <Tabs sx={{ "justify-content": "space-between" }} value={activeTab} onChange={handleChange} centered>
-            <Tab label="My invites" />
             <Tab label="My parties" />
+            <Tab label="My invites" />
           </Tabs>
         </div>
 
@@ -110,7 +110,7 @@ const Parties = () => {
         {!isInvitesLoading && !invitesLoaded && activeTab == 1 ? <p>Problem loading Invites</p> : ""}
         {!isInvitesLoading && invitesLoaded && invitesParties.length == 0 && activeTab == 1 ? (
           <Container>
-            <p>No Parties</p>
+            <p>No Invites</p>
           </Container>
         ) : (
           ""
