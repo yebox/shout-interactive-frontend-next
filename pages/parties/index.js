@@ -97,8 +97,8 @@ const Parties = () => {
 
         <div className=" shrink-0 flex-grow-0">
           <Tabs sx={{ "justify-content": "space-between" }} value={activeTab} onChange={handleChange} centered>
-            <Tab label="My parties" />
             <Tab label="My invites" />
+            <Tab label="My parties" />
           </Tabs>
         </div>
 
