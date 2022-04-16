@@ -1,15 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import FixedBtnLayout from "../../components/Layouts/FixedBtnLayout";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Tag from "../../components/Tag";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import Video from "../../components/Parties/Video";
 import Container from "../../components/Layouts/Container";
 import BaseLayout from "../../components/Layouts/Layout";
 import BtnPrimary from "../../components/Buttons/BtnPrimary";
 import FixedBottom from "../../components/Layouts/FixedBottom";
+import { useSelector } from "react-redux";
+import { getIndividualParties, getPartiesLoadedStatus } from "../../store/party";
+import Upload from "../../components/Upload/Upload";
+import Protect from "../../components/Protect";
 
 const ActivityBox = ({ text, icon, color, link = "/parties/id" }) => {
   return (
@@ -25,73 +30,95 @@ const ActivityBox = ({ text, icon, color, link = "/parties/id" }) => {
 };
 
 const PartyDetail = () => {
+  const router = useRouter();
+  const individualParties = useSelector(getIndividualParties);
+  const partiesLoaded = useSelector(getPartiesLoadedStatus);
+  const [party, setParty] = useState({});
+
+  useEffect(() => {
+    const getPartyDetail = (parties, id) => {
+      const partyArr = parties.filter((el) => {
+        return el.id == id;
+      });
+      console.log(parties);
+      console.log("party detail is", partyArr);
+      return partyArr[0];
+    };
+
+    const party = getPartyDetail(individualParties, router.query.id);
+    setParty(party);
+    console.log(party);
+  }, [router.query, partiesLoaded]);
   return (
     <>
       {/* <FixedBtnLayout text={"Join Party"} btnColor={"#3CC13B"}> */}
-      <BaseLayout>
-        {/* Header Details */}
-        <section className="bg-[#FA9330] py-[2.5rem] pb-[3.2rem] bg-[url(/images/bg-orange.png)] bg-no-repeat bg-cover">
-          <Container>
-            <header className="flex items-center justify-between  pb-[1.2rem] flex-shrink-0 flex-grow-0">
-              {/* <img src="/images/chevron-left-primary.svg"></img> */}
-              <Link href="/parties">
-                <i className="icon-chevron-left-primary cursor-pointer text-white text-[1.8rem]"></i>
-              </Link>
-              {/* <img src="/images/edit.svg"></img> */}
-              <Link href="/parties/edit">
-                <i className="icon-edit text-white text-[1.8rem] cursor-pointer"></i>
-              </Link>
-            </header>
+      <Protect>
+        <BaseLayout>
+          {/* Header Details */}
+          <section className="bg-[#FA9330] py-[2.5rem] pb-[3.2rem] bg-[url(/images/bg-orange.png)] bg-no-repeat bg-cover">
+            <Container>
+              <header className="flex items-center justify-between  pb-[1.2rem] flex-shrink-0 flex-grow-0">
+                {/* <img src="/images/chevron-left-primary.svg"></img> */}
+                <Link href="/parties">
+                  <i className="icon-chevron-left-primary cursor-pointer text-white text-[1.8rem]"></i>
+                </Link>
+                {/* <img src="/images/edit.svg"></img> */}
+                <Link href="/parties/edit">
+                  <i className="icon-edit text-white text-[1.8rem] cursor-pointer"></i>
+                </Link>
+              </header>
 
-            <div className="grid place-items-center">
-              <p className="headline_heavy text-white mt-[2.4rem] max-w-[24.5rem] text-center">Party with Mitchell Nwabueze 🎉 </p>
-              <div className="my-[1.6rem] mb-[3.4rem]">
-                <AvatarGroup max={4}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                  <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-                  <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-                  <Avatar alt="Agnes Walker" src="/static/images/avatar/4.jpg" />
-                  <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.jpg" />
-                </AvatarGroup>
+              <div className="grid place-items-center">
+                {/* <p className="headline_heavy text-white mt-[2.4rem] max-w-[24.5rem] text-center">Party with Mitchell Nwabueze 🎉 </p> */}
+                <p className="headline_heavy text-white mt-[2.4rem] max-w-[24.5rem] text-center capitalize">{party?.name} </p>
+                <div className="my-[1.6rem] mb-[3.4rem]">
+                  <AvatarGroup max={4}>
+                    <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                    <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
+                    <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
+                    <Avatar alt="Agnes Walker" src="/static/images/avatar/4.jpg" />
+                    <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.jpg" />
+                  </AvatarGroup>
+                </div>
+                <Tag>19 Nov, 7:00</Tag>
               </div>
-              <Tag>19 Nov, 7:00</Tag>
-            </div>
-          </Container>
-        </section>
+            </Container>
+          </section>
 
-        {/* Welcome message */}
-        <section className="py-[2.4rem]">
-          <Container>
-            <p className="subheader_heavy mb-3">Welcome message</p>
-            <Video></Video>
-          </Container>
-        </section>
+          {/* Welcome message */}
+          <section className="py-[2.4rem]">
+            <Container>
+              <p className="subheader_heavy mb-3">Welcome message</p>
+              {party?.video ? <Video></Video> : <Upload withLabel={false}></Upload>}
+            </Container>
+          </section>
 
-        {/* Activities  */}
-        <section className="pb-[2.4rem]">
-          <Container>
-            <p className="subheader_heavy mb-3">Activities</p>
-            <div className="grid grid-cols-2 gap-4">
-              <ActivityBox color={"#FA9330"} icon="icon-users-profile" text="Guestlist" link="/guest-list"></ActivityBox>
-              <ActivityBox color={"#FA4A0C"} icon="icon-gift-box" text="Gift goal" link="/gift-goal"></ActivityBox>
-              <ActivityBox color={"#B57BFF"} icon="icon-music" text="Musicpost" link="/music-post"></ActivityBox>
-              <ActivityBox color="#110066" icon="icon-share" text="Share"></ActivityBox>
-            </div>
-          </Container>
-        </section>
+          {/* Activities  */}
+          <section className="pb-[2.4rem]">
+            <Container>
+              <p className="subheader_heavy mb-3">Activities</p>
+              <div className="grid grid-cols-2 gap-4">
+                <ActivityBox color={"#FA9330"} icon="icon-users-profile" text="Guestlist" link="/guest-list"></ActivityBox>
+                <ActivityBox color={"#FA4A0C"} icon="icon-gift-box" text="Gift goal" link="/gift-goal"></ActivityBox>
+                <ActivityBox color={"#B57BFF"} icon="icon-music" text="Musicpost" link={`/music-post?id=${party?.id}`}></ActivityBox>
+                <ActivityBox color="#110066" icon="icon-share" text="Share"></ActivityBox>
+              </div>
+            </Container>
+          </section>
 
-        {/* About party */}
-        <section className="pb-[2.4rem] mb-[10rem]">
-          <Container>
-            <p className="subheader_heavy mb-3">About party</p>
-            <p className="body_light text-primary">Come with your dancing shoes on, the DJ has promised a great line up and there’s a surprise celebrity guest 👀 </p>
-          </Container>
-        </section>
+          {/* About party */}
+          <section className="pb-[2.4rem] mb-[10rem]">
+            <Container>
+              <p className="subheader_heavy mb-3">About party</p>
+              <p className="body_light text-primary">{party?.description} </p>
+            </Container>
+          </section>
 
-        <FixedBottom>
-          <BtnPrimary text={"Join Party"} color={"#14B363"} link="/livestream"></BtnPrimary>
-        </FixedBottom>
-      </BaseLayout>
+          <FixedBottom>
+            <BtnPrimary text={"Join Party"} color={"#14B363"} link={`/parties/${router.query.id}`}></BtnPrimary>
+          </FixedBottom>
+        </BaseLayout>
+      </Protect>
       {/* </FixedBtnLayout> */}
     </>
   );

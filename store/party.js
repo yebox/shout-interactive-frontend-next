@@ -8,6 +8,10 @@ const TOGGLE_PARTY_IS_LOADING = "party/toggle-isloading";
 const TOGGLE_INVITES_LOADED = "invites/toggle-loaded";
 const TOGGLE_INVITES_IS_LOADING = "invites/toggle-isloading";
 
+const SET_ERROR = "set-error";
+const CREATING_PARTY = "party/creating";
+const PARTY_CREATED = "party/created";
+
 const initState = {
   parties: {
     shout: [],
@@ -18,6 +22,10 @@ const initState = {
   partiesIsLoading: true,
   invitesIsLoaded: false,
   invitesIsLoading: true,
+  creatingParty: false,
+  partyCreated: false,
+
+  errorMessage: false,
 };
 
 // Party Reducer
@@ -36,6 +44,13 @@ export const PartyReducer = (state = initState, action) => {
       return { ...state, invitesIsLoaded: action.payload };
     case TOGGLE_INVITES_IS_LOADING:
       return { ...state, invitesIsLoading: action.payload };
+
+    case SET_ERROR:
+      return { ...state, errorMessage: action.payload };
+    case CREATING_PARTY:
+      return { ...state, creatingParty: action.payload };
+    case PARTY_CREATED:
+      return { ...state, partyCreated: action.payload };
 
     default:
       return { ...state };
@@ -67,6 +82,18 @@ export const getInvitesLoadedStatus = (state) => {
 export const getIsInvitesLoadingStatus = (state) => {
   return state.allParties.invitesIsLoading;
 };
+export const getCreatingPartyStatus = (state) => {
+  return state.allParties.creatingParty;
+};
+
+export const getpartyCreated = (state) => {
+  return state.allParties.partyCreated;
+};
+
+// Error selector
+export const getErrorStatus = (state) => {
+  return state.allParties.errorMessage;
+};
 
 // Action Creators
 const loadShoutParty = (party) => {
@@ -77,6 +104,15 @@ const loadIndividualParty = (party) => {
 };
 const loadInvitesParties = (party) => {
   return { type: LOAD_INDIVIDUAL_PARTY, payload: party };
+};
+
+const setError = (message) => {
+  return { type: SET_ERROR, payload: message };
+};
+
+export const setPartyCreated = (status) => {
+  console.log("in set party created and value is ", status);
+  return { type: PARTY_CREATED, payload: status };
 };
 
 // Async Actions
@@ -98,7 +134,13 @@ export const loadAllParties = (id) => {
       dispatch({ type: TOGGLE_PARTY_LOADED, payload: true });
       dispatch({ type: TOGGLE_PARTY_IS_LOADING, payload: false });
     } catch (error) {
+      if (error.response) {
+        console.log("a 400 error has occured");
+        // No parties response from the server
+        dispatch({ type: TOGGLE_INVITES_LOADED, payload: true });
+      }
       console.log("An error occured", error.message);
+      dispatch(setError("Load all parties error"));
       dispatch({ type: TOGGLE_PARTY_LOADED, payload: false });
       dispatch({ type: TOGGLE_PARTY_IS_LOADING, payload: false });
     }
@@ -129,5 +171,32 @@ export const loadAllInvites = (id) => {
       }
       dispatch({ type: TOGGLE_INVITES_IS_LOADING, payload: false });
     }
+  };
+};
+
+export const createParty = (partyData) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: CREATING_PARTY, payload: true });
+    // dispatch(setError(false));
+    // dispatch(setPartyCreated(false));
+    console.log("party data is", JSON.stringify(partyData));
+    try {
+      const user = getState().user;
+      console.log("IN try catch...", user.user.id);
+      const resp = await baseInstance.post("/party/create", JSON.stringify(partyData));
+      dispatch(loadAllParties(user.user.id));
+      dispatch({ type: CREATING_PARTY, payload: false });
+      dispatch(setPartyCreated(true));
+      dispatch(setError(""));
+    } catch (error) {
+      if (error.response) {
+        console.log("REsponse errro", error.response);
+      }
+      console.log("Error creating partyies");
+      dispatch(setError("Could'nt create party"));
+      dispatch({ type: PARTY_CREATED, payload: false });
+      dispatch({ type: CREATING_PARTY, payload: false });
+    }
+    // dispatch(setPartyCreated(false));
   };
 };

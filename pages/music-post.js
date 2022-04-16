@@ -8,8 +8,10 @@ import MyAvatar from "../components/Avatar";
 import BtnPrimary from "../components/Buttons/BtnPrimary";
 import Container from "../components/Layouts/Container";
 import Search from "../components/Search";
+import useGetParams from "../hooks/useGetParams";
 
 const MusicPost = () => {
+  const { getParams, getUrl } = useGetParams();
   const [selectedSongs, setSelectedSongs] = useState([]);
   const [allSongs, setAllSongs] = useState([
     { name: "Ginger", artist: "Wizkid Feat. Burna Boy" },
@@ -113,7 +115,14 @@ const MusicPost = () => {
         <div className="pb-8 h-[28rem] scroll_hide overflow-scroll">
           {allSongs.map((e, i) => {
             return (
-              <button onClick={() => {}} className="flex items-center mb-[1.8rem] last:mb-0 last:pb-8  w-full" key={i}>
+              <button
+                onClick={() => {
+                  console.log("get id param is", getParams("id"));
+                  console.log("get url si", getUrl());
+                }}
+                className="flex items-center mb-[1.8rem] last:mb-0 last:pb-8  w-full"
+                key={i}
+              >
                 <div className=" mr-[.8rem]">
                   <MyAvatar alt={e.name} src="/broken-image.jpg" />
                 </div>
@@ -158,7 +167,7 @@ const MusicPost = () => {
       </Drawer>
 
       {/* Main */}
-      <HeadersV1 link={"/parties/id"} text={"Musicpost"}>
+      <HeadersV1 link={`parties/${getParams("id")}`} text={"Musicpost"}>
         <div></div>
       </HeadersV1>
 
@@ -172,6 +181,7 @@ const MusicPost = () => {
             handleClick={() => {
               setIsDrawerOpened(true);
             }}
+            link={getUrl()}
             text="Select Songs"
           ></BtnPrimary>
         </div>

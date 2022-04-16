@@ -27,10 +27,12 @@ import {
 } from "../../store/party";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import PartiesSkeleton from "../../components/Skeleton/Parties";
+import Notification from "../../components/Notification";
 
 const Parties = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [loading, setLoadin] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
   const { getData } = useLoadData();
   const user = useSelector(getUser);
   const authenticated = useSelector(getAuthStatus);
@@ -49,6 +51,16 @@ const Parties = () => {
     console.log("New Value is ", newValue);
     setActiveTab(newValue);
   };
+
+  useEffect(() => {
+    if (router.query.message) {
+      setNotifOpen(true);
+      setTimeout(() => {
+        setNotifOpen(false);
+        router.replace("/parties", undefined, { shallow: true });
+      }, 3000);
+    }
+  }, [router.query]);
 
   useEffect(() => {
     const authToken = getLocalStorage("shout-token");
@@ -88,6 +100,8 @@ const Parties = () => {
 
   return (
     <>
+      <Notification open={notifOpen} icon={<i className="icon-info-circle text-[1.6rem]"></i>} title={"Party Created"} message="Party Created successfully!" color="green"></Notification>
+
       <BaseLayout text={"Create Party"} btnColor={"#3CC13B"}>
         <HeadersV1 mb={false} link={"/"} text={"🎉 Shout! Party"}>
           <Link href={"/calendar"}>
@@ -125,7 +139,7 @@ const Parties = () => {
                 {shoutParties.map((party, i) => {
                   return (
                     <div className="mb-[2.2rem]" key={i}>
-                      <TabCard color={"#3CC13B"} text={party.name} link="/parties/id"></TabCard>
+                      <TabCard color={"#3CC13B"} text={party.name} link=""></TabCard>
                     </div>
                   );
                 })}
@@ -137,7 +151,7 @@ const Parties = () => {
                 {individualParties.map((party, i) => {
                   return (
                     <div className="mb-[2.2rem]" key={i}>
-                      <TabCard key={i} color={"#110066"} text={party.name} btnColor={"#3CC13B"} link="/parties/id"></TabCard>{" "}
+                      <TabCard key={i} color={"#110066"} text={party.name} btnColor={"#3CC13B"} link={`/parties/${party.id}`}></TabCard>{" "}
                     </div>
                   );
                 })}

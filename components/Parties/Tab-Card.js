@@ -68,7 +68,7 @@ const TabCard = ({ color, text, btnColor, link, partyLink = "https://link" }) =>
         </div>
 
         <div className="grid place-items-center">
-          <p className="headline_heavy text-white mt-[2.4rem] max-w-[24.5rem] text-center">{text}</p>
+          <p className="headline_heavy text-white mt-[2.4rem] max-w-[24.5rem] text-center capitalize">{text}</p>
           <div className="my-[2.6rem]">
             <AvatarGroup max={4}>
               <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />

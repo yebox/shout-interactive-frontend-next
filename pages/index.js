@@ -86,10 +86,21 @@ export default function Home() {
   }, [router.query]);
   useEffect(() => {
     console.log("user chage", user);
-    if (user.user) {
-      setLoading(false);
-    }
+    // if (user.user) {
+    //   setLoading(false);
+    // }
+    setLoading(false);
   }, [user]);
+
+  function formatCoinAmt(value) {
+    var suffixes = ["", "K", "M", "B", "T"];
+    var suffixNum = Math.floor(("" + value).length / 3);
+    var shortValue = parseFloat((suffixNum != 0 ? value / Math.pow(1000, suffixNum) : value).toPrecision(2));
+    if (shortValue % 1 != 0) {
+      shortValue = shortValue.toFixed(1);
+    }
+    return shortValue + suffixes[suffixNum];
+  }
 
   return (
     <BaseLayout>
@@ -113,7 +124,8 @@ export default function Home() {
               <Link href={"/wallet"}>
                 <div className="p-[.952rem] flex items-center bg-gray-lighter rounded-2xl cursor-pointer">
                   <Image src="/images/coin.svg" height={24} width={24} alt="coins"></Image>
-                  <span className="subheader_heavy !text-gray-darker ml-[.5rem]">{5.1}M</span>
+                  {/* <span className="subheader_heavy !text-gray-darker ml-[.5rem]">{formatCoinAmt(user.coins)}</span> */}
+                  <span className="subheader_heavy !text-gray-darker ml-[.5rem]">100K</span>
                 </div>
               </Link>
               <div className="p-[.952rem] flex items-center bg-gray-lighter rounded-2xl ml-[1.6rem]">

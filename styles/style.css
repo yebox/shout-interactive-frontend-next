@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?yco0m6');
-  src:  url('fonts/icomoon.eot?yco0m6#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?yco0m6') format('truetype'),
-    url('fonts/icomoon.woff?yco0m6') format('woff'),
-    url('fonts/icomoon.svg?yco0m6#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?a5tfcx');
+  src:  url('fonts/icomoon.eot?a5tfcx#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?a5tfcx') format('truetype'),
+    url('fonts/icomoon.woff?a5tfcx') format('woff'),
+    url('fonts/icomoon.svg?a5tfcx#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -31,48 +31,150 @@
 .icon-add-video:before {
   content: "\e901";
 }
-.icon-calendar-header:before {
+.icon-angle-down:before {
   content: "\e902";
 }
-.icon-cancel:before {
+.icon-angle-left:before {
   content: "\e903";
 }
-.icon-chevron-left-primary:before {
+.icon-arrow-circle-left:before {
   content: "\e904";
 }
-.icon-chevron-right:before {
+.icon-arrow-down-spear:before {
   content: "\e905";
 }
-.icon-coin:before {
+.icon-asterisk:before {
   content: "\e906";
 }
-.icon-edit:before {
+.icon-bag:before {
   content: "\e907";
 }
-.icon-gift-box:before {
+.icon-cake:before {
   content: "\e908";
 }
-.icon-love:before {
+.icon-calendar-header:before {
   content: "\e909";
 }
-.icon-music:before {
-  content: "\e90a";
-}
-.icon-play:before {
-  content: "\e90b";
-}
-.icon-send:before {
+.icon-calender:before {
   content: "\e90c";
 }
-.icon-share:before {
+.icon-cancel:before {
   content: "\e90d";
 }
-.icon-trophy-star:before {
+.icon-check-circle:before {
   content: "\e90e";
 }
-.icon-user-single-stream:before {
+.icon-chevron-left-primary:before {
   content: "\e90f";
 }
-.icon-users-profile:before {
+.icon-chevron-right:before {
   content: "\e910";
+}
+.icon-close:before {
+  content: "\e911";
+}
+.icon-confeti:before {
+  content: "\e912";
+}
+.icon-copy:before {
+  content: "\e913";
+}
+.icon-delete:before {
+  content: "\e914";
+}
+.icon-double-user:before {
+  content: "\e915";
+}
+.icon-edit:before {
+  content: "\e916";
+}
+.icon-exclamation-triangle:before {
+  content: "\e917";
+}
+.icon-eye-view:before {
+  content: "\e918";
+}
+.icon-filter:before {
+  content: "\e919";
+}
+.icon-flower:before {
+  content: "\e91a";
+}
+.icon-gear:before {
+  content: "\e91b";
+}
+.icon-gift-box:before {
+  content: "\e91c";
+}
+.icon-home-alt:before {
+  content: "\e91d";
+}
+.icon-image-upload:before {
+  content: "\e91e";
+}
+.icon-info:before {
+  content: "\e91f";
+}
+.icon-info-circle:before {
+  content: "\e920";
+}
+.icon-Kite-1:before {
+  content: "\e921";
+}
+.icon-love:before {
+  content: "\e922";
+}
+.icon-music:before {
+  content: "\e923";
+}
+.icon-pencile:before {
+  content: "\e924";
+}
+.icon-play:before {
+  content: "\e925";
+}
+.icon-plus-circle:before {
+  content: "\e926";
+}
+.icon-puzzle-piece:before {
+  content: "\e927";
+}
+.icon-question-circle:before {
+  content: "\e928";
+}
+.icon-search:before {
+  content: "\e929";
+}
+.icon-send:before {
+  content: "\e92a";
+}
+.icon-share:before {
+  content: "\e92b";
+}
+.icon-shout-link:before {
+  content: "\e92c";
+}
+.icon-shout-link-2:before {
+  content: "\e92d";
+}
+.icon-trash-alt:before {
+  content: "\e92e";
+}
+.icon-trophy-star:before {
+  content: "\e92f";
+}
+.icon-user-single-stream:before {
+  content: "\e930";
+}
+.icon-users-profile:before {
+  content: "\e931";
+}
+.icon-Vector:before {
+  content: "\e932";
+}
+.icon-Transactions:before {
+  content: "\e90a";
+}
+.icon-Wallet:before {
+  content: "\e90b";
 }

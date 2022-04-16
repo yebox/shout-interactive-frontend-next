@@ -3,6 +3,8 @@ import HeadersV1 from "../components/Headers/Headers-v1";
 import BaseLayout from "../components/Layouts/Layout";
 import Container from "../components/Layouts/Container";
 import Image from "next/image";
+import { useSelector } from "react-redux";
+import { getUser } from "../store/user";
 
 const Wallet = () => {
   const coins = [
@@ -12,6 +14,10 @@ const Wallet = () => {
     { image: "coin-treasure.svg", amount: "20,000", price: "10,000" },
     { image: "coin-safe.svg", amount: "27,000 ", price: "20,000" },
   ];
+  const user = useSelector(getUser);
+
+  const addCommas = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const removeNonNumeric = (num) => num.toString().replace(/[^0-9]/g, "");
   return (
     <BaseLayout>
       {/* Header */}
@@ -22,7 +28,7 @@ const Wallet = () => {
 
         <div className="flex items-center justify-center place-items-center mt-[4.8rem] pb-[7.8rem]">
           <Image src="/images/coin.svg" height={40} width={40} alt="coins"></Image>
-          <p className="display_3_heavy !text-white ml-[.8rem]">200,000,000</p>
+          <p className="display_3_heavy !text-white ml-[.8rem]">{addCommas(removeNonNumeric(user.coins))}</p>
         </div>
       </section>
       <Container>

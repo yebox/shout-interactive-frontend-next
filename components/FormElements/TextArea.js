@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-const TextArea = ({ placeholder = "placeholder", label = "", status = "", message = "", reference }) => {
+const TextArea = ({ placeholder = "placeholder", label = "", status = "", message = "", reference, onChange = () => {} }) => {
   // status
   // warn
   // success
@@ -9,6 +9,9 @@ const TextArea = ({ placeholder = "placeholder", label = "", status = "", messag
     <div>
       <label className="caption_heavy text-black-default flex mb-[8px] mt-[1.6rem]">{label}</label>
       <textarea
+        onChange={(e) => {
+          onChange(e);
+        }}
         rows="4"
         ref={reference ? reference : defaultInputRef}
         className={`flex mb-[10px] max-w-full min-w-[200px] w-full text-black-default body_light focus:border-primary focus:outline-0 ${
