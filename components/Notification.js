@@ -15,7 +15,11 @@ const Notification = ({ message, type, icon, title, color, open, duration }) => 
     setOpen(open);
   }, [open]);
   return (
-    <div className={` fixed transition-all right-6 z-40 rounded-[1rem] bg-white py-[.5rem] px-[.9rem] max-w-[36rem] shadow-sm ${notifOpen ? "top-6 visible" : "-top-full  invisible"}`}>
+    <div
+      className={` fixed transition-all duration-700 right-6 z-40 rounded-[1rem] bg-white py-[.5rem] px-[.9rem] max-w-[36rem] shadow-sm ${
+        notifOpen ? "top-6 visible opacity-100" : "-top-full  invisible opacity-0"
+      }`}
+    >
       <main className="flex items-start">
         <div style={{ backgroundColor: color }} className="w-[3.2rem] h-[3.2rem] !text-white rounded-[1rem] mr-[1.3rem] grid place-items-center">
           {icon}

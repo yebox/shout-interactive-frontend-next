@@ -58,7 +58,7 @@ const Parties = () => {
       setTimeout(() => {
         setNotifOpen(false);
         router.replace("/parties", undefined, { shallow: true });
-      }, 5000);
+      }, 7000);
     }
   }, [router.query]);
 
@@ -116,7 +116,7 @@ const Parties = () => {
           </Tabs>
         </div>
 
-        {isPartiesLoading && !activeTab && <PartiesSkeleton></PartiesSkeleton>}
+        {isPartiesLoading && !activeTab && (shoutParties?.length == 0 || individualParties?.length == 0) && <PartiesSkeleton></PartiesSkeleton>}
         {!isPartiesLoading && !allPartyLoaded && <p>Problem loading parties</p>}
         {!isPartiesLoading && allPartyLoaded && shoutParties.length == 0 && individualParties.length == 0 && activeTab == 1 ? <p>No Parties</p> : ""}
 
