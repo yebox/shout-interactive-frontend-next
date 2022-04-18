@@ -124,7 +124,7 @@ const New = () => {
           <div className="grid place-items-center">
             <Image height={72} width={72} alt="charge" src={"/images/coin-5.svg"}></Image>
             <p className="max-w-[22.1rem] mt-[2.4rem]  subheader_heavy text-center !text-gray-darker">
-              You will be charged <br></br>2000 coins to join this party{" "}
+              You will be charged <br></br>2000 coins to create this party{" "}
             </p>
           </div>
         </ModalContainer>

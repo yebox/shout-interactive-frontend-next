@@ -54,7 +54,7 @@ const PartyDetail = () => {
       setNotifOpen(true);
       setTimeout(() => {
         setNotifOpen(false);
-      }, 4000);
+      }, 7000);
       // alert("Link shared successfully!");
     } else {
       // alert("An error has occured:-Cannot share file");

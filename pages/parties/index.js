@@ -58,7 +58,7 @@ const Parties = () => {
       setTimeout(() => {
         setNotifOpen(false);
         router.replace("/parties", undefined, { shallow: true });
-      }, 7000);
+      }, 10000);
     }
   }, [router.query]);
 
