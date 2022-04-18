@@ -4,6 +4,7 @@ import { fetchUser, getAuthStatus, getUser } from "../store/user";
 import { getPartiesLoadedStatus, loadAllParties } from "../store/party";
 import { useRouter } from "next/router";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { loadCalendarThunk } from "../store/calendar";
 
 const Protect = ({ children }) => {
   const { getLocalStorage } = useLocalStorage();
@@ -23,6 +24,7 @@ const Protect = ({ children }) => {
     if (authenticated && !partiesLoaded) {
       console.log("auth but not party loaded");
       dispatch(loadAllParties(user.user.id));
+      dispatch(loadCalendarThunk(user.user.id));
     }
   }, [authenticated]);
 
@@ -30,7 +32,8 @@ const Protect = ({ children }) => {
     console.log("parties loaded", partiesLoaded);
   }, [partiesLoaded]);
 
-  return authenticated && partiesLoaded ? <>{children}</> : <></>;
+  return authenticated ? <>{children}</> : <></>;
+  // return authenticated && partiesLoaded ? <>{children}</> : <></>;
   // if (authenticated && partiesLoaded) {
   //   return <>{children}</>;
   // } else {

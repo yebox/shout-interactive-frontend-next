@@ -15,11 +15,20 @@ import { useSelector } from "react-redux";
 import { getIndividualParties, getPartiesLoadedStatus } from "../../store/party";
 import Upload from "../../components/Upload/Upload";
 import Protect from "../../components/Protect";
+import useWebShare from "../../hooks/useWebShare";
+import Notification from "../../components/Notification";
+import useGetParams from "../../hooks/useGetParams";
 
-const ActivityBox = ({ text, icon, color, link = "/parties/id" }) => {
+const ActivityBox = ({ text, icon, color, link = "/parties/id", action = () => {} }) => {
   return (
     <Link href={link}>
-      <div style={{ background: color }} className=" rounded-[1.3rem] py-[1.6rem] px-[1.2rem] flex items-center cursor-pointer">
+      <div
+        onClick={() => {
+          action();
+        }}
+        style={{ background: color }}
+        className=" rounded-[1.3rem] py-[1.6rem] px-[1.2rem] flex items-center cursor-pointer"
+      >
         <span className="bg-white h-[3.2rem] w-[3.2rem] grid place-items-center rounded-full mr-[1.8rem]">
           <i style={{ color: color }} className={`${icon} text-[1.7rem]`}></i>
         </span>
@@ -34,6 +43,29 @@ const PartyDetail = () => {
   const individualParties = useSelector(getIndividualParties);
   const partiesLoaded = useSelector(getPartiesLoadedStatus);
   const [party, setParty] = useState({});
+  const { shareLink } = useWebShare();
+  const [notifOpen, setNotifOpen] = useState(false);
+  const { getParams, getUrl } = useGetParams();
+
+  const onShare = async (data) => {
+    console.log("in sharing");
+    const result = await shareLink(data);
+    if (result == "success") {
+      setNotifOpen(true);
+      setTimeout(() => {
+        setNotifOpen(false);
+      }, 4000);
+      // alert("Link shared successfully!");
+    } else {
+      // alert("An error has occured:-Cannot share file");
+      toggle();
+    }
+  };
+
+  function toggle() {
+    console.log("toggleing...");
+    open ? setOpen(false) : setOpen(true);
+  }
 
   useEffect(() => {
     const getPartyDetail = (parties, id) => {
@@ -53,6 +85,8 @@ const PartyDetail = () => {
     <>
       {/* <FixedBtnLayout text={"Join Party"} btnColor={"#3CC13B"}> */}
       <Protect>
+        <Notification open={notifOpen} icon={<i className="icon-add-user"></i>} title={"Share Shout Link"} message="Shared successfully" color="#FA9330"></Notification>
+
         <BaseLayout>
           {/* Header Details */}
           <section className="bg-[#FA9330] py-[2.5rem] pb-[3.2rem] bg-[url(/images/bg-orange.png)] bg-no-repeat bg-cover">
@@ -101,7 +135,15 @@ const PartyDetail = () => {
                 <ActivityBox color={"#FA9330"} icon="icon-users-profile" text="Guestlist" link="/guest-list"></ActivityBox>
                 <ActivityBox color={"#FA4A0C"} icon="icon-gift-box" text="Gift goal" link="/gift-goal"></ActivityBox>
                 <ActivityBox color={"#B57BFF"} icon="icon-music" text="Musicpost" link={`/music-post?id=${party?.id}`}></ActivityBox>
-                <ActivityBox color="#110066" icon="icon-share" text="Share"></ActivityBox>
+                <ActivityBox
+                  action={() => {
+                    onShare({ url: "Party Link", text: "Shout Party link", title: "Shout Party Link" });
+                  }}
+                  color="#110066"
+                  icon="icon-share"
+                  text="Share"
+                  link={`/parties/${getParams("id")}`}
+                ></ActivityBox>
               </div>
             </Container>
           </section>

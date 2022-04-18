@@ -13,8 +13,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MySelect = ({ handleChange = () => {}, label }) => {
-  const [val, setVal] = useState(10);
+const MySelect = ({ handleChange = () => {}, label, defaultVal = "default", items = ["love", "hate"] }) => {
+  const [val, setVal] = useState(0);
   const classes = useStyles();
 
   const selectStyle = {
@@ -56,13 +56,19 @@ const MySelect = ({ handleChange = () => {}, label }) => {
         sx={selectStyle}
         id="demo-simple-select"
         value={val}
-        onChange={() => {
-          handleChange();
+        onChange={(e) => {
+          setVal(e.target.value);
+          handleChange(e);
         }}
       >
-        <MenuItem value={10}>Ten</MenuItem>
-        <MenuItem value={20}>Twenty</MenuItem>
-        <MenuItem value={30}>Thirty</MenuItem>
+        {items.map((item, i) => (
+          <MenuItem key={i} value={i * 10}>
+            {item}
+          </MenuItem>
+        ))}
+
+        {/* <MenuItem value={20}>Twenty</MenuItem>
+        <MenuItem value={30}>Thirty</MenuItem> */}
       </Select>
     </div>
   );
