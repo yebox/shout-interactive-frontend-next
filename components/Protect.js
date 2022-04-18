@@ -4,12 +4,13 @@ import { fetchUser, getAuthStatus, getUser } from "../store/user";
 import { getPartiesLoadedStatus, loadAllParties } from "../store/party";
 import { useRouter } from "next/router";
 import useLocalStorage from "../hooks/useLocalStorage";
-import { loadCalendarThunk } from "../store/calendar";
+import { getCalendar, loadCalendarThunk } from "../store/calendar";
 
 const Protect = ({ children }) => {
   const { getLocalStorage } = useLocalStorage();
   const authenticated = useSelector(getAuthStatus);
   const partiesLoaded = useSelector(getPartiesLoadedStatus);
+  const calendar = useSelector(getCalendar);
   const user = useSelector(getUser);
 
   const dispatch = useDispatch();
@@ -22,8 +23,12 @@ const Protect = ({ children }) => {
       dispatch(fetchUser(authToken));
     }
     if (authenticated && !partiesLoaded) {
-      console.log("auth but not party loaded");
+      console.log("auth but no party loaded");
       dispatch(loadAllParties(user.user.id));
+      dispatch(loadCalendarThunk(user.user.id));
+    }
+    if (authenticated && !calendar) {
+      console.log("auth but no calendar loaded");
       dispatch(loadCalendarThunk(user.user.id));
     }
   }, [authenticated]);
