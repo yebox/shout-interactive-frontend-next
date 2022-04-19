@@ -79,12 +79,13 @@ const Upload = ({ withLabel = true, onUploadFile, onUploadError }) => {
           "Content-Type": "multipart/form-data",
         },
         onUploadProgress: (progressEvent) => {
+          console.log(progressEvent);
           setUploadPercentage(parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total)));
         },
       });
 
       // Clear percentage
-      setTimeout(() => setUploadPercentage(0), 10000);
+      // setTimeout(() => setUploadPercentage(0), 10000);
 
       const { name, path } = res.data.data;
       console.log("file uploaded successfully", name, path);
@@ -146,7 +147,7 @@ const Upload = ({ withLabel = true, onUploadFile, onUploadError }) => {
 
   return (
     <>
-      <Notification open={notifOpen} icon={<i className="icon-info-circle text-[1.6rem]"></i>} title={"Party Created"} message={message} color="green"></Notification>
+      <Notification open={notifOpen} icon={<i className="icon-info-circle text-[1.6rem]"></i>} title={"Video Uploaded"} message={message} color="green"></Notification>
 
       {withLabel && <p className="caption_heavy text-black-default mb-3 mt-[1.6rem]">Video Invitation</p>}
       {!file && (
@@ -164,6 +165,7 @@ const Upload = ({ withLabel = true, onUploadFile, onUploadError }) => {
       {file && (
         <>
           <UploadIndicator
+            loadPercentage={uploadPercentage}
             action={() => {
               setFile(null);
               setUploading(false);
