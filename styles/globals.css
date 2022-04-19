@@ -23,6 +23,14 @@
 
 }
 
+.react-player__preview {
+  background-color: rgba(10, 31, 68, 0.4);
+}
+
+.mtz-vlc-nmgkn {
+  object-fit: cover !important;
+}
+
 html {
   font-size: 62.5%;
   height: 100vh;

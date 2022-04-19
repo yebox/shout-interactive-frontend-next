@@ -7,7 +7,8 @@ const Text = ({ placeholder = "placeholder", label = "", status = "", message = 
   const defaultInputRef = useRef();
   return (
     <div>
-      <label className="caption_heavy text-black-default flex mb-[8px]">{label}</label>
+      {/* <label className="caption_heavy text-black-default flex mb-[8px]">{label}</label> */}
+      <label className="subheader_heavy text-black-default flex mb-[8px]">{label}</label>
       <input
         onChange={(e) => {
           onChange(e);

@@ -123,7 +123,7 @@ const PartyDetail = () => {
           <section className="py-[2.4rem]">
             <Container>
               <p className="subheader_heavy mb-3">Welcome message</p>
-              {party?.video ? <Video></Video> : <Upload withLabel={false}></Upload>}
+              {party?.video ? <Video url={party?.video}></Video> : <Upload withLabel={false}></Upload>}
             </Container>
           </section>
 

@@ -120,7 +120,7 @@ const GiftGoal = () => {
                   <Image width={700} height={416.2} src="/images/dubai-img.jpg" alt="place-img"></Image>
                   <h3 className="title_heavy text-black-default mt-[1.6rem]">{selectedGiftGoal.name}</h3>
                   <p className="mb-[1.6rem] caption_light ">{selectedGiftGoal.desc}</p>
-                  <ProgressBar value={30}></ProgressBar>
+                  <ProgressBar color="#3CC13B" value={30}></ProgressBar>
                   <div className="mt-[.4rem]">
                     <span className="caption_heavy text-black-default">10,000/40,000 Coins</span>
                   </div>
@@ -142,7 +142,7 @@ const GiftGoal = () => {
                   })}
                 </BoxContainer>
                 <form className="mb-[3rem] mt-[1.6rem]">
-                  <Text label="coins"></Text>
+                  <Text placeholder="Amount" label="Send coins"></Text>
                 </form>
               </Container>
             </section>

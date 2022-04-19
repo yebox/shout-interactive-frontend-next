@@ -53,7 +53,10 @@ const New = () => {
       return true;
     }
   };
-
+  const onUploadFile = ({ name, path }) => {
+    console.log("file path is", path);
+    setParty((val) => ({ ...val, video: path }));
+  };
   const onCreate = () => {
     console.log("on create");
     if (!isPartyInfoValid()) {
@@ -67,7 +70,6 @@ const New = () => {
     setParty((val) => ({ ...val, user: user.user.id }));
     setchargeRequest(true);
   };
-
   const onCanCharge = () => {
     if (user.coins > 2000) {
       dispatch(createParty(party));
@@ -77,7 +79,6 @@ const New = () => {
       setInsufficientPopup(true);
     }
   };
-
   useEffect(() => {
     if (partyCreated && !creatingParty && !errorStatus) {
       console.log("After creating party.. in use effect");
@@ -94,19 +95,15 @@ const New = () => {
       dispatch(setPartyCreated(false));
     }
   }, [partyCreated, creatingParty, errorStatus]);
-
   const onGetCoins = () => {
     router.push("/wallet");
   };
-
   const handleClick = () => {
     console.info("You clicked the Chip.");
   };
-
   const handleDelete = () => {
     console.info("You clicked the delete icon.");
   };
-
   const toggleChargeRequestModal = () => {
     chargeRequest ? setchargeRequest(false) : setchargeRequest(true);
   };
@@ -205,7 +202,7 @@ const New = () => {
               }}
               label={"Date*"}
             ></Calendar>
-            <Upload></Upload>
+            <Upload onUploadFile={onUploadFile}></Upload>
             <TextArea
               onChange={(e) => {
                 if (!e.target.value) {

@@ -22,7 +22,7 @@ const UploadIndicator = ({ fileName, children, action = () => {} }) => {
 
   return (
     <div className="w-full mt-4">
-      <p className="caption_heavy text-black-default mb-3">Uploaded</p>
+      {/* <p className="caption_heavy text-black-default mb-3">Uploaded</p> */}
       {/* <LinearProgress variant="determinate" value={progress} /> */}
 
       <div className="flex items-center gap-4">
