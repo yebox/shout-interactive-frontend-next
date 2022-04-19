@@ -115,12 +115,19 @@ export const setPartyCreated = (status) => {
   return { type: PARTY_CREATED, payload: status };
 };
 
+// Sort by date function
+function compare(a, b) {
+  if (Date.parse(a.date) > Date.parse(b.date)) return 1;
+  if (Date.parse(a.date) < Date.parse(b.date)) return -1;
+  return 0;
+}
 // Async Actions
 export const loadAllParties = (id) => {
   console.log("user id is ", id);
   return async (dispatch, state) => {
     console.log("In dispath load parties");
     dispatch({ type: TOGGLE_PARTY_IS_LOADING, payload: true });
+
     try {
       const resp = await baseInstance.post("/party", { user: id });
 
@@ -129,8 +136,10 @@ export const loadAllParties = (id) => {
       const individualParties = resp.data.parties.filter((party) => party.type == "individual");
       //   console.log("Shout Parties", shoutParties);
       //   console.log("INdive Parties", individualParties);
-      dispatch(loadShoutParty(shoutParties));
-      dispatch(loadIndividualParty(individualParties));
+      // const sorted = individualParties.sort(compare);
+      // console.log("sorted parties is ", sorted);
+      dispatch(loadShoutParty(shoutParties.sort(compare)));
+      dispatch(loadIndividualParty(individualParties.sort(compare)));
       dispatch({ type: TOGGLE_PARTY_LOADED, payload: true });
       dispatch({ type: TOGGLE_PARTY_IS_LOADING, payload: false });
     } catch (error) {
@@ -157,7 +166,7 @@ export const loadAllInvites = (id) => {
       console.log("INvite respons...e", inviteResp);
 
       const inviteParties = inviteResp.data.parties;
-      dispatch(loadInvitesParties(inviteParties));
+      dispatch(loadInvitesParties(inviteParties.sort(compare)));
       dispatch({ type: TOGGLE_INVITES_LOADED, payload: true });
       dispatch({ type: TOGGLE_INVITES_IS_LOADING, payload: false });
     } catch (error) {

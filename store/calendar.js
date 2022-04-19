@@ -77,6 +77,11 @@ export const setCalendarCreated = (status) => {
   return { type: SET_CALENDAR_CREATED, payload: status };
 };
 
+function compare(a, b) {
+  if (Date.parse(a.date) > Date.parse(b.date)) return 1;
+  if (Date.parse(a.date) < Date.parse(b.date)) return -1;
+  return 0;
+}
 // Async Actions
 export const loadCalendarThunk = (id) => {
   console.log("user id is ", id);
@@ -89,7 +94,7 @@ export const loadCalendarThunk = (id) => {
       console.log("calendar resppnse", calendarResp);
 
       const calendar = calendarResp.data.data.calenders;
-      dispatch(loadCalendar(calendar));
+      dispatch(loadCalendar(calendar.sort(compare)));
       dispatch({ type: TOGGLE_LOADING_CALENDAR, payload: false });
       dispatch(setError(false));
     } catch (error) {
