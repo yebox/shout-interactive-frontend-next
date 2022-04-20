@@ -60,10 +60,13 @@ const GiftGoal = () => {
   const dispatch = useDispatch();
 
   const toggleDrawer = (event) => {
-    setBtnDisabled(true);
     if (event && event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
       return;
     }
+    if (creatingGoalStatus) {
+      return;
+    }
+    // setBtnDisabled(true);
     setIsDrawerOpened((val) => !val);
     setActiveIndex(null);
     if (!createdGoalStatus) {
