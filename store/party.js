@@ -147,6 +147,7 @@ export const loadAllParties = (id) => {
         console.log("a 400 error has occured");
         // No parties response from the server
         dispatch({ type: TOGGLE_INVITES_LOADED, payload: true });
+        // dispatch({ type: TOGGLE_PARTY_LOADED, payload: true });
       }
       console.log("An error occured", error.message);
       dispatch(setError("Load all parties error"));
@@ -207,5 +208,13 @@ export const createParty = (partyData) => {
       dispatch({ type: CREATING_PARTY, payload: false });
     }
     // dispatch(setPartyCreated(false));
+  };
+};
+
+export const createGiftGoal = (giftData) => {
+  return async (dispatch) => {
+    try {
+      // const resp =
+    } catch (error) {}
   };
 };
