@@ -1,4 +1,5 @@
 import { baseInstance } from "../axios";
+import { loadAllParties } from "./party";
 
 const initState = {
   gifts: null,
@@ -104,7 +105,7 @@ export const loadGiftsThunk = () => {
   };
 };
 
-export const createGiftGoalThunk = (giftData) => {
+export const createGiftGoalThunk = (giftData, userId) => {
   return async (dispatch) => {
     try {
       dispatch(setCreateError(false));
@@ -114,6 +115,7 @@ export const createGiftGoalThunk = (giftData) => {
       console.log("In Create Gift goal thunk", resp.data);
       dispatch(setCreatingGoal(false));
       dispatch(setCreatedGoalStatus(true));
+      dispatch(loadAllParties(userId));
     } catch (error) {
       console.log("create goal error");
       dispatch(setCreateError(true));

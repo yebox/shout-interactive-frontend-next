@@ -14,12 +14,13 @@ import Drawer from "../components/Drawer";
 import MyAvatar from "../components/Avatar";
 import { useRouter } from "next/router";
 import useGetParams from "../hooks/useGetParams";
-import { getIndividualParties, getPartiesLoadedStatus } from "../store/party";
+import { getIndividualParties, getIsInvitesLoadingStatus, getIsPartiesLoadingStatus, getPartiesLoadedStatus } from "../store/party";
 import Protect from "../components/Protect";
 import { useDispatch, useSelector } from "react-redux";
 import { createGiftGoalThunk, getCreatedStatus, getCreateErrorStatus, getCreatingGoalStatus, getGifts, setCreatedGoalStatus } from "../store/gift-goal";
 import { getUser } from "../store/user";
 import Notification from "../components/Notification";
+import GiftGoalSkeleton from "../components/Skeleton/Gift-Goal";
 
 const GiftGoal = () => {
   const { getParams, getUrl } = useGetParams();
@@ -32,6 +33,8 @@ const GiftGoal = () => {
   const createdGoalStatus = useSelector(getCreatedStatus);
   const createGoalError = useSelector(getCreateErrorStatus);
   const [party, setParty] = useState(null);
+  const isPartiesLoading = useSelector(getIsPartiesLoadingStatus);
+  const isInvitesLoading = useSelector(getIsInvitesLoadingStatus);
 
   const [contributors, setContributors] = useState([
     { name: "David Adeleke", amount: "5000" },
@@ -74,7 +77,7 @@ const GiftGoal = () => {
 
   const onCreateGoal = () => {
     // setGoalData((val) => ({ ...val, party: party.id, user: user.user.id, gift: selectedGiftGoal?.id }));
-    dispatch(createGiftGoalThunk({ party: party?.id, user: user?.user?.id, gift: selectedGiftGoal?.id }));
+    dispatch(createGiftGoalThunk({ party: party?.id, user: user?.user?.id, gift: selectedGiftGoal?.id }, user?.user?.id));
     console.log("goal object", { party: party?.id, user: user?.user?.id, gift: selectedGiftGoal?.id });
   };
 
@@ -125,7 +128,7 @@ const GiftGoal = () => {
       console.log("error craeting goal...");
     }
     if (!createGoalError && !creatingGoalStatus && createdGoalStatus) {
-      toggleDrawer();
+      setIsDrawerOpened(false);
       setNotifOpen("Gift Goal Successfully Created!");
       setTimeout(() => {
         setNotifOpen("");
@@ -200,7 +203,7 @@ const GiftGoal = () => {
           </Drawer>
 
           {/* Empty State */}
-          {!party?.GiftGoal && !selectedGiftGoal && (
+          {!party?.GiftGoal && !selectedGiftGoal && !isPartiesLoading && (
             <div className="grid place-content-center place-items-center mt-[9.2rem] relative">
               <Image width={88} height={88} alt="musical-notes" src={"/images/musical-notes.png"}></Image>
               <h2 className="headline_heavy text-black-default mb-[.8rem] mt-[3.2rem]">No gift goal</h2>
@@ -258,6 +261,8 @@ const GiftGoal = () => {
               {party && party?.user && party?.user !== user?.user?.id && <FixedBtn text={"Send coins"} link="/gift-goal"></FixedBtn>}
             </>
           )}
+
+          {isPartiesLoading && !selectedGiftGoal && <GiftGoalSkeleton />}
         </BaseLayout>
       </Protect>
     </>
