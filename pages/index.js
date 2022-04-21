@@ -168,11 +168,11 @@ export default function Home() {
               <div
                 className={` rounded-[1.3rem] relative bg-[url(/images/bg-green.png)]  bg-cover bg-[#14B363] px-6 pb-[1.6rem] pt-[5.6rem] cursor-pointer hover:scale-[1.04] transition-all shadow overflow-hidden swell`}
               >
-                <h2 className="body_heavy !text-white ">Shout! Party</h2>
-                <p className="small_light max-w-[11rem] !text-white">Party with your friends everyday!</p>
                 <div className=" absolute bottom-0 right-0  playimg flex">
                   <Image height={114} width={282} src={"/images/shout-games.png"}></Image>
                 </div>
+                <h2 className="body_heavy relative !text-white ">Shout! Party</h2>
+                <p className="small_light relative max-w-[11rem] !text-white">Play games and win big prizes everyday!</p>
                 <button className="absolute top-1/2 -translate-y-1/2 right-[1.4rem] ">
                   {/* <img src="/images/chevron-right.svg"></img> */}
                   <i className="icon-chevron-right text-white text-[1.4rem]"></i>
@@ -183,16 +183,17 @@ export default function Home() {
               <div
                 className={` rounded-[1.3rem] relative bg-[url(/images/bg-blue.png)] bg-cover bg-[#110066] px-6 pb-[1.6rem] pt-[5.6rem] cursor-pointer hover:scale-[1.04] transition-all shadow overflow-hidden swell`}
               >
-                <h2 className="body_heavy !text-white ">Shout! Party</h2>
-                <p className="small_light !text-white max-w-[11rem]">Party with your friends everyday!</p>
                 <div className=" absolute bottom-0 right-0  auctionImg flex">
                   <Image height={114} width={260} src={"/images/shout-award.png"}></Image>
                 </div>
+                <h2 className="body_heavy relative !text-white ">Celebrity Auction</h2>
+                <p className="small_light relative !text-white max-w-[11rem]">Win big prizes from you favourite celebs</p>
                 <button className="absolute top-1/2 -translate-y-1/2 right-[1.4rem] ">
                   <i className="icon-chevron-right text-white text-[1.4rem]"></i>
                 </button>
               </div>
             </Link>
+            <div className="w-full rounded-[1.3rem] h-[7.4rem] grid place-items-center col-span-2 bg-gray-500 text-black text-2xl ">AD</div>
           </div>
         </main>
       )}
