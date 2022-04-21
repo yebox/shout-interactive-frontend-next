@@ -193,7 +193,7 @@ export default function Home() {
                 </button>
               </div>
             </Link>
-            <div className="w-full rounded-[1.3rem] h-[7.4rem] grid place-items-center col-span-2 bg-gray-500 text-black text-2xl ">AD</div>
+            <div className="w-full rounded-[1.3rem] h-[7.4rem] grid place-items-center col-span-2 bg-gray-300 text-black text-2xl ">AD</div>
           </div>
         </main>
       )}
