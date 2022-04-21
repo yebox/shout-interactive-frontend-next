@@ -6,7 +6,7 @@ import Notification from "../Notification";
 import { useSelector } from "react-redux";
 import { getUser } from "../../store/user";
 
-const Upload = ({ withLabel = true, onUploadFile, onUploadError }) => {
+const Upload = ({ withLabel = true, onUploadFile, onUploadError = () => {} }) => {
   const [file, setFile] = useState(null);
   const [err, setErr] = useState(false);
   const [message, setMessage] = useState("");
@@ -74,7 +74,8 @@ const Upload = ({ withLabel = true, onUploadFile, onUploadError }) => {
 
     setUploading(true);
     try {
-      const res = await axios.post("http://a805df5bc8dc349ea81228a62f357233-654010950.eu-west-3.elb.amazonaws.com/v1/file/upload", formData, {
+      const res = await axios.post("https://filemgt.shoutng.com/v1/file/upload", formData, {
+        // const res = await axios.post("http://a805df5bc8dc349ea81228a62f357233-654010950.eu-west-3.elb.amazonaws.com/v1/file/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -100,13 +101,14 @@ const Upload = ({ withLabel = true, onUploadFile, onUploadError }) => {
         setNotifOpen(false);
       }, 10000);
     } catch (err) {
-      if (err.response.status === 500) {
+      if (err.response && err.response.status === 500) {
         setMessage("There was a problem with the server");
         onUploadError("There was a problem with the server");
         console.log(err.response.data);
       } else {
-        setMessage(err.response.data);
-        console.log(err.response.data.message);
+        // setMessage(err.response.data);
+        setMessage("An unknown error has occured. Pls try again later!");
+        console.log("An error has occured", err.response);
         onUploadError("Problem Uploading file, pls try again later!");
       }
       setUploadPercentage(0);
@@ -147,7 +149,7 @@ const Upload = ({ withLabel = true, onUploadFile, onUploadError }) => {
 
   return (
     <>
-      <Notification open={notifOpen} icon={<i className="icon-info-circle text-[1.6rem]"></i>} title={"Video Uploaded"} message={message} color="green"></Notification>
+      <Notification open={notifOpen} icon={<i className="icon-info-circle text-[1.6rem]"></i>} title={"Video Upload"} message={message} color={`${err ? "red" : "green"}`}></Notification>
 
       {withLabel && <p className="caption_heavy text-black-default mb-3 mt-[1.6rem]">Video Invitation</p>}
       {!file && (

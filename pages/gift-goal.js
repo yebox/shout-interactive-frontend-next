@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import AES from "crypto-js/aes";
+import { enc } from "crypto-js";
 import HeadersV1 from "../components/Headers/Headers-v1";
 import Container from "../components/Layouts/Container";
 import BaseLayout from "../components/Layouts/Layout";
@@ -82,6 +84,12 @@ const GiftGoal = () => {
     // setGoalData((val) => ({ ...val, party: party.id, user: user.user.id, gift: selectedGiftGoal?.id }));
     dispatch(createGiftGoalThunk({ party: party?.id, user: user?.user?.id, gift: selectedGiftGoal?.id }, user?.user?.id));
     console.log("goal object", { party: party?.id, user: user?.user?.id, gift: selectedGiftGoal?.id });
+  };
+
+  const encryptId = (str) => {
+    const ciphertext = AES.encrypt(str, "mOhL95dmdjdpdYpgYTf8qLmssV5Px7sUpj");
+    // return encodeURIComponent(ciphertext.toString());
+    return ciphertext.toString();
   };
 
   useEffect(() => {
@@ -254,14 +262,20 @@ const GiftGoal = () => {
                     })}
                     {!party?.GiftGoal?.contributors && <p>No contributors yet</p>}
                   </BoxContainer>
-                  {party && party?.user && party?.user !== user.user.id && (
-                    <form className="mb-[3rem] mt-[1.6rem]">
-                      <Text placeholder="Amount" label="Send coins"></Text>
-                    </form>
-                  )}
+
+                  <form className="mb-[3rem] mt-[1.6rem]">
+                    <Text placeholder="Amount" label="Send coins"></Text>
+                  </form>
                 </Container>
               </section>
-              {party && party?.user && party?.user !== user?.user?.id && <FixedBtn text={"Send coins"} link="/gift-goal"></FixedBtn>}
+              <FixedBtn
+                action={() => {
+                  console.log("user id is", user.user.id);
+                  console.log("encrypted data is", encryptId(JSON.stringify({ user: user.user.id })));
+                }}
+                text={"Send coins"}
+                link="/gift-goal"
+              ></FixedBtn>
             </>
           )}
 
