@@ -16,7 +16,7 @@ const initialState = {
 export const UserReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_USER:
-      return { ...state, user: action?.payload?.user, coins: action?.payload?.coin };
+      return { ...state, user: action?.payload?.user, coins: action?.payload?.coin, token: action?.payload?.token };
     case SET_AUTH:
       return { ...state, authenticated: action.payload };
     default:

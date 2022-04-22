@@ -99,10 +99,10 @@ export const getErrorStatus = (state) => {
 const loadShoutParty = (party) => {
   return { type: LOAD_SHOUT_PARTY, payload: party };
 };
-const loadIndividualParty = (party) => {
+export const loadIndividualParty = (party) => {
   return { type: LOAD_INDIVIDUAL_PARTY, payload: party };
 };
-const loadInvitesParties = (party) => {
+export const loadInvitesParties = (party) => {
   return { type: LOAD_INDIVIDUAL_PARTY, payload: party };
 };
 
@@ -218,3 +218,5 @@ export const createGiftGoal = (giftData) => {
     } catch (error) {}
   };
 };
+
+export const updateParty = (updateObj, partyId) => {};

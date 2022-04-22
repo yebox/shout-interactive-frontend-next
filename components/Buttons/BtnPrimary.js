@@ -1,10 +1,12 @@
 import LoadingButton from "@mui/lab/LoadingButton";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const BtnPrimary = ({ text, loading, handleClick, link = "", color = "#110066", disabled = false }) => {
+  const router = useRouter();
   return (
     <div className="w-full">
-      <Link href={link}>
+      <Link href={link ? link : router.asPath}>
         <LoadingButton
           disableElevation
           sx={{

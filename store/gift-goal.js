@@ -124,3 +124,5 @@ export const createGiftGoalThunk = (giftData, userId) => {
     }
   };
 };
+
+export const sendGiftCoins = (amount) => {};

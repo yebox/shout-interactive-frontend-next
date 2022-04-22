@@ -133,7 +133,7 @@ const PartyDetail = () => {
               <p className="subheader_heavy mb-3">Activities</p>
               <div className="grid grid-cols-2 gap-4">
                 <ActivityBox color={"#FA9330"} icon="icon-users-profile" text="Guestlist" link="/guest-list"></ActivityBox>
-                <ActivityBox color={"#FA4A0C"} icon="icon-gift-box" text="Gift goal" link={`/gift-goal?id=${party?.id}`}></ActivityBox>
+                <ActivityBox color={"#FA4A0C"} icon="icon-gift-box" text="Gift goal" link={`/gift-goal/${party?.id}`}></ActivityBox>
                 <ActivityBox color={"#B57BFF"} icon="icon-music" text="Musicpost" link={`/music-post?id=${party?.id}`}></ActivityBox>
                 <ActivityBox
                   action={() => {

@@ -1,28 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import AES from "crypto-js/aes";
 import { enc } from "crypto-js";
-import HeadersV1 from "../components/Headers/Headers-v1";
-import Container from "../components/Layouts/Container";
-import BaseLayout from "../components/Layouts/Layout";
+import HeadersV1 from "../../components/Headers/Headers-v1";
+import Container from "../../components/Layouts/Container";
+import BaseLayout from "../../components/Layouts/Layout";
 import Image from "next/image";
-import Label from "../components/FormElements/Label";
-import Text from "../components/FormElements/TextField";
-import FixedBtn from "../components/Buttons/FixedBtn";
-import ProgressBar from "../components/ProgressBar";
-import BoxContainer from "../components/BoxContainer";
+import Label from "../../components/FormElements/Label";
+import Text from "../../components/FormElements/TextField";
+import FixedBtn from "../../components/Buttons/FixedBtn";
+import ProgressBar from "../../components/ProgressBar";
+import BoxContainer from "../../components/BoxContainer";
 import { Avatar } from "@mui/material";
-import BtnPrimary from "../components/Buttons/BtnPrimary";
-import Drawer from "../components/Drawer";
-import MyAvatar from "../components/Avatar";
+import BtnPrimary from "../../components/Buttons/BtnPrimary";
+import Drawer from "../../components/Drawer";
+import MyAvatar from "../../components/Avatar";
 import { useRouter } from "next/router";
-import useGetParams from "../hooks/useGetParams";
-import { getIndividualParties, getIsInvitesLoadingStatus, getIsPartiesLoadingStatus, getPartiesLoadedStatus } from "../store/party";
-import Protect from "../components/Protect";
+import useGetParams from "../../hooks/useGetParams";
+import { getIndividualParties, getIsInvitesLoadingStatus, getIsPartiesLoadingStatus, getPartiesLoadedStatus, loadIndividualParty as loadIndividualPartyUpdate } from "../../store/party";
+import Protect from "../../components/Protect";
 import { useDispatch, useSelector } from "react-redux";
-import { createGiftGoalThunk, getCreatedStatus, getCreateErrorStatus, getCreatingGoalStatus, getGifts, setCreatedGoalStatus } from "../store/gift-goal";
-import { getUser } from "../store/user";
-import Notification from "../components/Notification";
-import GiftGoalSkeleton from "../components/Skeleton/Gift-Goal";
+import { createGiftGoalThunk, getCreatedStatus, getCreateErrorStatus, getCreatingGoalStatus, getGifts, setCreatedGoalStatus } from "../../store/gift-goal";
+import { getUser } from "../../store/user";
+import Notification from "../../components/Notification";
+import GiftGoalSkeleton from "../../components/Skeleton/Gift-Goal";
+import { baseInstance } from "../../axios";
+import ModalContainer from "../../components/ModalContainer";
 
 const GiftGoal = () => {
   const { getParams, getUrl } = useGetParams();
@@ -37,7 +39,6 @@ const GiftGoal = () => {
   const [party, setParty] = useState(null);
   const isPartiesLoading = useSelector(getIsPartiesLoadingStatus);
   const isInvitesLoading = useSelector(getIsInvitesLoadingStatus);
-
   const [contributors, setContributors] = useState([
     { name: "David Adeleke", amount: "5000" },
     { name: "Ada Lovace", amount: "1000" },
@@ -60,6 +61,14 @@ const GiftGoal = () => {
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [notifOpen, setNotifOpen] = useState("");
   const dispatch = useDispatch();
+  const [coinAmount, setCoinAmount] = useState(null);
+  const [chargeRequest, setchargeRequest] = useState(false);
+  const [insufficientPopup, setInsufficientPopup] = useState(false);
+  const [checkingBal, setCheckingBal] = useState(false);
+  const [processingCharge, setProcessingCharge] = useState(false);
+  const [sentSuccess, setSentSuccess] = useState(false);
+  const [coinValueError, setCoinValueError] = useState(false);
+  const inputRef = useRef(null);
 
   const toggleDrawer = (event) => {
     if (event && event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
@@ -92,6 +101,103 @@ const GiftGoal = () => {
     return ciphertext.toString();
   };
 
+  const sendGiftCoins = async (coins, partyId) => {
+    setCoinAmount(coins);
+    setchargeRequest(true);
+  };
+
+  const onCanCharge = async () => {
+    setCheckingBal(true);
+    try {
+      const balance = await checkBalance(encryptId(JSON.stringify({ user: user?.user.id })));
+      setCheckingBal(false);
+      if (coinAmount > balance) {
+        console.log("Insufficient balance");
+        setCoinValueError("You need more coins to send this amount");
+
+        setchargeRequest(false);
+        setInsufficientPopup(true);
+      } else {
+        inputRef.current.value = "";
+        console.log("Good to go balance");
+        setchargeRequest(false);
+        console.log("user token is ", user.token);
+        const response = await baseInstance.post(
+          "/party/contribute",
+          {
+            party: party.id,
+            amount: coinAmount,
+          },
+          {
+            headers: {
+              Authorization: user.token,
+            },
+          }
+        );
+
+        console.log("Response from charge", response.data);
+
+        const newUpdatedIndividualParties = individualParties.map((el) => {
+          if (el.id == party.id) {
+            return {
+              ...party,
+              GiftGoal: {
+                ...party?.GiftGoal,
+                contributed: party?.GiftGoal?.contributed ? parseInt(party?.GiftGoal?.contributed) + parseInt(coinAmount) : parseInt(coinAmount),
+                contributors: party?.GiftGoal?.contributors ? [...party?.GiftGoal?.contributors, user.user.id] : [user.user.id],
+              },
+            };
+          } else {
+            return el;
+          }
+        });
+        setSentSuccess(true);
+        console.log("updated individual parties are ", newUpdatedIndividualParties);
+        dispatch(loadIndividualPartyUpdate(newUpdatedIndividualParties));
+        inputRef.current.value = "";
+      }
+    } catch (error) {
+      console.log("there was an error making contribution", error.response);
+    }
+  };
+
+  const toggleChargeRequestModal = () => {
+    chargeRequest ? setchargeRequest(false) : setchargeRequest(true);
+  };
+  const toggleInsufficientPopup = () => {
+    insufficientPopup ? setInsufficientPopup(false) : setInsufficientPopup(true);
+  };
+  const toggleSentSuccess = () => {
+    sentSuccess ? setSentSuccess(false) : setSentSuccess(true);
+  };
+
+  const checkBalance = async (value) => {
+    const body = { data: value };
+    console.log("data is", body);
+    try {
+      const resp = await baseInstance.post("/billing/check-coin", JSON.stringify(body));
+      // console.log("coins left is ", resp.data.data.coins);
+      return resp.data.data.coins;
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
+  const onGetCoins = () => {
+    router.push("/wallet");
+  };
+
+  function onlyNumbers(str) {
+    return /^[0-9]+$/.test(str);
+  }
+
+  useEffect(() => {
+    const test3 = { idt: 2, GiftGoal: { contributors: [] } };
+    console.log("spread operator...");
+    const newArr = test3?.GiftGoal?.contributors ? [...test3?.GiftGoal?.contributors, 1] : [1];
+    console.log(newArr);
+  }, []);
+
   useEffect(() => {
     const getPartyDetail = (parties, id) => {
       const partyArr = parties.filter((el) => {
@@ -120,6 +226,7 @@ const GiftGoal = () => {
     };
     if (gifts && party && party.GiftGoal) {
       const goal = getGiftGoal(gifts, party.GiftGoal.GiftId);
+      // const hybridGoal = { ...goal, contributors: party.GiftGoal.contributors, contributed: party.GiftGoal.contributed };
       console.log("selected gift goal is ", goal);
       console.log("various ids", party.GiftGoal.GiftId, gifts);
       setSelectedGiftGoal(goal);
@@ -155,6 +262,44 @@ const GiftGoal = () => {
     <>
       <Notification open={notifOpen} icon={<i className="icon-info-circle"></i>} title={"Gift goal"} message={notifOpen} color={notifOpen?.includes("Error") ? "red" : "green"}></Notification>
 
+      {/* Charge Modal */}
+      <ModalContainer onClose={toggleChargeRequestModal} onAction={onCanCharge} toggle={toggleChargeRequestModal} open={chargeRequest} processing={checkingBal} actionText="Okay">
+        <div className="grid place-items-center">
+          <Image height={72} width={72} alt="charge" src={"/images/coin-5.svg"}></Image>
+          <p className="max-w-[22.1rem] mt-[2.4rem]  subheader_heavy text-center !text-gray-darker">
+            You will be charged <br></br>
+            {coinAmount?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} coins{" "}
+          </p>
+        </div>
+      </ModalContainer>
+
+      {/* INsufficient coins Modal */}
+      <ModalContainer onAction={onGetCoins} toggle={toggleInsufficientPopup} open={insufficientPopup} actionText="Get Coins">
+        <div className="grid place-items-center">
+          {/* <Image height={72} width={72} alt="charge" src={"/images/coin-5.svg"}></Image> */}
+          <i className="icon-exclamation-triangle text-[7.2rem] text-warn-default"></i>
+          <p className="max-w-[22.1rem] mt-[2.4rem]  subheader_heavy text-center !text-gray-darker">
+            You need more Coins <br></br>
+            to contribute
+          </p>
+        </div>
+      </ModalContainer>
+
+      {/* Sent coins success Modal */}
+      <ModalContainer
+        onAction={() => {
+          toggleSentSuccess();
+        }}
+        toggle={toggleSentSuccess}
+        open={sentSuccess}
+        actionText="Okay"
+      >
+        <div className="grid place-items-center">
+          <Image height={72} width={72} alt="charge" src={"/images/success.png"}></Image>
+          {/* <i className="icon-exclamation-triangle text-[7.2rem] text-warn-default"></i> */}
+          <p className="max-w-[22.1rem] mt-[2.4rem]  subheader_heavy text-center !text-gray-darker">Successfully contributed!</p>
+        </div>
+      </ModalContainer>
       <Protect>
         <BaseLayout>
           <HeadersV1 link={`/parties/${router?.query?.id}`} text={"Gift goal"}>
@@ -238,7 +383,7 @@ const GiftGoal = () => {
                     <Image className=" object-cover object-top rounded-[1.3rem]" width={700} height={416.2} src={selectedGiftGoal?.image} alt="place-img"></Image>
                     <h3 className="title_heavy text-black-default mt-[1.6rem]">{selectedGiftGoal?.title}</h3>
                     <p className="mb-[1.6rem] caption_light ">{selectedGiftGoal?.description}</p>
-                    <ProgressBar color="#3CC13B" value={party?.GiftGoal?.contributed || 0}></ProgressBar>
+                    <ProgressBar color="#3CC13B" value={(party?.GiftGoal?.contributed * 100) / selectedGiftGoal?.price || 0}></ProgressBar>
                     <div className="mt-[.4rem]">
                       <span className="caption_heavy text-black-default">
                         {party?.GiftGoal?.contributed || 0}/ {selectedGiftGoal?.price} Coins
@@ -264,17 +409,39 @@ const GiftGoal = () => {
                   </BoxContainer>
 
                   <form className="mb-[3rem] mt-[1.6rem]">
-                    <Text placeholder="Amount" label="Send coins"></Text>
+                    <Text
+                      reference={inputRef}
+                      onChange={(e) => {
+                        console.log("evetn is ", e.target.value);
+                        if (!e.target.value) {
+                          setCoinValueError("Enter an amount");
+                        } else {
+                          setCoinValueError(false);
+                          var val = parseInt(e.target.value.replace(",", ""));
+                          setCoinAmount(val);
+                          // setCoinAmount(e.target.value);
+                        }
+                      }}
+                      status={coinValueError ? "error" : ""}
+                      message={coinValueError}
+                      placeholder="Amount"
+                      label="Send coins"
+                    ></Text>
                   </form>
                 </Container>
               </section>
               <FixedBtn
-                action={() => {
+                action={async (e) => {
+                  if (!onlyNumbers(coinAmount)) {
+                    return setCoinValueError("Please enter a valid amount");
+                  }
                   console.log("user id is", user.user.id);
+                  console.log("selected gift goal", selectedGiftGoal);
                   console.log("encrypted data is", encryptId(JSON.stringify({ user: user.user.id })));
+                  sendGiftCoins(coinAmount);
                 }}
                 text={"Send coins"}
-                link="/gift-goal"
+                link={`/gift-goal/${router.query.id}`}
               ></FixedBtn>
             </>
           )}

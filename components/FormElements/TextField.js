@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-const Text = ({ placeholder = "placeholder", label = "", status = "", message = "", reference, onChange = () => {} }) => {
+const Text = ({ placeholder = "placeholder", label = "", status = "", message = "Invalid input", reference, onChange = () => {} }) => {
   // status
   // warn
   // success
