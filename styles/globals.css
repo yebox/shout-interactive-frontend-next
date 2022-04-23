@@ -31,6 +31,10 @@
   object-fit: cover !important;
 }
 
+.livestream-ads video {
+  object-fit: cover !important;
+}
+
 html {
   font-size: 62.5%;
   height: 100vh;

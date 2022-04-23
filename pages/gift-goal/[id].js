@@ -126,10 +126,11 @@ const GiftGoal = () => {
           "/party/contribute",
           {
             party: party.id,
-            amount: coinAmount,
+            amount: parseInt(coinAmount),
           },
           {
             headers: {
+              "Content-Type": "application/json",
               Authorization: user.token,
             },
           }

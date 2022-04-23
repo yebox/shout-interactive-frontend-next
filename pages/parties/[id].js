@@ -81,6 +81,7 @@ const PartyDetail = () => {
     setParty(party);
     console.log(party);
   }, [router.query, partiesLoaded]);
+
   return (
     <>
       {/* <FixedBtnLayout text={"Join Party"} btnColor={"#3CC13B"}> */}

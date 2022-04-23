@@ -10,7 +10,7 @@ import useWebShare from "../../hooks/useWebShare";
 import ModalContainer from "../ModalContainer";
 import Notification from "../Notification";
 
-const TabCard = ({ color, text, btnColor, link, partyLink = "https://link" }) => {
+const TabCard = ({ color, text, btnColor, link, partyLink = "https://link", onEnterParty = () => {}, processing = false }) => {
   const [open, setOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const { shareLink } = useWebShare();
@@ -80,7 +80,7 @@ const TabCard = ({ color, text, btnColor, link, partyLink = "https://link" }) =>
           </div>
 
           <div className="w-[14rem]">
-            <BtnPrimary text={"Enter Party"} color={btnColor} link={link}></BtnPrimary>
+            <BtnPrimary disabled={processing ? true : false} loading={processing} handleClick={onEnterParty} text={"Enter Party"} color={btnColor} link={link}></BtnPrimary>
           </div>
         </div>
       </div>

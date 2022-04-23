@@ -28,6 +28,7 @@ import {
 import useLocalStorage from "../../hooks/useLocalStorage";
 import PartiesSkeleton from "../../components/Skeleton/Parties";
 import Notification from "../../components/Notification";
+import ShoutParties from "../../components/Parties/ShoutParties";
 
 const Parties = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -134,16 +135,8 @@ const Parties = () => {
         {allPartyLoaded && (shoutParties.length > 0 || individualParties.length > 0) && activeTab == 0 ? (
           <div className=" overflow-scroll scroll_hide pb-[8rem] pt-[1.4rem]">
             <Container>
-              <div>
-                <h2 className="subheader_heavy mb-[.8rem]">Featured Parties</h2>
-                {shoutParties.map((party, i) => {
-                  return (
-                    <div className="mb-[2.2rem]" key={i}>
-                      <TabCard color={"#3CC13B"} text={party.name} link=""></TabCard>
-                    </div>
-                  );
-                })}
-              </div>
+              {/* Shout Party */}
+              <ShoutParties shoutParties={shoutParties}></ShoutParties>
 
               {/* Upcoming Parties */}
               <div className="mt-[1.8rem]">
