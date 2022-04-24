@@ -7,6 +7,9 @@ const TOGGLE_PARTY_LOADED = "party/toggle-loaded";
 const TOGGLE_PARTY_IS_LOADING = "party/toggle-isloading";
 const TOGGLE_INVITES_LOADED = "invites/toggle-loaded";
 const TOGGLE_INVITES_IS_LOADING = "invites/toggle-isloading";
+const SET_UPDATE_INDIVIDUAL_PARTY_ERROR = "party/update-individual-error";
+const SET_UPDATE_SHOUT_PARTY_ERROR = "party/update-shout-error";
+const SET_UPDATED_PARTIES = "party/updated";
 
 const SET_ERROR = "set-error";
 const CREATING_PARTY = "party/creating";
@@ -27,6 +30,9 @@ const initState = {
   partyCreated: false,
 
   updatedPartiesDetailId: [],
+  errorUpdatingIndividual: false,
+  errorUpdatingShout: false,
+  updated: false,
 
   errorMessage: false,
 };
@@ -57,6 +63,13 @@ export const PartyReducer = (state = initState, action) => {
     case PARTY_CREATED:
       return { ...state, partyCreated: action.payload };
 
+    case SET_UPDATE_INDIVIDUAL_PARTY_ERROR:
+      return { ...state, errorUpdatingIndividual: action.payload };
+    case SET_UPDATE_SHOUT_PARTY_ERROR:
+      return { ...state, errorUpdatingShout: action.payload };
+    case SET_UPDATED_PARTIES:
+      return { ...state, updated: action.payload };
+
     default:
       return { ...state };
   }
@@ -78,6 +91,9 @@ export const getIsPartiesLoadingStatus = (state) => {
 };
 export const getUpdatedPartiesDetailsId = (state) => {
   return state.allParties.updatedPartiesDetailId;
+};
+export const getUpdatedStatus = (state) => {
+  return state.allParties.updated;
 };
 
 // Invites Selectors
@@ -152,6 +168,8 @@ export const loadAllParties = (id) => {
       // console.log("sorted parties is ", sorted);
       dispatch(loadShoutParty(shoutParties.sort(compare)));
       dispatch(loadIndividualParty(individualParties.sort(compare)));
+      dispatch(updateAllParties(individualParties, id, "individual"));
+      dispatch(updateAllParties(shoutParties, id, "shout"));
       dispatch({ type: TOGGLE_PARTY_LOADED, payload: true });
       dispatch({ type: TOGGLE_PARTY_IS_LOADING, payload: false });
     } catch (error) {
@@ -249,6 +267,40 @@ export const updateParty = (updateObj, partyId, type) => {
       });
       dispatch(loadIndividualParty(updatedParties));
       dispatch(setUpdatedIds(updatedIds));
+    }
+  };
+};
+
+export const updateAllParties = (parties, userId, type) => {
+  return async (dispatch) => {
+    const allPartiesPromises = parties.map((el) => {
+      return baseInstance.post("/party/details", {
+        id: el.id,
+        user: userId,
+      });
+    });
+    try {
+      const updatedParties = (await Promise.all(allPartiesPromises)).map((el) => {
+        return el.data.party;
+      });
+
+      if (type == "individual") {
+        dispatch(loadIndividualParty(updatedParties.sort(compare)));
+        dispatch({ type: SET_UPDATE_INDIVIDUAL_PARTY_ERROR, payload: false });
+      } else {
+        dispatch(loadShoutParty(updatedParties.sort(compare)));
+        dispatch({ type: SET_UPDATE_SHOUT_PARTY_ERROR, payload: false });
+      }
+      dispatch({ type: SET_UPDATED_PARTIES, payload: true });
+      console.log("in update all parties function", updatedParties);
+    } catch (error) {
+      console.log("There was an error updating parites");
+      if (type == "individual") {
+        dispatch({ type: SET_UPDATE_INDIVIDUAL_PARTY_ERROR, payload: true });
+      } else {
+        dispatch({ type: SET_UPDATE_SHOUT_PARTY_ERROR, payload: true });
+      }
+      dispatch({ type: SET_UPDATED_PARTIES, payload: false });
     }
   };
 };

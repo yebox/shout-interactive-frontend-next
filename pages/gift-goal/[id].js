@@ -22,6 +22,7 @@ import {
   getIsPartiesLoadingStatus,
   getPartiesLoadedStatus,
   getUpdatedPartiesDetailsId,
+  getUpdatedStatus,
   loadIndividualParty as loadIndividualPartyUpdate,
 } from "../../store/party";
 import Protect from "../../components/Protect";
@@ -77,6 +78,7 @@ const GiftGoal = () => {
   const [coinValueError, setCoinValueError] = useState(false);
   const inputRef = useRef(null);
   const updatedPartiesId = useSelector(getUpdatedPartiesDetailsId);
+  const partiesUpdated = useSelector(getUpdatedStatus);
 
   const toggleDrawer = (event) => {
     if (event && event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
@@ -210,6 +212,26 @@ const GiftGoal = () => {
     console.log(newArr);
   }, []);
 
+  // useEffect(() => {
+  //   const getPartyDetail = (parties, id) => {
+  //     const partyArr = parties.filter((el) => {
+  //       return el.id == id;
+  //     });
+  //     console.log(parties);
+  //     console.log("party detail is", partyArr);
+  //     return partyArr[0];
+  //   };
+
+  //   if (router.query.id && updatedPartiesId.includes(router.query.id)) {
+  //     const party = getPartyDetail(individualParties, router.query.id);
+
+  //     setParty(party);
+  //     console.log("parties in gift goal", party);
+  //   } else if (router.query.id && !updatedPartiesId.includes(router.query.id)) {
+  //     router.replace(`/parties/${router.query.id}`);
+  //   }
+  // }, [router.query, partiesLoaded, individualParties, updatedPartiesId]);
+
   useEffect(() => {
     const getPartyDetail = (parties, id) => {
       const partyArr = parties.filter((el) => {
@@ -220,15 +242,12 @@ const GiftGoal = () => {
       return partyArr[0];
     };
 
-    if (router.query.id && updatedPartiesId.includes(router.query.id)) {
+    if (router.query.id) {
       const party = getPartyDetail(individualParties, router.query.id);
-
       setParty(party);
       console.log("parties in gift goal", party);
-    } else if (router.query.id && !updatedPartiesId.includes(router.query.id)) {
-      router.replace(`/parties/${router.query.id}`);
     }
-  }, [router.query, partiesLoaded, individualParties, updatedPartiesId]);
+  }, [router.query, partiesLoaded, individualParties]);
 
   useEffect(() => {
     console.log("in party gift user effect", party, gifts);
@@ -408,18 +427,19 @@ const GiftGoal = () => {
                   {/* Contributors */}
                   <BoxContainer>
                     <h3 className="subheader_heavy mb-[1.6rem]">Contributors</h3>
-                    {party?.GiftGoal?.contributors?.map((e, i) => {
-                      return (
-                        <div key={i} className="flex items-center mb-[1.6rem]">
-                          {/* <img className="h-[3.4rem] w-[3.4rem]" src="/"></img> */}
-                          <Avatar sx={{ borderRadius: "10px" }} alt={e.name} src="/broken-image.jpg" />
-                          <p className="ml-[1rem] caption_heavy text-[#90979E] max-w-[22.8rem]">
-                            <span className="text-[#C0C9D2] mr-3">{e.firstname + " " + e.lastname}</span>
-                            <span>Sent you {e?.amount} 🎉🎉</span>
-                          </p>
-                        </div>
-                      );
-                    })}
+                    {partiesUpdated &&
+                      party?.GiftGoal?.contributors?.map((e, i) => {
+                        return (
+                          <div key={i} className="flex items-center mb-[1.6rem]">
+                            {/* <img className="h-[3.4rem] w-[3.4rem]" src="/"></img> */}
+                            <Avatar sx={{ borderRadius: "10px" }} alt={e.name} src="/broken-image.jpg" />
+                            <p className="ml-[1rem] caption_heavy text-[#90979E] max-w-[22.8rem]">
+                              <span className="text-[#C0C9D2] mr-3">{e.firstname + " " + e.lastname}</span>
+                              <span>Sent you {e?.amount} 🎉🎉</span>
+                            </p>
+                          </div>
+                        );
+                      })}
                     {!party?.GiftGoal?.contributors && <p>No contributors yet</p>}
                   </BoxContainer>
 

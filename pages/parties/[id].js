@@ -73,6 +73,39 @@ const PartyDetail = () => {
     open ? setOpen(false) : setOpen(true);
   }
 
+  // useEffect(() => {
+  //   const getPartyDetail = (parties, id) => {
+  //     const partyArr = parties.filter((el) => {
+  //       return el.id == id;
+  //     });
+  //     console.log(parties);
+  //     console.log("party detail is", partyArr);
+  //     return partyArr[0];
+  //   };
+
+  //   const getMoreDetailsParty = async (partyId, userId) => {
+  //     try {
+  //       const resp = await baseInstance.post("/party/details", {
+  //         id: partyId,
+  //         user: userId,
+  //       });
+  //       setUpdateError(false);
+  //       console.log("party detials", resp.data.party);
+  //       dispatch(updateParty(resp.data.party, partyId, resp.data.party.type));
+  //     } catch (error) {
+  //       console.log("There was an error geting more party details");
+  //       setUpdateError(true);
+  //     }
+  //   };
+
+  //   const party = getPartyDetail(individualParties, router.query.id);
+  //   setParty(party);
+  //   if (party?.id && user?.user?.id && !updatedPartiesId.includes(party?.id)) {
+  //     getMoreDetailsParty(party.id, user.user.id);
+  //   }
+  //   console.log(party);
+  // }, [router.query, partiesLoaded, updatedPartiesId, user]);
+
   useEffect(() => {
     const getPartyDetail = (parties, id) => {
       const partyArr = parties.filter((el) => {
@@ -82,29 +115,10 @@ const PartyDetail = () => {
       console.log("party detail is", partyArr);
       return partyArr[0];
     };
-
-    const getMoreDetailsParty = async (partyId, userId) => {
-      try {
-        const resp = await baseInstance.post("/party/details", {
-          id: partyId,
-          user: userId,
-        });
-        setUpdateError(false);
-        console.log("party detials", resp.data.party);
-        dispatch(updateParty(resp.data.party, partyId, resp.data.party.type));
-      } catch (error) {
-        console.log("There was an error geting more party details");
-        setUpdateError(true);
-      }
-    };
-
     const party = getPartyDetail(individualParties, router.query.id);
     setParty(party);
-    if (party?.id && user?.user?.id && !updatedPartiesId.includes(party?.id)) {
-      getMoreDetailsParty(party.id, user.user.id);
-    }
     console.log(party);
-  }, [router.query, partiesLoaded, updatedPartiesId, user]);
+  }, [router.query, partiesLoaded, user]);
 
   useEffect(() => {
     console.log("upated ids in details use effect", updatedPartiesId);
