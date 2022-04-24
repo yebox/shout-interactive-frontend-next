@@ -11,13 +11,15 @@ import Container from "../../components/Layouts/Container";
 import BaseLayout from "../../components/Layouts/Layout";
 import BtnPrimary from "../../components/Buttons/BtnPrimary";
 import FixedBottom from "../../components/Layouts/FixedBottom";
-import { useSelector } from "react-redux";
-import { getIndividualParties, getPartiesLoadedStatus } from "../../store/party";
+import { useDispatch, useSelector } from "react-redux";
+import { getIndividualParties, getPartiesLoadedStatus, getUpdatedPartiesDetailsId, updateParty } from "../../store/party";
 import Upload from "../../components/Upload/Upload";
 import Protect from "../../components/Protect";
 import useWebShare from "../../hooks/useWebShare";
 import Notification from "../../components/Notification";
 import useGetParams from "../../hooks/useGetParams";
+import { baseInstance } from "../../axios";
+import { getUser } from "../../store/user";
 
 const ActivityBox = ({ text, icon, color, link = "/parties/id", action = () => {} }) => {
   return (
@@ -43,9 +45,13 @@ const PartyDetail = () => {
   const individualParties = useSelector(getIndividualParties);
   const partiesLoaded = useSelector(getPartiesLoadedStatus);
   const [party, setParty] = useState({});
+  const [updateError, setUpdateError] = useState(false);
   const { shareLink } = useWebShare();
   const [notifOpen, setNotifOpen] = useState(false);
   const { getParams, getUrl } = useGetParams();
+  const updatedPartiesId = useSelector(getUpdatedPartiesDetailsId);
+  const dispatch = useDispatch();
+  const user = useSelector(getUser);
 
   const onShare = async (data) => {
     console.log("in sharing");
@@ -77,16 +83,39 @@ const PartyDetail = () => {
       return partyArr[0];
     };
 
+    const getMoreDetailsParty = async (partyId, userId) => {
+      try {
+        const resp = await baseInstance.post("/party/details", {
+          id: partyId,
+          user: userId,
+        });
+        setUpdateError(false);
+        console.log("party detials", resp.data.party);
+        dispatch(updateParty(resp.data.party, partyId, resp.data.party.type));
+      } catch (error) {
+        console.log("There was an error geting more party details");
+        setUpdateError(true);
+      }
+    };
+
     const party = getPartyDetail(individualParties, router.query.id);
     setParty(party);
+    if (party?.id && user?.user?.id && !updatedPartiesId.includes(party?.id)) {
+      getMoreDetailsParty(party.id, user.user.id);
+    }
     console.log(party);
-  }, [router.query, partiesLoaded]);
+  }, [router.query, partiesLoaded, updatedPartiesId, user]);
+
+  useEffect(() => {
+    console.log("upated ids in details use effect", updatedPartiesId);
+  }, [updatedPartiesId]);
 
   return (
     <>
       {/* <FixedBtnLayout text={"Join Party"} btnColor={"#3CC13B"}> */}
       <Protect>
         <Notification open={notifOpen} icon={<i className="icon-add-user"></i>} title={"Share Shout Link"} message="Shared successfully" color="#FA9330"></Notification>
+        <Notification open={updateError} icon={<i className="icon-info-circle"></i>} title={"Update"} message="Update Party Error" color="red"></Notification>
 
         <BaseLayout>
           {/* Header Details */}

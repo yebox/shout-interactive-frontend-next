@@ -16,7 +16,14 @@ import Drawer from "../../components/Drawer";
 import MyAvatar from "../../components/Avatar";
 import { useRouter } from "next/router";
 import useGetParams from "../../hooks/useGetParams";
-import { getIndividualParties, getIsInvitesLoadingStatus, getIsPartiesLoadingStatus, getPartiesLoadedStatus, loadIndividualParty as loadIndividualPartyUpdate } from "../../store/party";
+import {
+  getIndividualParties,
+  getIsInvitesLoadingStatus,
+  getIsPartiesLoadingStatus,
+  getPartiesLoadedStatus,
+  getUpdatedPartiesDetailsId,
+  loadIndividualParty as loadIndividualPartyUpdate,
+} from "../../store/party";
 import Protect from "../../components/Protect";
 import { useDispatch, useSelector } from "react-redux";
 import { createGiftGoalThunk, getCreatedStatus, getCreateErrorStatus, getCreatingGoalStatus, getGifts, setCreatedGoalStatus } from "../../store/gift-goal";
@@ -69,6 +76,7 @@ const GiftGoal = () => {
   const [sentSuccess, setSentSuccess] = useState(false);
   const [coinValueError, setCoinValueError] = useState(false);
   const inputRef = useRef(null);
+  const updatedPartiesId = useSelector(getUpdatedPartiesDetailsId);
 
   const toggleDrawer = (event) => {
     if (event && event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
@@ -145,7 +153,10 @@ const GiftGoal = () => {
               GiftGoal: {
                 ...party?.GiftGoal,
                 contributed: party?.GiftGoal?.contributed ? parseInt(party?.GiftGoal?.contributed) + parseInt(coinAmount) : parseInt(coinAmount),
-                contributors: party?.GiftGoal?.contributors ? [...party?.GiftGoal?.contributors, user.user.id] : [user.user.id],
+                // contributors: party?.GiftGoal?.contributors ? [...party?.GiftGoal?.contributors, user.user.id] : [user.user.id],
+                contributors: party?.GiftGoal?.contributors
+                  ? [...party?.GiftGoal?.contributors, { id: user.user.id, firstname: user.user.firstname, lastname: user.user.lastname, amount: parseInt(coinAmount) }]
+                  : [{ id: user.user.id, firstname: user.user.firstname, lastname: user.user.lastname, amount: parseInt(coinAmount) }],
               },
             };
           } else {
@@ -209,12 +220,15 @@ const GiftGoal = () => {
       return partyArr[0];
     };
 
-    if (router.query.id) {
+    if (router.query.id && updatedPartiesId.includes(router.query.id)) {
       const party = getPartyDetail(individualParties, router.query.id);
+
       setParty(party);
       console.log("parties in gift goal", party);
+    } else if (router.query.id && !updatedPartiesId.includes(router.query.id)) {
+      router.replace(`/parties/${router.query.id}`);
     }
-  }, [router.query, partiesLoaded, individualParties]);
+  }, [router.query, partiesLoaded, individualParties, updatedPartiesId]);
 
   useEffect(() => {
     console.log("in party gift user effect", party, gifts);
@@ -400,8 +414,8 @@ const GiftGoal = () => {
                           {/* <img className="h-[3.4rem] w-[3.4rem]" src="/"></img> */}
                           <Avatar sx={{ borderRadius: "10px" }} alt={e.name} src="/broken-image.jpg" />
                           <p className="ml-[1rem] caption_heavy text-[#90979E] max-w-[22.8rem]">
-                            <span className="text-[#C0C9D2] mr-3">{e.name}</span>
-                            <span>Sent you {e.amount} 🎉🎉</span>
+                            <span className="text-[#C0C9D2] mr-3">{e.firstname + " " + e.lastname}</span>
+                            <span>Sent you {e?.amount} 🎉🎉</span>
                           </p>
                         </div>
                       );

@@ -11,6 +11,7 @@ const TOGGLE_INVITES_IS_LOADING = "invites/toggle-isloading";
 const SET_ERROR = "set-error";
 const CREATING_PARTY = "party/creating";
 const PARTY_CREATED = "party/created";
+const UPDATE_IDS = "party/updateIds";
 
 const initState = {
   parties: {
@@ -24,6 +25,8 @@ const initState = {
   invitesIsLoading: true,
   creatingParty: false,
   partyCreated: false,
+
+  updatedPartiesDetailId: [],
 
   errorMessage: false,
 };
@@ -39,6 +42,8 @@ export const PartyReducer = (state = initState, action) => {
       return { ...state, partiesLoaded: action.payload };
     case TOGGLE_PARTY_IS_LOADING:
       return { ...state, partiesIsLoading: action.payload };
+    case UPDATE_IDS:
+      return { ...state, updatedPartiesDetailId: action.payload };
 
     case TOGGLE_INVITES_LOADED:
       return { ...state, invitesIsLoaded: action.payload };
@@ -70,6 +75,9 @@ export const getPartiesLoadedStatus = (state) => {
 };
 export const getIsPartiesLoadingStatus = (state) => {
   return state.allParties.partiesIsLoading;
+};
+export const getUpdatedPartiesDetailsId = (state) => {
+  return state.allParties.updatedPartiesDetailId;
 };
 
 // Invites Selectors
@@ -104,6 +112,10 @@ export const loadIndividualParty = (party) => {
 };
 export const loadInvitesParties = (party) => {
   return { type: LOAD_INDIVIDUAL_PARTY, payload: party };
+};
+
+export const setUpdatedIds = (ids) => {
+  return { type: UPDATE_IDS, payload: ids };
 };
 
 const setError = (message) => {
@@ -219,4 +231,24 @@ export const createGiftGoal = (giftData) => {
   };
 };
 
-export const updateParty = (updateObj, partyId) => {};
+export const updateParty = (updateObj, partyId, type) => {
+  console.log("In update party ", updateObj);
+  console.log("update party id is", partyId);
+  return async (dispatch, getState) => {
+    const state = getState();
+    if (type == "individual") {
+      const parties = state.allParties.parties.individual;
+      const updatedIds = [...state.allParties.updatedPartiesDetailId, partyId];
+      console.log("updated parties id", updatedIds);
+      const updatedParties = parties.map((party) => {
+        if (party.id == partyId) {
+          return updateObj;
+        } else {
+          return party;
+        }
+      });
+      dispatch(loadIndividualParty(updatedParties));
+      dispatch(setUpdatedIds(updatedIds));
+    }
+  };
+};
