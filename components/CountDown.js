@@ -16,6 +16,7 @@ const renderer = (element) => {
               <span className="text-[7px] font-semibold">Days</span>
             </p> */}
             {/* <span className="mx-[1px]">:</span> */}
+
             <p className="flex items-center">
               <span className="">{hours}</span>
               <span className="caption_heavy text-white">H</span>
@@ -38,8 +39,8 @@ const renderer = (element) => {
 };
 // const renderer =
 
-const CountDown = ({ time, completed }) => {
-  return <Countdown date={Date.now() + 500000} renderer={renderer(completed)}></Countdown>;
+const CountDown = ({ time = Date.now() + 500000, completed = "Ended" }) => {
+  return <Countdown date={time} renderer={renderer(completed)}></Countdown>;
 };
 
 export default CountDown;

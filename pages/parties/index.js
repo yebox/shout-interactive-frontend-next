@@ -53,6 +53,8 @@ const Parties = () => {
     setActiveTab(newValue);
   };
 
+  const calcDate = (date) => {};
+
   useEffect(() => {
     if (router.query.message) {
       setNotifOpen(true);
@@ -110,7 +112,7 @@ const Parties = () => {
           </Link>
         </HeadersV1>
 
-        <div className=" shrink-0 flex-grow-0">
+        <div className=" shrink-0 flex-grow-0 sticky top-[4.9rem] bg-white z-50">
           <Tabs sx={{ "justify-content": "space-between" }} value={activeTab} onChange={handleChange} centered>
             <Tab label="My parties" />
             <Tab label="My invites" />
@@ -144,7 +146,7 @@ const Parties = () => {
                 {individualParties.map((party, i) => {
                   return (
                     <div className="mb-[2.2rem]" key={i}>
-                      <TabCard key={i} color={"#110066"} text={party.name} btnColor={"#3CC13B"} link={`/parties/${party.id}`}></TabCard>{" "}
+                      <TabCard date={new Date(party?.date)} key={i} color={"#110066"} text={party.name} btnColor={"#3CC13B"} link={`/parties/${party.id}`}></TabCard>{" "}
                     </div>
                   );
                 })}

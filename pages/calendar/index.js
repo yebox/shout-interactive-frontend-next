@@ -63,10 +63,16 @@ const Calendar = () => {
           {allCalendar && !calendarError && (
             <>
               {/* Navigator Tabs */}
-              <Tabs sx={{ "justify-content": "space-between", marginBottom: "2.4rem" }} value={value} onChange={handleChange} centered>
+              {/* <Tabs sx={{ "justify-content": "space-between", marginBottom: "2.4rem" }} value={value} onChange={handleChange} centered>
                 <Tab label="My Events" />
                 <Tab label="Other Events" />
-              </Tabs>
+              </Tabs> */}
+              <div className=" shrink-0 flex-grow-0 sticky top-[4.9rem] bg-white z-50">
+                <Tabs sx={{ "justify-content": "space-between" }} value={value} onChange={handleChange} centered>
+                  <Tab label="My Events" />
+                  <Tab label="Other Events" />
+                </Tabs>
+              </div>
               {/* Main */}
               <Container>
                 {/* <section>

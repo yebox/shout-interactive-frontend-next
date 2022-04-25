@@ -153,6 +153,7 @@ const ShoutParties = ({ shoutParties }) => {
           return (
             <div className={`mb-[2.2rem] ${party.name == "Easter Party" ? " hidden" : ""}`} key={i}>
               <TabCard
+                date={new Date(party.date)}
                 processing={activeParty == i ? checkingCanJoin : false}
                 onEnterParty={() => {
                   console.log("setting active index");

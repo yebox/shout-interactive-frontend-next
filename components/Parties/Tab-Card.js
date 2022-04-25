@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import BtnPrimary from "../Buttons/BtnPrimary";
@@ -11,7 +11,7 @@ import useWebShare from "../../hooks/useWebShare";
 import ModalContainer from "../ModalContainer";
 import Notification from "../Notification";
 
-const TabCard = ({ color, text, btnColor, link, partyLink = "https://link", onEnterParty = () => {}, processing = false }) => {
+const TabCard = ({ color, date, text, btnColor, link, partyLink = "https://link", onEnterParty = () => {}, processing = false }) => {
   const [open, setOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const { shareLink } = useWebShare();
@@ -47,6 +47,10 @@ const TabCard = ({ color, text, btnColor, link, partyLink = "https://link", onEn
     }, 4000);
   };
 
+  useEffect(() => {
+    console.log("Date is ..", date);
+    console.log("date.now is", Date.now());
+  }, [date]);
   return (
     <>
       <Notification open={copied} icon={<i className="icon-info-circle"></i>} title={"Copy Link"} message="Link copied to clipboard" color="green"></Notification>
@@ -94,7 +98,8 @@ const TabCard = ({ color, text, btnColor, link, partyLink = "https://link", onEn
         className="p-[1.8rem] py-[2.2rem] rounded-3xl !bg-cover bg-no-repeat"
       >
         <div className="flex justify-between">
-          <CountDown></CountDown>
+          {/* {date && <CountDown time={date}></CountDown>} */}
+          {date && <CountDown></CountDown>}
 
           {/* <Tag>Party starts in 04H:13M:5S</Tag> */}
           <div className=" bg-[rgba(255,255,255,0.3)] rounded-3xl p-[.8rem] grid place-items-center place-content-center">
