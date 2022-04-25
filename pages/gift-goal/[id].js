@@ -436,7 +436,7 @@ const GiftGoal = () => {
                             <Avatar sx={{ borderRadius: "10px" }} alt={e.name} src="/broken-image.jpg" />
                             <p className="ml-[1rem] caption_heavy text-[#90979E] max-w-[22.8rem]">
                               <span className="text-[#C0C9D2] mr-3">{e.firstname + " " + e.lastname}</span>
-                              <span>Sent you {e?.amount} 🎉🎉</span>
+                              <span>Sent you {e?.amount} coins 🎉🎉</span>
                             </p>
                           </div>
                         );
