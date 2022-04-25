@@ -33,6 +33,7 @@ import Notification from "../../components/Notification";
 import GiftGoalSkeleton from "../../components/Skeleton/Gift-Goal";
 import { baseInstance } from "../../axios";
 import ModalContainer from "../../components/ModalContainer";
+import FixedBottom from "../../components/Layouts/FixedBottom";
 
 const GiftGoal = () => {
   const { getParams, getUrl } = useGetParams();
@@ -465,7 +466,7 @@ const GiftGoal = () => {
                   </form>
                 </Container>
               </section>
-              <FixedBtn
+              {/* <FixedBtn
                 action={async (e) => {
                   if (!onlyNumbers(coinAmount)) {
                     return setCoinValueError("Please enter a valid amount");
@@ -477,7 +478,22 @@ const GiftGoal = () => {
                 }}
                 text={"Send coins"}
                 link={`/gift-goal/${router.query.id}`}
-              ></FixedBtn>
+              ></FixedBtn> */}
+              <FixedBottom>
+                <BtnPrimary
+                  handleClick={async (e) => {
+                    if (!onlyNumbers(coinAmount)) {
+                      return setCoinValueError("Please enter a valid amount");
+                    }
+                    console.log("user id is", user.user.id);
+                    console.log("selected gift goal", selectedGiftGoal);
+                    console.log("encrypted data is", encryptId(JSON.stringify({ user: user.user.id })));
+                    sendGiftCoins(coinAmount);
+                  }}
+                  text={"Send coins"}
+                  link={`/gift-goal/${router.query.id}`}
+                ></BtnPrimary>
+              </FixedBottom>
             </>
           )}
 
