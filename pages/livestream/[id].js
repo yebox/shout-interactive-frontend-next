@@ -57,31 +57,29 @@ const Livestream = () => {
           </>
         )}
         {true && (
-          <BaseLayout>
-            <div className="livestream-ads h-full">
-              <ReactPlayer
-                playIcon={
-                  <button className=" mb-3 p-[1.1rem] grid place-items-center rounded-[1.3rem] text-white bg-[rgba(255,255,255,0.3)]">
-                    <span className="icon-play text-[1.8rem] cursor-pointer "></span>
-                  </button>
-                }
-                loop={true}
-                playing={true}
-                width={"100%"}
-                height={"100%"}
-                url="/ads.mp4"
-              />
-            </div>
-          </BaseLayout>
+          <div className="livestream-ads w-full h-screen  fixed  flex flex-col mx-auto">
+            <ReactPlayer
+              playIcon={
+                <button className=" mb-3 p-[1.1rem] grid place-items-center rounded-[1.3rem] text-white bg-[rgba(255,255,255,0.3)]">
+                  <span className="icon-play text-[1.8rem] cursor-pointer "></span>
+                </button>
+              }
+              loop={true}
+              playing={true}
+              width={"100%"}
+              height={"100%"}
+              url="/ads.mp4"
+            />
+          </div>
         )}
         <div
           style={{
             background: "linear-gradient(180deg, rgba(0, 0, 0, 0) 77.02%, #000000 127.65%)",
           }}
-          className="w-full h-screen px-[1.6rem] pt-[2.4rem] pb-[3.4rem] relative bg-slate-400 flex flex-col max-w-[70rem] mx-auto"
+          className="w-full h-screen px-[1.6rem] pt-[2.4rem] pb-[3.4rem] relative bg-slate-400  flex flex-col max-w-[70rem] mx-auto"
         >
           {/* Header Section */}
-          <section className="flex items-center top-0 left-0 w-full justify-between relative ">
+          <section className="flex items-center top-0 left-0 w-full justify-between relative z-30">
             <select className=" bg-see-through rounded-[2rem] px-[.8rem] py-[.4rem] caption_heavy text-white focus:outline-none">
               <option>My party</option>
               <option>Everyone</option>

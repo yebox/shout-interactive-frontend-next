@@ -16,6 +16,7 @@ const TabCard = ({ color, text, btnColor, link, partyLink = "https://link", onEn
   const [notifOpen, setNotifOpen] = useState(false);
   const { shareLink } = useWebShare();
   const router = useRouter();
+  const [copied, setCopied] = useState(false);
 
   const onShare = async (data) => {
     console.log("in sharing");
@@ -37,10 +38,32 @@ const TabCard = ({ color, text, btnColor, link, partyLink = "https://link", onEn
     open ? setOpen(false) : setOpen(true);
   }
 
+  const onCopy = async () => {
+    const value = await navigator.clipboard.writeText(router?.asPath);
+    console.log("copied value is ", value);
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 4000);
+  };
+
   return (
     <>
+      <Notification open={copied} icon={<i className="icon-info-circle"></i>} title={"Copy Link"} message="Link copied to clipboard" color="green"></Notification>
+
       {/* <Dialog sx={{ "& .MuiDialog-paper": { borderRadius: "1.4rem" } }} onClose={toggle} open={open}> */}
-      <ModalContainer actionText="Copy" toggle={toggle} onClose={toggle} open={open} headerText="Share Shout Link" icon={<span className="icon-share text-[15px] font-bold"></span>}>
+      <ModalContainer
+        onAction={() => {
+          onCopy();
+          toggle();
+        }}
+        actionText="Copy"
+        toggle={toggle}
+        onClose={toggle}
+        open={open}
+        headerText="Share Shout Link"
+        icon={<span className="icon-share text-[15px] font-bold"></span>}
+      >
         {/* <h3 className="caption_heavy text-black-default">{"Party link"}</h3> */}
         <div className="relative">
           <input
@@ -49,7 +72,15 @@ const TabCard = ({ color, text, btnColor, link, partyLink = "https://link", onEn
             readOnly={true}
             className={`flex h-[48px] translate-y-8 mb-[10px] max-w-full min-w-[200px] w-full text-black-default body_light focus:border-none focus:border-transparent focus:outline-0 focus:outline-transparent border rounded-[6px] px-[8px] py-[14px] pr-[5rem]`}
           ></input>
-          <button className=" absolute right-6 top-full -translate-y-5 text-black-default text-lg">COPY</button>
+          <button
+            onClick={() => {
+              onCopy();
+              toggle();
+            }}
+            className=" absolute right-6 top-full -translate-y-5 text-black-default text-lg"
+          >
+            COPY
+          </button>
         </div>
       </ModalContainer>
       {/* </Dialog> */}

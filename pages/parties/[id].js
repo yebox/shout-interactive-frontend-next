@@ -54,6 +54,7 @@ const PartyDetail = () => {
   const dispatch = useDispatch();
   const user = useSelector(getUser);
   const [open, setOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const onShare = async (data) => {
     console.log("in sharing");
@@ -68,6 +69,15 @@ const PartyDetail = () => {
       // alert("An error has occured:-Cannot share file");
       toggle();
     }
+  };
+
+  const onCopy = async () => {
+    const value = await navigator.clipboard.writeText(router?.asPath);
+    console.log("copied value is ", value);
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 4000);
   };
 
   function toggle() {
@@ -129,7 +139,20 @@ const PartyDetail = () => {
 
   return (
     <>
-      <ModalContainer actionText="Copy" toggle={toggle} onClose={toggle} open={open} headerText="Share Shout Link" icon={<span className="icon-share text-[15px] font-bold"></span>}>
+      <Notification open={copied} icon={<i className="icon-info-circle"></i>} title={"Copy Link"} message="Link copied to clipboard" color="green"></Notification>
+
+      <ModalContainer
+        onAction={() => {
+          onCopy();
+          toggle();
+        }}
+        actionText="Copy"
+        toggle={toggle}
+        onClose={toggle}
+        open={open}
+        headerText="Share Shout Link"
+        icon={<span className="icon-share text-[15px] font-bold"></span>}
+      >
         {/* <h3 className="caption_heavy text-black-default">{"Party link"}</h3> */}
         <div className="relative">
           <input
@@ -138,7 +161,15 @@ const PartyDetail = () => {
             readOnly={true}
             className={`flex h-[48px] translate-y-8 mb-[10px] max-w-full min-w-[200px] w-full text-black-default body_light focus:border-none focus:border-transparent focus:outline-0 focus:outline-transparent border rounded-[6px] px-[8px] py-[14px] pr-[5rem]`}
           ></input>
-          <button className=" absolute right-6 top-full -translate-y-5 text-black-default text-lg">COPY</button>
+          <button
+            onClick={() => {
+              onCopy();
+              toggle();
+            }}
+            className=" absolute right-6 top-full -translate-y-5 text-black-default text-lg"
+          >
+            COPY
+          </button>
         </div>
       </ModalContainer>
       {/* <FixedBtnLayout text={"Join Party"} btnColor={"#3CC13B"}> */}
@@ -216,7 +247,7 @@ const PartyDetail = () => {
           </section>
 
           <FixedBottom>
-            <BtnPrimary text={"Join Party"} color={"#14B363"} link={`/parties/${router.query.id}`}></BtnPrimary>
+            <BtnPrimary text={"Join Party"} color={"#14B363"} link={`/livestream/${router.query.id}`}></BtnPrimary>
           </FixedBottom>
         </BaseLayout>
       </Protect>
