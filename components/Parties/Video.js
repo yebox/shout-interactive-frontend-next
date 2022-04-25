@@ -17,7 +17,7 @@ const Video = ({ url }) => {
               <span className="icon-play text-[1.8rem] cursor-pointer "></span>
             </button>
           }
-          light={"/images/cuppy.jpg"}
+          light={"/images/black-bg.jpg"}
           playing={play}
           width={"100%"}
           height={"100%"}

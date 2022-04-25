@@ -7,6 +7,7 @@ import HeadersV1 from "../components/Headers/Headers-v1";
 import Container from "../components/Layouts/Container";
 import BaseLayout from "../components/Layouts/Layout";
 import Search from "../components/Search";
+import { useRouter } from "next/router";
 
 const GuestList = () => {
   const [isChecked, setIsChecked] = useState(false);
@@ -33,6 +34,7 @@ const GuestList = () => {
   const [activeUserIndex, setActiveUserIndex] = useState(0);
 
   const [isDrawerOpened, setIsDrawerOpened] = useState(false);
+  const router = useRouter();
 
   const openGuestListDrawer = (i) => {
     setIsDrawerOpened(true);
@@ -191,7 +193,7 @@ const GuestList = () => {
       </Drawer>
 
       {/* Main */}
-      <HeadersV1 link={"/parties/id"} text={"View guests"}>
+      <HeadersV1 link={`/parties/${router?.query?.id}`} text={"View guests"}>
         <i
           onClick={() => {
             setActiveDrawer("friends-list");
