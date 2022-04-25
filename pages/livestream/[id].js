@@ -90,7 +90,7 @@ const Livestream = () => {
               <span className="body_heavy text-white">900</span>
             </div>
 
-            <Link href="/parties/dd">
+            <Link href={`/parties/${router?.query?.id}`}>
               <i
                 onClick={() => {
                   setShowVid((val) => !val);
