@@ -20,6 +20,7 @@ import Notification from "../../components/Notification";
 import useGetParams from "../../hooks/useGetParams";
 import { baseInstance } from "../../axios";
 import { getUser } from "../../store/user";
+import ModalContainer from "../../components/ModalContainer";
 
 const ActivityBox = ({ text, icon, color, link = "/parties/id", action = () => {} }) => {
   return (
@@ -52,6 +53,7 @@ const PartyDetail = () => {
   const updatedPartiesId = useSelector(getUpdatedPartiesDetailsId);
   const dispatch = useDispatch();
   const user = useSelector(getUser);
+  const [open, setOpen] = useState(false);
 
   const onShare = async (data) => {
     console.log("in sharing");
@@ -126,9 +128,12 @@ const PartyDetail = () => {
 
   return (
     <>
+      <ModalContainer actionText="Copy" toggle={toggle} onClose={toggle} open={open} headerText="Share Shout Link" icon={<span className="icon-share text-[15px] font-bold"></span>}>
+        <h3 className="caption_heavy text-black-default">{"Party link"}</h3>
+      </ModalContainer>
       {/* <FixedBtnLayout text={"Join Party"} btnColor={"#3CC13B"}> */}
       <Protect>
-        <Notification open={notifOpen} icon={<i className="icon-add-user"></i>} title={"Share Shout Link"} message="Shared successfully" color="#FA9330"></Notification>
+        {/* <Notification open={notifOpen} icon={<i className="icon-add-user"></i>} title={"Share Shout Link"} message="Shared successfully" color="#FA9330"></Notification> */}
         <Notification open={updateError} icon={<i className="icon-info-circle"></i>} title={"Update"} message="Update Party Error" color="red"></Notification>
 
         <BaseLayout>
