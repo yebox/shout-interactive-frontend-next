@@ -10,7 +10,8 @@ import Protect from "../../components/Protect";
 import ReactPlayer from "react-player/lazy";
 
 const Livestream = () => {
-  const [chats, setChats] = useState(["Love and Hate", " Opor opor tonight we are doing Dorime!!🍾🍾🍾🍾", "Happy Birthday David!! 🎉🎉🎊"]);
+  // const [chats, setChats] = useState(["Love and Hate", " Opor opor tonight we are doing Dorime!!🍾🍾🍾🍾", "Happy Birthday David!! 🎉🎉🎊"]);
+  const [chats, setChats] = useState([]);
   const messageRef = useRef(null);
   const chatBoxRef = useRef(null);
   const [showVid, setShowVid] = useState(true);

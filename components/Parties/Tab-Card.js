@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 
 import BtnPrimary from "../Buttons/BtnPrimary";
 import Tag from "../Tag";
@@ -14,6 +15,7 @@ const TabCard = ({ color, text, btnColor, link, partyLink = "https://link", onEn
   const [open, setOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const { shareLink } = useWebShare();
+  const router = useRouter();
 
   const onShare = async (data) => {
     console.log("in sharing");
@@ -39,7 +41,16 @@ const TabCard = ({ color, text, btnColor, link, partyLink = "https://link", onEn
     <>
       {/* <Dialog sx={{ "& .MuiDialog-paper": { borderRadius: "1.4rem" } }} onClose={toggle} open={open}> */}
       <ModalContainer actionText="Copy" toggle={toggle} onClose={toggle} open={open} headerText="Share Shout Link" icon={<span className="icon-share text-[15px] font-bold"></span>}>
-        <h3 className="caption_heavy text-black-default">{partyLink}</h3>
+        {/* <h3 className="caption_heavy text-black-default">{"Party link"}</h3> */}
+        <div className="relative">
+          <input
+            // disabled
+            value={router?.asPath}
+            readOnly={true}
+            className={`flex h-[48px] translate-y-8 mb-[10px] max-w-full min-w-[200px] w-full text-black-default body_light focus:border-none focus:border-transparent focus:outline-0 focus:outline-transparent border rounded-[6px] px-[8px] py-[14px] pr-[5rem]`}
+          ></input>
+          <button className=" absolute right-6 top-full -translate-y-5 text-black-default text-lg">COPY</button>
+        </div>
       </ModalContainer>
       {/* </Dialog> */}
       {/* Notification  */}

@@ -124,12 +124,22 @@ const PartyDetail = () => {
 
   useEffect(() => {
     console.log("upated ids in details use effect", updatedPartiesId);
+    console.log("rotue is", router);
   }, [updatedPartiesId]);
 
   return (
     <>
       <ModalContainer actionText="Copy" toggle={toggle} onClose={toggle} open={open} headerText="Share Shout Link" icon={<span className="icon-share text-[15px] font-bold"></span>}>
-        <h3 className="caption_heavy text-black-default">{"Party link"}</h3>
+        {/* <h3 className="caption_heavy text-black-default">{"Party link"}</h3> */}
+        <div className="relative">
+          <input
+            // disabled
+            value={router?.asPath}
+            readOnly={true}
+            className={`flex h-[48px] translate-y-8 mb-[10px] max-w-full min-w-[200px] w-full text-black-default body_light focus:border-none focus:border-transparent focus:outline-0 focus:outline-transparent border rounded-[6px] px-[8px] py-[14px] pr-[5rem]`}
+          ></input>
+          <button className=" absolute right-6 top-full -translate-y-5 text-black-default text-lg">COPY</button>
+        </div>
       </ModalContainer>
       {/* <FixedBtnLayout text={"Join Party"} btnColor={"#3CC13B"}> */}
       <Protect>
