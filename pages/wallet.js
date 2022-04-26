@@ -29,7 +29,8 @@ const Wallet = () => {
         {/* Header */}
         <section className="bg-[#FA9330]  bg-[url(/images/bg-blue.png)] bg-no-repeat bg-cover ">
           <HeadersV1 link={`/?token=${user?.token}`} text={"Wallet"} withborder={false} theme="white">
-            <i className="icon-cancel text-white text-[1.4rem]"></i>
+            {/* <i className="icon-cancel text-white text-[1.4rem]"></i> */}
+            <div></div>
           </HeadersV1>
 
           <div className="flex items-center justify-center place-items-center mt-[4.8rem] pb-[7.8rem]">
