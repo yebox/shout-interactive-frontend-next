@@ -192,9 +192,9 @@ const PartyDetail = () => {
                   <i className="icon-chevron-left-primary cursor-pointer text-white text-[1.8rem]"></i>
                 </Link>
                 {/* <img src="/images/edit.svg"></img> */}
-                <Link href="/parties/edit">
+                {/* <Link href="/parties/edit">
                   <i className="icon-edit text-white text-[1.8rem] cursor-pointer"></i>
-                </Link>
+                </Link> */}
               </header>
 
               <div className="grid place-items-center">
@@ -209,7 +209,7 @@ const PartyDetail = () => {
                     <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.jpg" />
                   </AvatarGroup>
                 </div>
-                <Tag>{formatDate(party.date)}</Tag>
+                <Tag>{formatDate(party?.date)}</Tag>
               </div>
             </Container>
           </section>
