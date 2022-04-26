@@ -85,6 +85,11 @@ const PartyDetail = () => {
     open ? setOpen(false) : setOpen(true);
   }
 
+  function formatDate(date) {
+    const monthShortNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return `${new Date(date).getDate()} ${monthShortNames[new Date(date).getMonth()]}, ${new Date(date).getHours()}:00`;
+  }
+
   // useEffect(() => {
   //   const getPartyDetail = (parties, id) => {
   //     const partyArr = parties.filter((el) => {
@@ -204,7 +209,7 @@ const PartyDetail = () => {
                     <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.jpg" />
                   </AvatarGroup>
                 </div>
-                <Tag>19 Nov, 7:00</Tag>
+                <Tag>{formatDate(party.date)}</Tag>
               </div>
             </Container>
           </section>
