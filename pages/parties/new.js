@@ -43,11 +43,12 @@ const New = () => {
   const [chargeRequest, setchargeRequest] = useState(false);
   const [insufficientPopup, setInsufficientPopup] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   // const [processingCharge, setProcessingCharge] = useState(false);
 
   const isPartyInfoValid = () => {
     console.log(party.name);
-    if (!party.name || !party.date || !party.description) {
+    if (!party.name || !party.date || !party.description || !party.owner) {
       return false;
     } else {
       return true;
@@ -71,7 +72,7 @@ const New = () => {
     setchargeRequest(true);
   };
   const onCanCharge = () => {
-    if (user.coins > 2000) {
+    if (3000 > 2000) {
       dispatch(createParty(party));
       // setProcessingCharge(true);
     } else {
@@ -79,12 +80,21 @@ const New = () => {
       setInsufficientPopup(true);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      console.log("Destroying create party and dipatching setPartyCreated to fals");
+      dispatch(setPartyCreated(false));
+    };
+  }, []);
+
   useEffect(() => {
     if (partyCreated && !creatingParty && !errorStatus) {
+      setDisabled(true);
       console.log("After creating party.. in use effect");
-      router.push("/parties?message=party created successfully");
+      router.push(`/parties/${partyCreated.id}?message=party created successfully`);
       // Reset creat party state
-      dispatch(setPartyCreated(false));
+      // dispatch(setPartyCreated(false));
     }
     if (!partyCreated && !creatingParty && errorStatus) {
       setchargeRequest(false);
@@ -117,7 +127,14 @@ const New = () => {
         <Notification open={notifOpen} icon={<i className="icon-add-user"></i>} title={"Create Party Error"} message="Error creating party!!" color="#FA9330"></Notification>
 
         {/* Charge Modal */}
-        <ModalContainer onClose={toggleChargeRequestModal} onAction={onCanCharge} toggle={toggleChargeRequestModal} open={chargeRequest} processing={creatingParty} actionText="Okay">
+        <ModalContainer
+          onClose={toggleChargeRequestModal}
+          onAction={onCanCharge}
+          toggle={toggleChargeRequestModal}
+          open={chargeRequest}
+          processing={creatingParty || partyCreated?.id ? true : false}
+          actionText="Okay"
+        >
           <div className="grid place-items-center">
             <Image height={72} width={72} alt="charge" src={"/images/coin-5.svg"}></Image>
             <p className="max-w-[22.1rem] mt-[2.4rem]  subheader_heavy text-center !text-gray-darker">
@@ -146,10 +163,10 @@ const New = () => {
             {/* Party Name */}
             <Text
               onChange={(e) => {
+                setParty((val) => ({ ...val, name: e.target.value }));
                 if (!e.target.value) {
                   setNameError(true);
                 } else {
-                  setParty((val) => ({ ...val, name: e.target.value }));
                   setNameError(false);
                 }
               }}
@@ -161,11 +178,11 @@ const New = () => {
             {/* Owner */}
             <Text
               onChange={(e) => {
+                setParty((val) => ({ ...val, owner: e.target.value }));
                 if (!e.target.value) {
                   setOwnerError(true);
                 } else {
                   setOwnerError(false);
-                  setParty((val) => ({ ...val, owner: e.target.value }));
                 }
               }}
               status={ownerError ? "error" : ""}
@@ -193,11 +210,11 @@ const New = () => {
               required={true}
               errorStatus={dateError}
               onChange={(newValue) => {
+                setParty((val) => ({ ...val, date: newValue }));
                 if (newValue?.toString().includes("Invalid")) {
                   setDateError(true);
                 } else {
                   setDateError(false);
-                  setParty((val) => ({ ...val, date: newValue }));
                 }
               }}
               label={"Date*"}
@@ -205,11 +222,11 @@ const New = () => {
             <Upload onUploadFile={onUploadFile}></Upload>
             <TextArea
               onChange={(e) => {
+                setParty((val) => ({ ...val, description: e.target.value }));
                 if (!e.target.value) {
                   setDescError(true);
                 } else {
                   setDescError(false);
-                  setParty((val) => ({ ...val, description: e.target.value }));
                 }
               }}
               status={descError ? "error" : ""}

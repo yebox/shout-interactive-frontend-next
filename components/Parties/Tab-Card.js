@@ -48,8 +48,8 @@ const TabCard = ({ color, date, text, btnColor, link, partyLink = "https://link"
   };
 
   useEffect(() => {
-    console.log("Date is ..", date);
-    console.log("date.now is", Date.now());
+    // console.log("Date is ..", date);
+    // console.log("date.now is", Date.now());
   }, [date]);
   return (
     <>

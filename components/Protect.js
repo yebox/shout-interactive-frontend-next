@@ -24,6 +24,9 @@ const Protect = ({ children }) => {
     if (!authenticated && authToken) {
       dispatch(fetchUser(authToken));
     }
+    if (!authenticated && !authToken) {
+      router.replace("/");
+    }
     if (authenticated && !partiesLoaded) {
       console.log("auth but no party loaded");
       dispatch(loadAllParties(user.user.id));

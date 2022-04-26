@@ -151,7 +151,8 @@ const ShoutParties = ({ shoutParties }) => {
         <h2 className="subheader_heavy mb-[.8rem]">Featured Parties</h2>
         {shoutParties.map((party, i) => {
           return (
-            <div className={`mb-[2.2rem] ${party.name == "Easter Party" ? " hidden" : ""}`} key={i}>
+            // <div className={`mb-[2.2rem] ${party.name == "Easter Party" ? " hidden" : ""}`} key={i}>
+            <div className={`mb-[2.2rem] `} key={i}>
               <TabCard
                 date={new Date(party.date)}
                 processing={activeParty == i ? checkingCanJoin : false}

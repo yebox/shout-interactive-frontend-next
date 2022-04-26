@@ -4,7 +4,7 @@ import Link from "next/link";
 const HeadersV1 = ({ text, children, link, withborder = true, theme, mb = true }) => {
   return (
     <header
-      className={`flex items-center ${mb ? "mb-[1.6rem] " : ""} sticky top-0 bg-white z-50 justify-between px-[1.4rem] py-[1.2rem] ${
+      className={`flex items-center ${mb ? "mb-[1.6rem] " : ""} sticky top-0 ${theme ? "" : "bg-white"}  z-40 justify-between px-[1.4rem] py-[1.2rem] ${
         withborder == true ? " border-b" : " "
       }  flex-shrink-0 flex-grow-0`}
     >

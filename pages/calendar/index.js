@@ -67,7 +67,7 @@ const Calendar = () => {
                 <Tab label="My Events" />
                 <Tab label="Other Events" />
               </Tabs> */}
-              <div className=" shrink-0 flex-grow-0 sticky top-[4.9rem] bg-white z-50">
+              <div className=" shrink-0 flex-grow-0 sticky top-[4.9rem] bg-white z-40">
                 <Tabs sx={{ "justify-content": "space-between" }} value={value} onChange={handleChange} centered>
                   <Tab label="My Events" />
                   <Tab label="Other Events" />
@@ -81,7 +81,7 @@ const Calendar = () => {
                 </section> */}
 
                 {/* Today Section */}
-                <section className="mb-[3.2rem]">
+                <section className="mb-[3.2rem] pt-[1.4rem]">
                   <h3 className="mb-[.8rem] subheader_heavy text-black-default">Upcoming</h3>
                   {allCalendar.map((cal, i) => {
                     return (

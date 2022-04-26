@@ -376,6 +376,7 @@ const GiftGoal = () => {
                   </button>
                 );
               })}
+              {allGoals?.length == 0 && <p className=" text-gray-600">No gift goal yet!</p>}
             </div>
 
             <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-full p-[1.6rem]">

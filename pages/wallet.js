@@ -5,6 +5,7 @@ import Container from "../components/Layouts/Container";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import { getUser } from "../store/user";
+import Protect from "../components/Protect";
 
 const Wallet = () => {
   const coins = [
@@ -17,43 +18,49 @@ const Wallet = () => {
   const user = useSelector(getUser);
 
   const addCommas = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  const removeNonNumeric = (num) => num.toString().replace(/[^0-9]/g, "");
-  return (
-    <BaseLayout>
-      {/* Header */}
-      <section className="bg-[#FA9330]  bg-[url(/images/bg-blue.png)] bg-no-repeat bg-cover ">
-        <HeadersV1 link={"/"} text={"Wallet"} withborder={false} theme="white">
-          <i className="icon-cancel text-white text-[1.4rem]"></i>
-        </HeadersV1>
+  const removeNonNumeric = (num) =>
+    parseInt(num, 10)
+      .toString()
+      .replace(/[^0-9]/g, "");
 
-        <div className="flex items-center justify-center place-items-center mt-[4.8rem] pb-[7.8rem]">
-          <Image src="/images/coin.svg" height={40} width={40} alt="coins"></Image>
-          <p className="display_3_heavy !text-white ml-[.8rem]">{addCommas(removeNonNumeric(user.coins))}</p>
-        </div>
-      </section>
-      <Container>
-        <section className="mt-[3.2rem] border rounded-[1.3rem] py-[1.6rem]">
-          {/* Buy coins */}
-          <div className=" px-[1.2rem]">
-            <h3 className="title_heavy !text-primary">Buy Coinss</h3>
-            <p className="caption_light !text-primary">Get more coins to gift your friends and win more!</p>
-          </div>
-          {/* Coins row */}
-          <div className="mt-[3.5rem]">
-            {coins.map((e, i) => {
-              return (
-                <div key={i} className="flex items-center px-[1.2rem] last:border-none border-b py-[1.6rem]">
-                  <Image src={`/images/${e.image}`} height={20} width={20} alt="coins"></Image>
-                  <p className="body_heavy !text-primary ml-[.8rem]">{e.amount}</p>
-                  <div className="py-[.4rem] px-[.8rem] bg-[#FFBB38] caption_heavy rounded-lg text-primary ml-auto">N{e.price}</div>
-                </div>
-              );
-            })}
+  return (
+    <Protect>
+      <BaseLayout>
+        {/* Header */}
+        <section className="bg-[#FA9330]  bg-[url(/images/bg-blue.png)] bg-no-repeat bg-cover ">
+          <HeadersV1 link={`/?token=${user?.token}`} text={"Wallet"} withborder={false} theme="white">
+            <i className="icon-cancel text-white text-[1.4rem]"></i>
+          </HeadersV1>
+
+          <div className="flex items-center justify-center place-items-center mt-[4.8rem] pb-[7.8rem]">
+            <Image src="/images/coin.svg" height={40} width={40} alt="coins"></Image>
+            <p className="display_3_heavy !text-white ml-[.8rem]">{addCommas(removeNonNumeric(user.coins))}</p>
           </div>
         </section>
-      </Container>
-      <section></section>
-    </BaseLayout>
+        <Container>
+          <section className="mt-[3.2rem] border rounded-[1.3rem] py-[1.6rem]">
+            {/* Buy coins */}
+            <div className=" px-[1.2rem]">
+              <h3 className="title_heavy !text-primary">Buy Coinss</h3>
+              <p className="caption_light !text-primary">Get more coins to gift your friends and win more!</p>
+            </div>
+            {/* Coins row */}
+            <div className="mt-[3.5rem]">
+              {coins.map((e, i) => {
+                return (
+                  <div key={i} className="flex items-center px-[1.2rem] last:border-none border-b py-[1.6rem]">
+                    <Image src={`/images/${e.image}`} height={20} width={20} alt="coins"></Image>
+                    <p className="body_heavy !text-primary ml-[.8rem]">{e.amount}</p>
+                    <div className="py-[.4rem] px-[.8rem] bg-[#FFBB38] caption_heavy rounded-lg text-primary ml-auto">N{e.price}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        </Container>
+        <section></section>
+      </BaseLayout>
+    </Protect>
   );
 };
 

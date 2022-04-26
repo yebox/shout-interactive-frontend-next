@@ -29,6 +29,7 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 import PartiesSkeleton from "../../components/Skeleton/Parties";
 import Notification from "../../components/Notification";
 import ShoutParties from "../../components/Parties/ShoutParties";
+import Protect from "../../components/Protect";
 
 const Parties = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -66,13 +67,6 @@ const Parties = () => {
   }, [router.query]);
 
   useEffect(() => {
-    const authToken = getLocalStorage("shout-token");
-    if (!authenticated && authToken) {
-      dispatch(fetchUser(authToken));
-    }
-    if (!authenticated && !authToken) {
-      router.replace("/");
-    }
     if (authenticated && !allPartyLoaded) {
       console.log("authenticated and all party not loaded");
       dispatch(loadAllParties(user.user.id));
@@ -103,83 +97,86 @@ const Parties = () => {
 
   return (
     <>
-      <Notification open={notifOpen} icon={<i className="icon-info-circle text-[1.6rem]"></i>} title={"Party Created"} message="Party Created successfully!" color="green"></Notification>
+      <Protect>
+        <Notification open={notifOpen} icon={<i className="icon-info-circle text-[1.6rem]"></i>} title={"Party Created"} message="Party Created successfully!" color="green"></Notification>
 
-      <BaseLayout text={"Create Party"} btnColor={"#3CC13B"}>
-        <HeadersV1 mb={false} link={"/"} text={"🎉 Shout! Party"}>
-          <Link href={"/calendar"}>
-            <img src="/images/calendar-header.svg"></img>
-          </Link>
-        </HeadersV1>
+        <BaseLayout text={"Create Party"} btnColor={"#3CC13B"}>
+          <HeadersV1 mb={false} link={`/?token=${user?.token}`} text={"🎉 Shout! Party"}>
+            <Link href={"/calendar"}>
+              <img src="/images/calendar-header.svg"></img>
+            </Link>
+          </HeadersV1>
 
-        <div className=" shrink-0 flex-grow-0 sticky top-[4.9rem] bg-white z-50">
-          <Tabs sx={{ "justify-content": "space-between" }} value={activeTab} onChange={handleChange} centered>
-            <Tab label="My parties" />
-            <Tab label="My invites" />
-          </Tabs>
-        </div>
-
-        {isPartiesLoading && !activeTab && (shoutParties?.length == 0 || individualParties?.length == 0) && <PartiesSkeleton></PartiesSkeleton>}
-        {!isPartiesLoading && !allPartyLoaded && <p>Problem loading parties</p>}
-        {!isPartiesLoading && allPartyLoaded && shoutParties.length == 0 && individualParties.length == 0 && activeTab == 1 ? <p>No Parties</p> : ""}
-
-        {isInvitesLoading && activeTab == 1 ? <PartiesSkeleton></PartiesSkeleton> : ""}
-        {!isInvitesLoading && !invitesLoaded && activeTab == 1 ? <p>Problem loading Invites</p> : ""}
-        {!isInvitesLoading && invitesLoaded && invitesParties.length == 0 && activeTab == 1 ? (
-          <Container>
-            <p>No Invites</p>
-          </Container>
-        ) : (
-          ""
-        )}
-
-        {/* All Parties Tab */}
-        {allPartyLoaded && (shoutParties.length > 0 || individualParties.length > 0) && activeTab == 0 ? (
-          <div className=" overflow-scroll scroll_hide pb-[8rem] pt-[1.4rem]">
-            <Container>
-              {/* Shout Party */}
-              <ShoutParties shoutParties={shoutParties}></ShoutParties>
-
-              {/* Upcoming Parties */}
-              <div className="mt-[1.8rem]">
-                <h2 className="subheader_heavy mb-[.8rem]">Upcoming Parties</h2>
-                {individualParties.map((party, i) => {
-                  return (
-                    <div className="mb-[2.2rem]" key={i}>
-                      <TabCard date={new Date(party?.date)} key={i} color={"#110066"} text={party.name} btnColor={"#3CC13B"} link={`/parties/${party.id}`}></TabCard>{" "}
-                    </div>
-                  );
-                })}
-              </div>
-            </Container>
+          <div className=" shrink-0 flex-grow-0 sticky top-[4.9rem] bg-white z-40">
+            <Tabs sx={{ "justify-content": "space-between" }} value={activeTab} onChange={handleChange} centered>
+              <Tab label="My parties" />
+              <Tab label="My invites" />
+            </Tabs>
           </div>
-        ) : (
-          ""
-        )}
-        {/* All Invites Tab */}
-        {invitesLoaded && invitesParties.length > 0 && activeTab == 1 ? (
-          <div className=" overflow-scroll scroll_hide pb-[8rem] pt-[1.4rem]">
-            <Container>
-              <div>
-                <h2 className="subheader_heavy mb-[.8rem]">Featured Parties</h2>
-                {invitesParties.map((party, i) => {
-                  return (
-                    <div className="mb-[2.2rem]" key={i}>
-                      <TabCard color={"#3CC13B"} text={party.name} link="/parties/id"></TabCard>
-                    </div>
-                  );
-                })}
-              </div>
-            </Container>
-          </div>
-        ) : (
-          ""
-        )}
 
-        <FixedBottom>
-          <BtnPrimary text={"Create"} color={"#14B363"} link="/parties/new"></BtnPrimary>
-        </FixedBottom>
-      </BaseLayout>
+          {isPartiesLoading && !activeTab && (shoutParties?.length == 0 || individualParties?.length == 0) && <PartiesSkeleton></PartiesSkeleton>}
+          {!isPartiesLoading && !allPartyLoaded && <p>Problem loading parties</p>}
+          {!isPartiesLoading && allPartyLoaded && shoutParties.length == 0 && individualParties.length == 0 && activeTab == 1 ? <p>No Parties</p> : ""}
+
+          {isInvitesLoading && activeTab == 1 ? <PartiesSkeleton></PartiesSkeleton> : ""}
+          {!isInvitesLoading && !invitesLoaded && activeTab == 1 ? <p>Problem loading Invites</p> : ""}
+          {!isInvitesLoading && invitesLoaded && invitesParties.length == 0 && activeTab == 1 ? (
+            <Container>
+              <p>No Invites</p>
+            </Container>
+          ) : (
+            ""
+          )}
+
+          {/* All Parties Tab */}
+          {allPartyLoaded && (shoutParties.length > 0 || individualParties.length > 0) && activeTab == 0 ? (
+            <div className=" overflow-scroll scroll_hide pb-[8rem] pt-[1.4rem]">
+              <Container>
+                {/* Shout Party */}
+                {shoutParties.length > 0 && <ShoutParties shoutParties={shoutParties}></ShoutParties>}
+
+                {/* Upcoming Parties */}
+                <div className="mt-[1.8rem]">
+                  <h2 className="subheader_heavy mb-[.8rem]">Upcoming Parties</h2>
+                  {individualParties.map((party, i) => {
+                    return (
+                      <div className="mb-[2.2rem]" key={i}>
+                        <TabCard date={new Date(party?.date)} key={i} color={"#110066"} text={party.name} btnColor={"#3CC13B"} link={`/parties/${party.id}`}></TabCard>{" "}
+                      </div>
+                    );
+                  })}
+                  {individualParties.length == 0 && "No party yet. Create one!"}
+                </div>
+              </Container>
+            </div>
+          ) : (
+            ""
+          )}
+          {/* All Invites Tab */}
+          {invitesLoaded && invitesParties.length > 0 && activeTab == 1 ? (
+            <div className=" overflow-scroll scroll_hide pb-[8rem] pt-[1.4rem]">
+              <Container>
+                <div>
+                  <h2 className="subheader_heavy mb-[.8rem]">Featured Parties</h2>
+                  {invitesParties.map((party, i) => {
+                    return (
+                      <div className="mb-[2.2rem]" key={i}>
+                        <TabCard color={"#3CC13B"} text={party.name} link="/parties/id"></TabCard>
+                      </div>
+                    );
+                  })}
+                </div>
+              </Container>
+            </div>
+          ) : (
+            ""
+          )}
+
+          <FixedBottom>
+            <BtnPrimary text={"Create"} color={"#14B363"} link="/parties/new"></BtnPrimary>
+          </FixedBottom>
+        </BaseLayout>
+      </Protect>
     </>
   );
 };

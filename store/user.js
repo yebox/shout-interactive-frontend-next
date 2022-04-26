@@ -1,8 +1,10 @@
 import { baseInstance } from "../axios";
+import { encryptId } from "../utils/encryptId";
 
 // Action types
 const LOAD_USER = "user/load-user";
 const SET_AUTH = "user/set-auth-status";
+const SET_COIN_BAL = "user/set-coin-balance";
 
 // init state
 const initialState = {
@@ -19,6 +21,8 @@ export const UserReducer = (state = initialState, action) => {
       return { ...state, user: action?.payload?.user, coins: action?.payload?.coin, token: action?.payload?.token };
     case SET_AUTH:
       return { ...state, authenticated: action.payload };
+    case SET_COIN_BAL:
+      return { ...state, coins: action.payload };
     default:
       return { ...state };
   }
@@ -41,6 +45,10 @@ export const setAuthStatus = (status) => {
   return { type: SET_AUTH, payload: status };
 };
 
+export const setCoinBalance = (bal) => {
+  return { type: SET_COIN_BAL, payload: bal };
+};
+
 export const fetchUser = (token) => {
   console.log("in fetch user");
   return async (dispatch, state) => {
@@ -48,11 +56,25 @@ export const fetchUser = (token) => {
       const resp = await baseInstance.get(`/auth/token/${token}`);
       console.log("response from fetch user is", resp.data.data);
       dispatch(loadUser(resp.data.data));
+      dispatch(getUserBalanceThunk(resp.data.data.user.id));
       localStorage.setItem("shout-token", resp.data.data.token);
       dispatch(setAuthStatus(true));
     } catch (error) {
       console.log("An error occured", error);
       dispatch(setAuthStatus(false));
+    }
+  };
+};
+
+export const getUserBalanceThunk = (userId) => {
+  return async (dispatch) => {
+    try {
+      const body = { data: encryptId(JSON.stringify({ user: userId })) };
+      const resp = await baseInstance.post("/billing/check-coin", JSON.stringify(body));
+      console.log("Coin balance is ", resp.data.data.coins);
+      dispatch(setCoinBalance(resp.data.data.coins));
+    } catch (error) {
+      // dispatch(setCoinBalance(null));
     }
   };
 };

@@ -10,6 +10,7 @@ const TOGGLE_INVITES_IS_LOADING = "invites/toggle-isloading";
 const SET_UPDATE_INDIVIDUAL_PARTY_ERROR = "party/update-individual-error";
 const SET_UPDATE_SHOUT_PARTY_ERROR = "party/update-shout-error";
 const SET_UPDATED_PARTIES = "party/updated";
+const ADD_PARTY = "party/add";
 
 const SET_ERROR = "set-error";
 const CREATING_PARTY = "party/creating";
@@ -27,7 +28,7 @@ const initState = {
   invitesIsLoaded: false,
   invitesIsLoading: true,
   creatingParty: false,
-  partyCreated: false,
+  partyCreated: null,
 
   updatedPartiesDetailId: [],
   errorUpdatingIndividual: false,
@@ -50,6 +51,8 @@ export const PartyReducer = (state = initState, action) => {
       return { ...state, partiesIsLoading: action.payload };
     case UPDATE_IDS:
       return { ...state, updatedPartiesDetailId: action.payload };
+    case ADD_PARTY:
+      return { ...state, parties: { ...state.parties, individual: [...state.parties.individual, action.payload] } };
 
     case TOGGLE_INVITES_LOADED:
       return { ...state, invitesIsLoaded: action.payload };
@@ -94,6 +97,10 @@ export const getUpdatedPartiesDetailsId = (state) => {
 };
 export const getUpdatedStatus = (state) => {
   return state.allParties.updated;
+};
+
+export const getNewParty = (state) => {
+  return state.allParties.newParty;
 };
 
 // Invites Selectors
@@ -141,6 +148,10 @@ const setError = (message) => {
 export const setPartyCreated = (status) => {
   console.log("in set party created and value is ", status);
   return { type: PARTY_CREATED, payload: status };
+};
+
+export const addParty = (party) => {
+  return { type: ADD_PARTY, payload: party };
 };
 
 // Sort by date function
@@ -202,7 +213,7 @@ export const loadAllInvites = (id) => {
       dispatch({ type: TOGGLE_INVITES_IS_LOADING, payload: false });
     } catch (error) {
       console.log("An error occured in load all invites", error.response);
-      if ((error.response.status = 400)) {
+      if (error?.response && error?.response?.status == 400) {
         console.log("a 400 error has occured");
         // No Invites response from the server
         dispatch({ type: TOGGLE_INVITES_LOADED, payload: true });
@@ -224,10 +235,17 @@ export const createParty = (partyData) => {
       const user = getState().user;
       console.log("IN try catch...", user.user.id);
       const resp = await baseInstance.post("/party/create", JSON.stringify(partyData));
-      dispatch(loadAllParties(user.user.id));
+      console.log("After creating Party: Response is:", resp.data.data);
+      // dispatch(loadAllParties(user.user.id));
+      dispatch(addParty(resp.data.data));
+      // console.log("update individual party", getState().allParties.parties.individual);
+      dispatch(setPartyCreated(resp.data.data));
       dispatch({ type: CREATING_PARTY, payload: false });
-      dispatch(setPartyCreated(true));
+      dispatch(loadIndividualParty(getState().allParties.parties.individual.sort(compare)));
       dispatch(setError(""));
+      // setTimeout(() => {
+      //   dispatch(setPartyCreated(false));
+      // }, 8000);
     } catch (error) {
       if (error.response) {
         console.log("REsponse errro", error.response);

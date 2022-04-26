@@ -16,7 +16,7 @@ const Notification = ({ message, type, icon, title, color, open, duration }) => 
   }, [open]);
   return (
     <div
-      className={` fixed transition-all duration-700 right-6 z-40 rounded-[1rem] bg-white py-[.5rem] px-[.9rem] max-w-[36rem] shadow-sm ${
+      className={` fixed transition-all duration-700 right-6 z-50 rounded-[1rem] bg-white py-[.5rem] px-[.9rem] max-w-[36rem] shadow-sm ${
         notifOpen ? "top-6 visible opacity-100" : "-top-full  invisible opacity-0"
       }`}
     >

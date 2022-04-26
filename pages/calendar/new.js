@@ -104,10 +104,10 @@ const New = () => {
           {/* Party Name */}
           <Text
             onChange={(e) => {
+              setCalendarData((val) => ({ ...val, name: e.target.value }));
               if (!e.target.value) {
                 setNameError(true);
               } else {
-                setCalendarData((val) => ({ ...val, name: e.target.value }));
                 setNameError(false);
               }
             }}
@@ -147,11 +147,11 @@ const New = () => {
 
           <TextArea
             onChange={(e) => {
+              setCalendarData((val) => ({ ...val, description: e.target.value }));
               if (!e.target.value) {
                 setDescError(true);
               } else {
                 setDescError(false);
-                setCalendarData((val) => ({ ...val, description: e.target.value }));
               }
             }}
             status={descError ? "error" : ""}

@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import HomeSkeleton from "../components/Skeleton/Home";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { determineUnit } from "../utils/determineUnit(K,H,M,T)";
 
 export default function Home() {
   // const token =
@@ -42,6 +43,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log("value unit in useEffect", determineUnit(parseInt(user.coins)));
     // Delays the confeti animation
     setTimeout(() => {
       setSplash(!splash);
@@ -74,16 +76,23 @@ export default function Home() {
   // }, [router.query]);
 
   useEffect(() => {
-    const authToken = getLocalStorage("shout-token");
+    // const authToken = getLocalStorage("shout-token");
+    console.log("router query is", router);
     if (authenticated) {
       return;
     }
-    if (!authenticated && authToken) {
-      dispatch(fetchUser(authToken));
-    } else if (router.query.token) {
+    if (!authenticated && router.query.token) {
       dispatch(fetchUser(router.query.token));
     }
-  }, [router.query]);
+    // if (router.query.token) {
+    //   dispatch(fetchUser(router.query.token));
+    // } else {
+    //   if (authenticated) {
+    //   } else if (!authenticated && authToken) {
+    //     dispatch(fetchUser(authToken));
+    //   }
+    // }
+  }, [router.query.token]);
   useEffect(() => {
     console.log("user chage", user);
     // if (user.user) {
@@ -125,7 +134,8 @@ export default function Home() {
                 <div className="p-[.952rem] flex items-center bg-gray-lighter rounded-2xl cursor-pointer">
                   <Image src="/images/coin.svg" height={24} width={24} alt="coins"></Image>
                   {/* <span className="subheader_heavy !text-gray-darker ml-[.5rem]">{formatCoinAmt(user.coins)}</span> */}
-                  <span className="subheader_heavy !text-gray-darker ml-[.5rem]">100K</span>
+                  <span className="subheader_heavy !text-gray-darker ml-[.5rem]">{user.coins + " " + determineUnit(parseInt(user.coins))}</span>
+                  {/* <span className="subheader_heavy !text-gray-darker ml-[.5rem]">100K</span> */}
                 </div>
               </Link>
               <div className="p-[.952rem] flex items-center bg-gray-lighter rounded-2xl ml-[1.6rem]">
