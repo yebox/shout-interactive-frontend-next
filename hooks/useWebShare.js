@@ -5,7 +5,7 @@ const useWebShare = () => {
       await navigator.share(data);
       return "success";
     } catch (error) {
-      // console.log("An error has occured", error.name);
+      console.log("An error has occured", error.name);
       // alert(`An error has occured ${error.name}`);
       return error.name;
     }

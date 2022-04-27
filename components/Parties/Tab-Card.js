@@ -27,6 +27,7 @@ const TabCard = ({ color, date, text, btnColor, link, partyLink = "https://link"
         setNotifOpen(false);
       }, 4000);
       // alert("Link shared successfully!");
+    } else if (result == "AbortError") {
     } else {
       // alert("An error has occured:-Cannot share file");
       toggle();
