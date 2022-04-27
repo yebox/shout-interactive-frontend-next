@@ -162,7 +162,7 @@ const New = () => {
           actionText="Okay"
         >
           <div className="grid place-items-center">
-            <Image height={72} width={72} alt="charge" src={"/images/coin-5.svg"}></Image>
+            <Image height={72} width={72} alt="charge" src={"/images/coin-5.png"}></Image>
             <p className="max-w-[22.1rem] mt-[2.4rem]  subheader_heavy text-center !text-gray-darker">
               You will be charged <br></br>2000 coins to create this party{" "}
             </p>
