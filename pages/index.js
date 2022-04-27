@@ -132,7 +132,8 @@ export default function Home() {
             <div className="flex items-center ml-auto">
               <Link href={"/wallet"}>
                 <div className="p-[.952rem] flex items-center bg-gray-lighter rounded-2xl cursor-pointer">
-                  <Image src="/images/coin.svg" height={24} width={24} alt="coins"></Image>
+                  {/* <Image src="/images/coin.png" height={24} width={24} alt="coins"></Image> */}
+                  <img height={24} width={24} src="/images/coin.png" alt="coins"></img>
                   {/* <span className="subheader_heavy !text-gray-darker ml-[.5rem]">{formatCoinAmt(user.coins)}</span> */}
                   <span className="subheader_heavy !text-gray-darker ml-[.5rem]">{user.coins + " " + determineUnit(parseInt(user.coins))}</span>
                   {/* <span className="subheader_heavy !text-gray-darker ml-[.5rem]">100K</span> */}
@@ -174,14 +175,14 @@ export default function Home() {
             </Link>
 
             {/* Smaller Cards */}
-            <Link href={"/parties"}>
+            <Link href={"/shout-play"}>
               <div
                 className={` rounded-[1.3rem] relative bg-[url(/images/bg-green.png)]  bg-cover bg-[#14B363] px-6 pb-[1.6rem] pt-[5.6rem] cursor-pointer hover:scale-[1.04] transition-all shadow overflow-hidden swell`}
               >
                 <div className=" absolute bottom-0 right-0  playimg flex">
                   <Image height={114} width={282} src={"/images/shout-games.png"}></Image>
                 </div>
-                <h2 className="body_heavy relative !text-white ">Shout! Party</h2>
+                <h2 className="body_heavy relative !text-white ">Shout! Play</h2>
                 <p className="small_light relative max-w-[11rem] !text-white">Play games and win big prizes everyday!</p>
                 <button className="absolute top-1/2 -translate-y-1/2 right-[1.4rem] ">
                   {/* <img src="/images/chevron-right.svg"></img> */}
@@ -189,7 +190,7 @@ export default function Home() {
                 </button>
               </div>
             </Link>
-            <Link href={"/parties"}>
+            <Link href={"/celeb-auction"}>
               <div
                 className={` rounded-[1.3rem] relative bg-[url(/images/bg-blue.png)] bg-cover bg-[#110066] px-6 pb-[1.6rem] pt-[5.6rem] cursor-pointer hover:scale-[1.04] transition-all shadow overflow-hidden swell`}
               >

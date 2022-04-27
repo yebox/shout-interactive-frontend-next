@@ -78,3 +78,14 @@ div.MuiFormControl-root.MuiTextField-root {
 .MuiSkeleton-root.MuiSkeleton-rectangular {
   border-radius: 1.3rem;
 }
+
+.MuiRadio-root .MuiSvgIcon-root {
+  font-size: 2rem !important;
+  font-family: inherit !important;
+  color: var(--color-primary);
+}
+
+.radio-checked-style * {
+  background: #3f3a5a !important;
+  opacity: 1 !important;
+}

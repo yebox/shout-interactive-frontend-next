@@ -14,6 +14,7 @@ import { baseInstance } from "../../axios";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser, getAuthStatus, getUser } from "../../store/user";
 import { useRouter } from "next/router";
+
 import {
   getPartiesLoadedStatus,
   loadAllParties,
@@ -30,6 +31,7 @@ import PartiesSkeleton from "../../components/Skeleton/Parties";
 import Notification from "../../components/Notification";
 import ShoutParties from "../../components/Parties/ShoutParties";
 import Protect from "../../components/Protect";
+import EmptyState from "../../components/EmptyState";
 
 const Parties = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -121,8 +123,9 @@ const Parties = () => {
           {isInvitesLoading && activeTab == 1 ? <PartiesSkeleton></PartiesSkeleton> : ""}
           {!isInvitesLoading && !invitesLoaded && activeTab == 1 ? <p>Problem loading Invites</p> : ""}
           {!isInvitesLoading && invitesLoaded && invitesParties.length == 0 && activeTab == 1 ? (
+            // Empty Invites
             <Container>
-              <p>No Invites</p>
+              <EmptyState text="You&lsquo;ve not been invited to any party yet!" caption="No invites"></EmptyState>
             </Container>
           ) : (
             ""

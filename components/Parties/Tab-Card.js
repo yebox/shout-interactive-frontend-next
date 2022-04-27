@@ -92,10 +92,10 @@ const TabCard = ({ color, date, text, btnColor, link, partyLink = "https://link"
       <Notification open={notifOpen} icon={<i className="icon-add-user"></i>} title={"Share Shout Link"} message="Shared successfully" color="#FA9330"></Notification>
       <div
         style={{
-          backgroundColor: color,
-          background: `${color == "#3CC13B" ? "url(/images/bg-green.png)" : "url(/images/bg-blue.png)"}`,
+          backgroundColor: "red !important",
+          backgroundImage: `${color == "#3CC13B" ? "url(/images/bg-green.png)" : "url(/images/bg-blue.png)"}`,
         }}
-        className="p-[1.8rem] py-[2.2rem] rounded-3xl !bg-cover bg-no-repeat"
+        className={`p-[1.8rem] py-[2.2rem] rounded-3xl !bg-cover bg-no-repeat bg-red-400 ${color == "#3CC13B" ? "bg-green-700" : " bg-blue-700"}`}
       >
         <div className="flex justify-between">
           {/* {date && <CountDown time={date}></CountDown>} */}

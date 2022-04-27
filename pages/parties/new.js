@@ -18,6 +18,8 @@ import ModalContainer from "../../components/ModalContainer";
 import { createParty, getCreatingPartyStatus, getErrorStatus, getpartyCreated, setPartyCreated } from "../../store/party";
 import Notification from "../../components/Notification";
 import Protect from "../../components/Protect";
+import MyRadio from "../../components/Radio";
+import { FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 
 const New = () => {
   // States
@@ -28,7 +30,7 @@ const New = () => {
   const partyCreated = useSelector(getpartyCreated);
   const errorStatus = useSelector(getErrorStatus);
   const [party, setParty] = useState({
-    owner: "",
+    owner: "Self",
     name: "",
     geusts: ["geust@gmail.com", "geust2@gmail.com"],
     date: "",
@@ -44,6 +46,7 @@ const New = () => {
   const [insufficientPopup, setInsufficientPopup] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("Self");
   // const [processingCharge, setProcessingCharge] = useState(false);
 
   const isPartyInfoValid = () => {
@@ -59,7 +62,10 @@ const New = () => {
     setParty((val) => ({ ...val, video: path }));
   };
   const onCreate = () => {
-    console.log("on create");
+    console.log("on create party is ", party);
+    // if (selectedValue == "Self") {
+    //   setParty((val) => ({ ...val, owner: user?.user?.firstname }));
+    // }
     if (!isPartyInfoValid()) {
       console.log(" party not valide");
       if (!party.name) setNameError(true);
@@ -69,6 +75,7 @@ const New = () => {
       return;
     }
     setParty((val) => ({ ...val, user: user.user.id }));
+
     setchargeRequest(true);
   };
   const onCanCharge = () => {
@@ -120,6 +127,25 @@ const New = () => {
   const toggleInsufficientPopup = () => {
     insufficientPopup ? setInsufficientPopup(false) : setInsufficientPopup(true);
   };
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+    if (event.target.value == "Self") {
+      setParty((val) => ({ ...val, owner: event.target.value }));
+      setOwnerError(true);
+    } else {
+      setParty((val) => ({ ...val, owner: "" }));
+      setOwnerError(false);
+    }
+    console.log("selected value is", event.target.value);
+  };
+
+  const controlProps = (item) => ({
+    checked: selectedValue === item,
+    onChange: handleChange,
+    value: item,
+    name: "size-radio-button-demo",
+    inputProps: { "aria-label": item },
+  });
 
   return (
     <>
@@ -176,21 +202,48 @@ const New = () => {
               placeholder="David’s 25th Birthday Bash 🎊🍾"
             ></Text>
             {/* Owner */}
-            <Text
-              onChange={(e) => {
-                setParty((val) => ({ ...val, owner: e.target.value }));
-                if (!e.target.value) {
-                  setOwnerError(true);
-                } else {
-                  setOwnerError(false);
-                }
-              }}
-              status={ownerError ? "error" : ""}
-              message={ownerError ? "This field is required" : ""}
-              label="Owner*"
-              placeholder="Owner"
-            ></Text>
-            <div className="">
+            <label className="caption_heavy text-black-default flex">Create for</label>
+            {/* <div className="flex -translate-x-4">
+              <div className="flex items-center">
+                <Radio {...controlProps("Individual")} />
+                <p className="caption_heavy text-black-default">My self</p>
+              </div>
+              <div className="flex items-center">
+                <Radio {...controlProps("Others")} />
+                <p className="caption_heavy text-black-default">Others</p>
+              </div>
+            </div> */}
+
+            <FormControl>
+              <RadioGroup row aria-labelledby="demo-controlled-radio-buttons-group" name="controlled-radio-buttons-group" value={selectedValue} onChange={handleChange}>
+                <FormControlLabel value="Self" control={<Radio />} label="Self" />
+                <FormControlLabel value="Others" control={<Radio />} label="Others" />
+              </RadioGroup>
+            </FormControl>
+            {selectedValue == "Others" && (
+              <Text
+                onChange={(e) => {
+                  setParty((val) => ({ ...val, owner: e.target.value }));
+                  if (!e.target.value) {
+                    // setParty((val) => ({ ...val, owner: "Self" }));
+                    setOwnerError(true);
+                  } else {
+                    setOwnerError(false);
+                  }
+                  // if (!e.target.value) {
+                  //   setOwnerError(true);
+                  // } else {
+                  //   setOwnerError(false);
+                  // }
+                }}
+                status={ownerError ? "error" : ""}
+                message={ownerError ? "This field is required" : ""}
+                // label="Owner*"
+                placeholder="Owner"
+              ></Text>
+            )}
+
+            {/* <div className="">
               <label className="caption_heavy text-black-default flex mb-[8px] mt-[1.6rem]">Guests</label>
               <div
                 className={`flex items-center relative h-[48px] mb-[10px] max-w-full min-w-[200px] w-full text-black-default body_light focus:border-primary focus:outline-0 border rounded-[16px] px-[8px] py-[14px]`}
@@ -205,7 +258,7 @@ const New = () => {
                 />
                 <i className="icon-add-user absolute right-3 text-gray-dark font-[2.2rem] top-1/2 -translate-y-1/2 cursor-pointer"></i>
               </div>
-            </div>
+            </div> */}
             <Calendar
               required={true}
               errorStatus={dateError}
