@@ -397,7 +397,7 @@ const GiftGoal = () => {
           {/* Empty State */}
           {!party?.GiftGoal && !selectedGiftGoal && !isPartiesLoading && (
             <div className="grid place-content-center place-items-center mt-[9.2rem] relative">
-              <Image width={88} height={88} alt="musical-notes" src={"/images/musical-notes.png"}></Image>
+              <Image width={88} height={88} alt="musical-notes" src={"/images/gift-box.png"}></Image>
               <h2 className="headline_heavy text-black-default mb-[.8rem] mt-[3.2rem]">No gift goal</h2>
               <p className="body_light mb-[4.8rem]">You have not selected a gift goal</p>
               <BtnPrimary

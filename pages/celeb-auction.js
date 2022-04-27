@@ -14,7 +14,7 @@ const CelebAuction = () => {
         <div></div>
       </HeadersV1>
       <Container>
-        <EmptyState caption="Celebrity Auction" text="Coming Soon 🚧" />
+        <EmptyState image="/images/gift-box.png" caption="Celebrity Auction" text="Coming Soon 🚧" />
       </Container>
     </BaseLayout>
   );
