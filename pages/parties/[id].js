@@ -142,9 +142,20 @@ const PartyDetail = () => {
     console.log("rotue is", router);
   }, [updatedPartiesId]);
 
+  useEffect(() => {
+    if (router.query.message) {
+      setNotifOpen(true);
+      setTimeout(() => {
+        setNotifOpen(false);
+        router.replace(`/parties/${router?.query?.id}`, undefined, { shallow: true });
+      }, 10000);
+    }
+  }, [router.query]);
+
   return (
     <>
       <Notification open={copied} icon={<i className="icon-info-circle"></i>} title={"Copy Link"} message="Link copied to clipboard" color="green"></Notification>
+      <Notification open={notifOpen} icon={<i className="icon-info-circle text-[1.6rem]"></i>} title={"Party Created"} message="Party Created successfully!" color="green"></Notification>
 
       <ModalContainer
         onAction={() => {
