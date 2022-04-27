@@ -23,9 +23,11 @@ const ModalContainer = ({ children, icon, headerText, onClose, actionText, onAct
             </div>
           )}
 
-          <div className="flex-1" onClick={onAction}>
-            <BtnPrimary loading={processing} disabled={processing ? true : false} text={processing ? "Processing" : actionText}></BtnPrimary>
-          </div>
+          {onAction && (
+            <div className="flex-1" onClick={onAction}>
+              <BtnPrimary loading={processing} disabled={processing ? true : false} text={processing ? "Processing" : actionText}></BtnPrimary>
+            </div>
+          )}
         </div>
       </div>
     </Dialog>

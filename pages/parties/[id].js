@@ -65,6 +65,7 @@ const PartyDetail = () => {
         setNotifOpen(false);
       }, 7000);
       // alert("Link shared successfully!");
+    } else if (result == "AbortError") {
     } else {
       // alert("An error has occured:-Cannot share file");
       toggle();
@@ -158,13 +159,13 @@ const PartyDetail = () => {
       <Notification open={notifOpen} icon={<i className="icon-info-circle text-[1.6rem]"></i>} title={"Party Created"} message="Party Created successfully!" color="green"></Notification>
 
       <ModalContainer
-        onAction={() => {
-          onCopy();
-          toggle();
-        }}
+        // onAction={() => {
+        //   onCopy();
+        //   toggle();
+        // }}
         actionText="Copy"
         toggle={toggle}
-        onClose={toggle}
+        // onClose={toggle}
         open={open}
         headerText="Share Shout Link"
         icon={<span className="icon-share text-[15px] font-bold"></span>}
