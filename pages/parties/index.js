@@ -125,7 +125,7 @@ const Parties = () => {
           {!isInvitesLoading && invitesLoaded && invitesParties.length == 0 && activeTab == 1 ? (
             // Empty Invites
             <Container>
-              <EmptyState text="You&lsquo;ve not been invited to any party yet!" caption="No invites"></EmptyState>
+              <EmptyState text="You have no invitations yet!" caption="No invites"></EmptyState>
             </Container>
           ) : (
             ""
