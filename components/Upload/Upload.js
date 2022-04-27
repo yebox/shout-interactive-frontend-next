@@ -153,16 +153,17 @@ const Upload = ({ withLabel = true, onUploadFile, onUploadError = () => {} }) =>
 
       {withLabel && <p className="caption_heavy text-black-default mb-3 mt-[1.6rem]">Video Invitation</p>}
       {!file && (
-        <div className=" min-w-[220px] h-[150px] rounded-[4px] border-black-lighter outline-dashed border-opacity-10 outline-[1px] bg-black-lightest-1 flex flex-col items-center justify-center">
+        <label
+          htmlFor="file"
+          className=" min-w-[220px] h-[150px] rounded-[4px] border-black-lighter outline-dashed border-opacity-10 outline-[1px] bg-black-lightest-1 flex flex-col items-center justify-center"
+        >
           <span className="icon-Vector text-[32px] mb-1"></span>
           <input accept="video/*" onChange={onSelectFilesChange} id={"file"} className=" invisible" type={"file"}></input>
           <p className=" text-black-default caption_heavy text-center">
-            <label className="caption_heavy text-primary cursor-pointer block" htmlFor="file">
-              Record or upload a video
-            </label>
+            <label className="caption_heavy text-primary cursor-pointer block">Record or upload a video</label>
             message to your guests
           </p>
-        </div>
+        </label>
       )}
       {file && (
         <>
