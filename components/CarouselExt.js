@@ -29,6 +29,7 @@ const CarouselSlider = () => {
   };
   const clearIntervalFunc = () => {
     if (intervalRef) {
+      console.log("clear interval", intervalRef);
       clearInterval(intervalRef);
     }
   };
@@ -86,8 +87,11 @@ const CarouselSlider = () => {
       </div>
       <ButtonBack
         onClick={() => {
+          if (intervalRef) {
+            console.log("clear interval", intervalRef);
+            clearInterval(intervalRef);
+          }
           onPrev();
-          clearIntervalFunc();
         }}
       >
         <button className=" h-[2.6rem] w-[2.6rem] -translate-y-1/2 absolute top-1/2 left-3 grid place-items-center bg-white rounded-full">
@@ -96,8 +100,11 @@ const CarouselSlider = () => {
       </ButtonBack>
       <ButtonNext
         onClick={() => {
+          if (intervalRef) {
+            console.log("clear interval", intervalRef);
+            clearInterval(intervalRef);
+          }
           onNext();
-          clearIntervalFunc();
         }}
       >
         <button className=" h-[2.6rem] w-[2.6rem] -translate-y-1/2 absolute top-1/2 right-3 rotate-180 grid place-items-center bg-white rounded-full">
