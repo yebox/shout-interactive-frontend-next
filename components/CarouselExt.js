@@ -53,7 +53,7 @@ const CarouselSlider = () => {
     }
   }, [active]);
   return (
-    <CarouselProvider isPlaying={true} infinite={true} className="relative" naturalSlideWidth={100} naturalSlideHeight={60} totalSlides={images.length}>
+    <CarouselProvider isPlaying={true} className="relative" naturalSlideWidth={100} naturalSlideHeight={60} totalSlides={images.length}>
       {/* <div className="relative"> */}
       <div className="rounded-[13px] overflow-hidden relative shadow-sm">
         <Slider>
