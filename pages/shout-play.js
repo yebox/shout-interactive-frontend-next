@@ -16,7 +16,7 @@ const ShoutPlay = () => {
           <div></div>
         </HeadersV1>
         <Container>
-          <EmptyState caption="Shout Play" text="Coming Soon " />
+          <EmptyState caption="Shout Play" text="Play games and win big prizes everyday!" />
         </Container>
       </BaseLayout>
     </Protect>

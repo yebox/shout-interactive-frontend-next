@@ -159,10 +159,10 @@ const PartyDetail = () => {
       <Notification open={notifOpen} icon={<i className="icon-info-circle text-[1.6rem]"></i>} title={"Party Created"} message="Party Created successfully!" color="green"></Notification>
 
       <ModalContainer
-        // onAction={() => {
-        //   onCopy();
-        //   toggle();
-        // }}
+        onAction={() => {
+          onCopy();
+          toggle();
+        }}
         actionText="Copy"
         toggle={toggle}
         // onClose={toggle}
@@ -176,9 +176,9 @@ const PartyDetail = () => {
             // disabled
             value={router?.asPath}
             readOnly={true}
-            className={`flex h-[48px] translate-y-8 mb-[10px] max-w-full min-w-[200px] w-full text-black-default body_light focus:border-none focus:border-transparent focus:outline-0 focus:outline-transparent border rounded-[6px] px-[8px] py-[14px] pr-[5rem]`}
+            className={`flex h-[48px] translate-y-8 mb-[10px] max-w-full min-w-[200px] w-full text-black-default body_light focus:border-none focus:border-transparent focus:outline-0 focus:outline-transparent border rounded-[6px] px-[8px] py-[14px] `}
           ></input>
-          <button
+          {/* <button
             onClick={() => {
               onCopy();
               toggle();
@@ -186,7 +186,7 @@ const PartyDetail = () => {
             className=" absolute right-6 top-full -translate-y-5 text-black-default text-lg"
           >
             COPY
-          </button>
+          </button> */}
         </div>
       </ModalContainer>
       {/* <FixedBtnLayout text={"Join Party"} btnColor={"#3CC13B"}> */}
