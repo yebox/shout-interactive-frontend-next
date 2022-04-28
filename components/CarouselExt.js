@@ -109,7 +109,7 @@ const CarouselSlider = () => {
           onPrev();
         }}
       >
-        <button className=" h-[2.6rem] w-[2.6rem] -translate-y-1/2 absolute top-1/2 left-3 grid place-items-center bg-white rounded-full">
+        <button className=" h-[2.6rem] w-[2.6rem] -translate-y-1/2 absolute top-1/2 left-3 grid place-items-center bg-white opacity-75 focus:opacity-95 rounded-full">
           <Image height={10} width={10} src="/images/chevron-left-primary.svg" alt="arrow-left"></Image>
         </button>
       </ButtonBack>
@@ -122,7 +122,7 @@ const CarouselSlider = () => {
           onNext();
         }}
       >
-        <button className=" h-[2.6rem] w-[2.6rem] -translate-y-1/2 absolute top-1/2 right-3 rotate-180 grid place-items-center bg-white rounded-full">
+        <button className=" h-[2.6rem] w-[2.6rem] -translate-y-1/2 absolute top-1/2 right-3 rotate-180 grid place-items-center bg-white  opacity-75 focus:opacity-95 rounded-full">
           <Image height={10} width={10} src="/images/chevron-left-primary.svg" alt="arrow-left"></Image>
         </button>
       </ButtonNext>
