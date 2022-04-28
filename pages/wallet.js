@@ -43,7 +43,7 @@ const Wallet = () => {
           <section className="mt-[3.2rem] border rounded-[1.3rem] py-[1.6rem]">
             {/* Buy coins */}
             <div className=" px-[1.2rem]">
-              <h3 className="title_heavy !text-primary">Buy Coinss</h3>
+              <h3 className="title_heavy !text-primary">Buy Coins</h3>
               <p className="caption_light !text-primary">Get more coins to gift your friends and win more!</p>
             </div>
             {/* Coins row */}

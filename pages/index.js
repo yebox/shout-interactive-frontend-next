@@ -128,7 +128,7 @@ export default function Home() {
       {!loading && user.user && (
         <main className="px-[1.6rem]">
           {/* #000 Header */}
-          <header className="flex items-center my-[2.4rem]">
+          <header className="flex items-center my-[2rem]">
             <h2 className="headline_heavy text-primary whitespace-nowrap overflow-hidden text-ellipsis">Hi, {user.user ? user.user.lastname : "Guest"}</h2>
             <div className="flex items-center ml-auto">
               <Link href={"/wallet"}>
