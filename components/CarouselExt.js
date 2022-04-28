@@ -83,8 +83,16 @@ const CarouselSlider = () => {
                     clearIntervalFunc();
                     setActive(i);
                   }}
-                  className={` h-2 w-2 rounded-full bg-white ${active == i ? " opacity-100 scale-[1.2]" : "opacity-50 scale-100"} flex`}
+                  className={` h-3 w-3 rounded-full bg-white opacity-50 flex`}
                 ></button>
+                {/* <button
+                  onClick={() => {
+                    console.log("clearing interval", intervalRef);
+                    clearIntervalFunc();
+                    setActive(i);
+                  }}
+                  className={` h-2 w-2 rounded-full bg-white ${active == i ? " opacity-100 scale-[1.2]" : "opacity-50 scale-100"} flex`}
+                ></button> */}
               </Dot>
             );
           })}
