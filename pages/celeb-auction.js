@@ -14,7 +14,7 @@ const CelebAuction = () => {
         <div></div>
       </HeadersV1>
       <Container>
-        <EmptyState image="/images/gift-box.png" caption="Celebrity Auction" text="Coming Soon 🚧" />
+        <EmptyState image="/images/gift-box.png" caption="Celebrity Auction" text="Win big prizes from you favourite celebs🎁🎈" />
       </Container>
     </BaseLayout>
   );
