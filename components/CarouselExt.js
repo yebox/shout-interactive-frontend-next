@@ -4,7 +4,7 @@ import "pure-react-carousel/dist/react-carousel.es.css";
 import Image from "next/image";
 
 const CarouselSlider = () => {
-  const [images, setImages] = useState(["cuppy.jpg", "wed-party.jpg", "adele.jpg", "drake.jpg"]);
+  const [images, setImages] = useState(["cuppy.jpg", "drake.jpg", "adele.jpg"]);
   const [active, setActive] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [intervalRef, setIntervalRef] = useState(null);
@@ -54,7 +54,7 @@ const CarouselSlider = () => {
   return (
     <CarouselProvider isPlaying={true} infinite={true} className="relative" naturalSlideWidth={100} naturalSlideHeight={60} totalSlides={images.length}>
       {/* <div className="relative"> */}
-      <div className="rounded-[13px] overflow-hidden relative shadow">
+      <div className="rounded-[13px] overflow-hidden relative shadow-sm">
         <Slider>
           {images.map((img, i) => {
             return (
@@ -91,7 +91,7 @@ const CarouselSlider = () => {
         }}
       >
         <button className=" h-[2.6rem] w-[2.6rem] -translate-y-1/2 absolute top-1/2 left-3 grid place-items-center bg-white rounded-full">
-          <Image height={14} width={14} src="/images/chevron-left-primary.svg" alt="arrow-left"></Image>
+          <Image height={10} width={10} src="/images/chevron-left-primary.svg" alt="arrow-left"></Image>
         </button>
       </ButtonBack>
       <ButtonNext
@@ -101,7 +101,7 @@ const CarouselSlider = () => {
         }}
       >
         <button className=" h-[2.6rem] w-[2.6rem] -translate-y-1/2 absolute top-1/2 right-3 rotate-180 grid place-items-center bg-white rounded-full">
-          <Image height={14} width={14} src="/images/chevron-left-primary.svg" alt="arrow-left"></Image>
+          <Image height={10} width={10} src="/images/chevron-left-primary.svg" alt="arrow-left"></Image>
         </button>
       </ButtonNext>
 
