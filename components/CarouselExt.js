@@ -53,7 +53,7 @@ const CarouselSlider = () => {
     }
   }, [active]);
   return (
-    <CarouselProvider isPlaying={true} className="relative" naturalSlideWidth={100} naturalSlideHeight={60} totalSlides={images.length}>
+    <CarouselProvider isPlaying={true} infinite={true} className="relative" naturalSlideWidth={100} naturalSlideHeight={60} totalSlides={images.length}>
       {/* <div className="relative"> */}
       <div className="rounded-[13px] overflow-hidden relative shadow-sm">
         <Slider>
@@ -68,7 +68,7 @@ const CarouselSlider = () => {
         </Slider>
         {/* Dot Navigation */}
 
-        <div className="flex items-center gap-2 absolute bottom-4 left-1/2 -translate-x-1/2">
+        {/* <div className="flex items-center gap-2 absolute bottom-4 left-1/2 -translate-x-1/2">
           {images.map((img, i) => {
             return (
               <Dot key={i} slide={i}>
@@ -83,8 +83,10 @@ const CarouselSlider = () => {
               </Dot>
             );
           })}
-        </div>
+        </div> */}
       </div>
+
+      {/* Buttton Navigation */}
       <ButtonBack
         onClick={() => {
           if (intervalRef) {
