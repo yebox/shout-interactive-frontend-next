@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import HomeSkeleton from "../components/Skeleton/Home";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { determineUnit } from "../utils/determineUnit(K,H,M,T)";
+import CarouselSlider from "../components/CarouselExt";
 
 export default function Home() {
   // const token =
@@ -152,9 +153,10 @@ export default function Home() {
 
           {/* Carousel */}
           <div>
-            <Carousel></Carousel>
+            {/* <Carousel></Carousel> */}
+            <CarouselSlider></CarouselSlider>
           </div>
-          <div className=" grid grid-cols-2 gap-6 mt-7">
+          <div className=" grid grid-cols-2 gap-6 mt-1">
             {/* Big Card */}
             <Link href={"/parties"}>
               <div className={`rounded-[1.3rem] relative bg-[#FA4A0C] px-6 pb-[1.6rem] pt-[6.6rem] cursor-pointer hover:scale-[1.04] transition-all col-span-2 shadow overflow-hidden swell`}>
