@@ -8,6 +8,7 @@ import { getPartiesLoadedStatus, getShoutParties } from "../../store/party";
 import { useSelector } from "react-redux";
 import Protect from "../../components/Protect";
 import ReactPlayer from "react-player/lazy";
+import AddGuestList from "../../components/Drawers/AddGuestList";
 
 const Livestream = () => {
   // const [chats, setChats] = useState(["Love and Hate", " Opor opor tonight we are doing Dorime!!🍾🍾🍾🍾", "Happy Birthday David!! 🎉🎉🎊"]);
@@ -19,6 +20,7 @@ const Livestream = () => {
   const [party, setParty] = useState(null);
   const shoutParties = useSelector(getShoutParties);
   const partiesLoaded = useSelector(getPartiesLoadedStatus);
+  const [isGuesListDrawerOpened, setIsGuesListDrawerOpened] = useState(false);
 
   const onMessage = (message) => {
     console.log("message is", message, chatBoxRef.current.scrollHeight);
@@ -102,7 +104,12 @@ const Livestream = () => {
           </section>
           {/* Sidebar Section */}
           <section className=" relative top-[5.5rem] right-0 ml-auto flex flex-col gap-[1.6rem]">
-            <div className=" bg-see-through rounded-[1rem] px-[.8rem] py-[1rem] ml-auto w-[4.4rem] h-[4.4rem] grid place-items-center cursor-pointer">
+            <div
+              onClick={() => {
+                setIsGuesListDrawerOpened((val) => !val);
+              }}
+              className=" bg-see-through rounded-[1rem] px-[.8rem] py-[1rem] ml-auto w-[4.4rem] h-[4.4rem] grid place-items-center cursor-pointer"
+            >
               <i className="icon-add-user text-white text-[2.1rem]"></i>
             </div>
             <div className=" bg-see-through rounded-[1rem] px-[.8rem] py-[1rem] ml-auto w-[4.4rem] h-[4.4rem] grid place-items-center cursor-pointer">
@@ -111,7 +118,7 @@ const Livestream = () => {
             <div className=" bg-see-through rounded-[1rem] px-[.8rem] py-[1rem] ml-auto w-[4.4rem] h-[4.4rem] grid place-items-center cursor-pointer">
               <i className="icon-music text-white text-[2.1rem]"></i>
             </div>
-            <div
+            {/* <div
               onClick={() => {
                 console.log("set cam to true");
                 setShowVid((val) => true);
@@ -119,7 +126,7 @@ const Livestream = () => {
               className=" bg-see-through rounded-[1rem] px-[.8rem] py-[1rem] ml-auto w-[4.4rem] h-[4.4rem] grid place-items-center cursor-pointer"
             >
               <i className="icon-add-video text-white text-[1.8rem]"></i>
-            </div>
+            </div> */}
           </section>
 
           {/* Chatbox Section */}
@@ -166,6 +173,13 @@ const Livestream = () => {
             </div>
           </section>
         </div>
+        {/* Add Gueslist Drawer Placed down for positioning */}
+        <AddGuestList
+          onClose={() => {
+            setIsGuesListDrawerOpened((val) => !val);
+          }}
+          isDrawerOpened={isGuesListDrawerOpened}
+        ></AddGuestList>
       </Protect>
     </>
   );
