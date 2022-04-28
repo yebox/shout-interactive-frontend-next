@@ -9,7 +9,9 @@ const CarouselSlider = () => {
   const [active, setActive] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [intervalRef, setIntervalRef] = useState(null);
+  const [play, setPlay] = useState(true);
   const onNext = () => {
+    setPlay(true);
     console.log("onNext, setActive is", active);
     if (active < images.length - 1) {
       setActive((val) => val + 1);
@@ -22,6 +24,7 @@ const CarouselSlider = () => {
     // }
   };
   const onPrev = () => {
+    setPlay(true);
     if (active > 0) {
       setActive((val) => val - 1);
     } else {
@@ -29,6 +32,7 @@ const CarouselSlider = () => {
     }
   };
   const clearIntervalFunc = () => {
+    setPlay(true);
     if (intervalRef) {
       console.log("clear interval", intervalRef);
       clearInterval(intervalRef);
@@ -40,7 +44,7 @@ const CarouselSlider = () => {
       const refTimer = setInterval(() => {
         console.log("In imtervel", active);
         onNext();
-      }, 5000);
+      }, 3500);
       setIntervalRef(refTimer);
     } else {
       setLoaded(true);
@@ -54,7 +58,7 @@ const CarouselSlider = () => {
     }
   }, [active]);
   return (
-    <CarouselProvider isPlaying={true} infinite={true} className="relative" naturalSlideWidth={100} naturalSlideHeight={60} totalSlides={images.length}>
+    <CarouselProvider isPlaying={play} interval={3500} infinite={true} className="relative" naturalSlideWidth={100} naturalSlideHeight={60} totalSlides={images.length}>
       {/* <div className="relative"> */}
       <div className="rounded-[13px] overflow-hidden relative shadow-sm">
         <Slider>
