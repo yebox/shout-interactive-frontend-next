@@ -4,7 +4,7 @@ import "pure-react-carousel/dist/react-carousel.es.css";
 import Image from "next/image";
 
 const CarouselSlider = () => {
-  const [images, setImages] = useState(["cuppy.jpg", "drake.jpg", "adele.jpg"]);
+  const [images, setImages] = useState(["cuppy.jpg", "jack-harlow.jpg", "lil-nas.jpg", "nfl.webp", "drake.jpg"]);
   const [active, setActive] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [intervalRef, setIntervalRef] = useState(null);
