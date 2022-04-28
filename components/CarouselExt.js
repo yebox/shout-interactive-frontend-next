@@ -69,7 +69,7 @@ const CarouselSlider = () => {
         </Slider>
         {/* Dot Navigation */}
 
-        {/* <div className="flex items-center gap-2 absolute bottom-4 left-1/2 -translate-x-1/2">
+        <div className="flex items-center gap-2 absolute bottom-4 left-1/2 -translate-x-1/2">
           {images.map((img, i) => {
             return (
               <Dot key={i} slide={i}>
@@ -79,12 +79,12 @@ const CarouselSlider = () => {
                     clearIntervalFunc();
                     setActive(i);
                   }}
-                  className={` h-3 w-3 rounded-full bg-white ${active == i ? " opacity-100" : "opacity-50"} flex`}
+                  className={` h-2 w-2 rounded-full bg-white ${active == i ? " opacity-100 scale-[1.2]" : "opacity-50 scale-100"} flex`}
                 ></button>
               </Dot>
             );
           })}
-        </div> */}
+        </div>
       </div>
 
       {/* Buttton Navigation */}
