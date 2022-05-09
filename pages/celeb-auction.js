@@ -10,7 +10,8 @@ const CelebAuction = () => {
   const user = useSelector(getUser);
   return (
     <BaseLayout>
-      <HeadersV1 mb={false} link={`/?token=${user?.token}`} text={"Celebrity Auction 🎄"}>
+      <HeadersV1 mb={false} link={`/?token=${user?.token}`} text={"Celebrity Auction"}>
+        {/* <HeadersV1 mb={false} link={`/?token=${user?.token}`} text={"Celebrity Auction 🎄"}> */}
         <div></div>
       </HeadersV1>
       <Container>

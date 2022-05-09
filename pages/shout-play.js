@@ -12,6 +12,7 @@ const ShoutPlay = () => {
   return (
     <Protect>
       <BaseLayout>
+        {/* <HeadersV1 mb={false} link={`/?token=${user?.token}`} text={"Shout! Play "}> */}
         <HeadersV1 mb={false} link={`/?token=${user?.token}`} text={"Shout! Play 🎮"}>
           <div></div>
         </HeadersV1>
