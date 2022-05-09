@@ -200,7 +200,7 @@ export default function Home() {
                   <Image height={114} width={260} src={"/images/shout-award.png"}></Image>
                 </div>
                 <h2 className="body_heavy relative !text-white ">Celebrity Auction</h2>
-                <p className="small_light relative !text-white max-w-[15rem]">Own a piece of your fav's prized possessions.</p>
+                <p className="small_light relative !text-white max-w-[15rem]">Own a piece of your fav&apos;s prized possessions.</p>
                 <button className="absolute top-1/2 -translate-y-1/2 right-[1.4rem] ">
                   <i className="icon-chevron-right text-white text-[1.4rem]"></i>
                 </button>
