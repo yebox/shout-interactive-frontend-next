@@ -185,7 +185,7 @@ export default function Home() {
                   <Image height={114} width={282} src={"/images/shout-games.png"}></Image>
                 </div>
                 <h2 className="body_heavy relative !text-white ">Shout! Play</h2>
-                <p className="small_light relative max-w-[11rem] !text-white">Play games and win big prizes everyday!</p>
+                <p className="small_light relative max-w-[11rem] !text-white">Play, earn and cashout everyday!</p>
                 <button className="absolute top-1/2 -translate-y-1/2 right-[1.4rem] ">
                   {/* <img src="/images/chevron-right.svg"></img> */}
                   <i className="icon-chevron-right text-white text-[1.4rem]"></i>
@@ -200,7 +200,7 @@ export default function Home() {
                   <Image height={114} width={260} src={"/images/shout-award.png"}></Image>
                 </div>
                 <h2 className="body_heavy relative !text-white ">Celebrity Auction</h2>
-                <p className="small_light relative !text-white max-w-[11rem]">Win big prizes from you favourite celebs</p>
+                <p className="small_light relative !text-white max-w-[15rem]">Own a piece of your fav's prized possessions.</p>
                 <button className="absolute top-1/2 -translate-y-1/2 right-[1.4rem] ">
                   <i className="icon-chevron-right text-white text-[1.4rem]"></i>
                 </button>

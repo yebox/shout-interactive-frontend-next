@@ -8,10 +8,10 @@ const HeadersV1 = ({ text, children, link, withborder = true, theme, mb = true }
         withborder == true ? " border-b" : " "
       }  flex-shrink-0 flex-grow-0`}
     >
-      <Link href={link}>
+      <Link href={link} scroll={false}>
         <i className={`icon-chevron-left-primary text-black-default text-[1.8rem] cursor-pointer ${theme == "white" ? " !text-white" : ""}`}></i>
       </Link>
-      <span className={`subheader_heavy ${theme == "white" ? " !text-white" : ""}`}>{text}</span>
+      <span className={`subheader_heavy !text-[2rem] ${theme == "white" ? " !text-white" : ""}`}>{text}</span>
       <div className=" cursor-pointer flex items-center">{children}</div>
       {/* <img src="/images/calendar-header.svg"></img> */}
     </header>

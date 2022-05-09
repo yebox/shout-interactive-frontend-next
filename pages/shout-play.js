@@ -16,7 +16,8 @@ const ShoutPlay = () => {
           <div></div>
         </HeadersV1>
         <Container>
-          <EmptyState caption="Shout Play" text="Play games and win big prizes everyday!🏀" />
+          <EmptyState caption="Shout! Play" text="Play, earn and cashout everyday!" />
+          {/* <EmptyState imgClassName={" -translate-x-[85px]"} image="/images/shout-games.png" caption="Shout! Play" text="Play, earn and cashout everyday!" /> */}
         </Container>
       </BaseLayout>
     </Protect>

@@ -6,7 +6,7 @@ const BtnPrimary = ({ text, loading, handleClick, link = "", color = "#110066", 
   const router = useRouter();
   return (
     <div className="w-full">
-      <Link href={link ? link : router.asPath}>
+      <Link scroll={false} href={link ? link : router?.asPath}>
         <LoadingButton
           disableElevation
           sx={{
