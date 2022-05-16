@@ -106,3 +106,7 @@ a {
   opacity: 1 !important;
   transform: scale(1.2) !important;
 }
+
+.text-shadow {
+  text-shadow: 1px 1px 6px #00000098;
+}

@@ -160,7 +160,9 @@ const Upload = ({ withLabel = true, onUploadFile, onUploadError = () => {} }) =>
           <span className="icon-Vector text-[32px] mb-1"></span>
           <input accept="video/*" onChange={onSelectFilesChange} id={"file"} className=" invisible" type={"file"}></input>
           <p className=" text-black-default caption_heavy text-center">
-            <label className="caption_heavy text-primary cursor-pointer block">Record or upload a video</label>
+            <label htmlFor="file" className="caption_heavy text-primary cursor-pointer block">
+              Record or upload a video
+            </label>
             message to your guests
           </p>
         </label>

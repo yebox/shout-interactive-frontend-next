@@ -160,13 +160,13 @@
     position: absolute;
     right: -46px;
     bottom: 0px;
-    width: 230px;
+    width: 290px;
     /* animation: pulse 1s both; */
     /* transform: translate3d(0, 0, 0); */
     /* animation-iteration-count: 1; */
     /* z-index: 10; */
     animation: slideInLeft 1.2s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-    transform: translate3d(0, 0, 0);
+    /* transform: translate3d(0, 0, 0) scale(2); */
     animation-iteration-count: 1;
     /* animation-delay: 1s; */
 }
@@ -241,7 +241,8 @@
     position: absolute;
     right: -27px;
     bottom: 0px;
-    width: 230px;
+    /* width: 230px; */
+    width: 270px;
     /* animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; */
     /* animation-iteration-count: infinite; */
     /* z-index: 10; */

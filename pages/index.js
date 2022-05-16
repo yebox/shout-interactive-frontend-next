@@ -159,16 +159,21 @@ export default function Home() {
           <div className=" grid grid-cols-2 gap-6 mt-1">
             {/* Big Card */}
             <Link href={"/parties"}>
-              <div className={`rounded-[1.3rem] relative bg-[#FA4A0C] px-6 pb-[1.6rem] pt-[6.6rem] cursor-pointer hover:scale-[1.04] transition-all col-span-2 shadow overflow-hidden swell`}>
-                <h2 className="title_heavy !text-white ">Shout! Party</h2>
-                <p className="caption_light !text-white">Party with your friends everyday!</p>
+              <div
+                className={`rounded-[1.3rem] relative bg-[url(/images/shout-party-bg.jpg)] bg-cover bg-[#FA4A0C] px-6 pb-[1.6rem] pt-[6.6rem] cursor-pointer hover:scale-[1.04] transition-all col-span-2 shadow overflow-hidden swell`}
+              >
                 <div style={{ marginLeft: "336px" }}>
                   <Confetti active={splash} config={config} />
                 </div>
                 <div className={`shoutimage flex ${splash ? "shake" : ""} `}>
                   {/* <Image height={214} width={370} src={"/images/shout-bottle.png"}></Image> */}
                   <img src={"/images/shout-bottle.png"}></img>
+                  {/* <img src={"/images/Bottle.svg"}></img> */}
                 </div>
+                <h2 className="title_heavy !text-white ">Shout! Party</h2>
+                <p className="caption_light !text-white  relative">
+                  Celebrate and party with your friends <br></br> everyday!
+                </p>
                 <button className="absolute top-1/2 -translate-y-1/2 right-[1.4rem] ">
                   {/* <img src="/images/chevron-right.svg"></img> */}
                   <i className="icon-chevron-right text-white text-[1.4rem]"></i>
@@ -179,30 +184,30 @@ export default function Home() {
             {/* Smaller Cards */}
             <Link href={"/shout-play"}>
               <div
-                className={` rounded-[1.3rem] relative bg-[url(/images/bg-green.png)]  bg-cover bg-[#14B363] px-6 pb-[1.6rem] pt-[5.6rem] cursor-pointer hover:scale-[1.04] transition-all shadow overflow-hidden swell`}
+                className={` rounded-[1.3rem] relative bg-[url(/images/shout-play-bg.jpg)]  bg-cover bg-[#14B363] px-6 pb-[1.6rem] pt-[5.6rem] cursor-pointer hover:scale-[1.04] transition-all shadow overflow-hidden swell`}
               >
                 <div className=" absolute bottom-0 right-0  playimg flex">
                   <Image height={114} width={282} src={"/images/shout-games.png"}></Image>
                 </div>
-                <h2 className="body_heavy relative !text-white ">Shout! Play</h2>
-                <p className="small_light relative max-w-[11rem] !text-white">Play, earn and cashout everyday!</p>
+                <h2 className="body_heavy relative !text-white text-shadow text-shadow">Shout! Play</h2>
+                <p className="small_light relative max-w-[11rem] !text-white text-shadow text-shadow">Play, earn and cashout everyday!</p>
                 <button className="absolute top-1/2 -translate-y-1/2 right-[1.4rem] ">
                   {/* <img src="/images/chevron-right.svg"></img> */}
-                  <i className="icon-chevron-right text-white text-[1.4rem]"></i>
+                  <i className="icon-chevron-right text-white text-[1.4rem] text-shadow"></i>
                 </button>
               </div>
             </Link>
             <Link href={"/celeb-auction"}>
               <div
-                className={` rounded-[1.3rem] relative bg-[url(/images/bg-blue.png)] bg-cover bg-[#110066] px-6 pb-[1.6rem] pt-[5.6rem] cursor-pointer hover:scale-[1.04] transition-all shadow overflow-hidden swell`}
+                className={` rounded-[1.3rem] relative bg-[url(/images/celeb-auction-bg.jpg)] bg-cover bg-[#110066] px-6 pb-[1.6rem] pt-[5.6rem] cursor-pointer hover:scale-[1.04] transition-all shadow overflow-hidden swell`}
               >
                 <div className=" absolute bottom-0 right-0  auctionImg flex">
                   <Image height={114} width={260} src={"/images/shout-award.png"}></Image>
                 </div>
-                <h2 className="body_heavy relative !text-white ">Celebrity Auction</h2>
-                <p className="small_light relative !text-white max-w-[15rem]">Own a piece of your fav&apos;s prized possessions.</p>
+                <h2 className="body_heavy relative !text-white text-shadow">Celeb Auction</h2>
+                <p className="small_light relative !text-white max-w-[15rem] text-shadow">Own a piece of your fav&apos;s prized possessions.</p>
                 <button className="absolute top-1/2 -translate-y-1/2 right-[1.4rem] ">
-                  <i className="icon-chevron-right text-white text-[1.4rem]"></i>
+                  <i className="icon-chevron-right text-white text-[1.4rem] text-shadow"></i>
                 </button>
               </div>
             </Link>
