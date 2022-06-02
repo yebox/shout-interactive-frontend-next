@@ -2,14 +2,17 @@ import React, { useEffect, useState } from "react";
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext, Image as CarouselImage, Dot } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import Image from "next/image";
+import { baseInstance } from "../axios";
 
-const CarouselSlider = () => {
+const CarouselSlider = ({ data }) => {
   // const [images, setImages] = useState(["cuppy.jpg", "jack-harlow.jpg", "lil-nas.jpg", "nfl.webp", "burna.jpg", "drake.jpg"]);
   const [images, setImages] = useState(["cuppy.jpg", "burna.jpg", "jack-harlow.jpg", "lil-nas.jpg", "nfl.webp"]);
   const [active, setActive] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [intervalRef, setIntervalRef] = useState(null);
   const [play, setPlay] = useState(true);
+  const [ads, setAds] = useState([]);
+
   const onNext = () => {
     setPlay(true);
     console.log("onNext, setActive is", active);
@@ -42,7 +45,7 @@ const CarouselSlider = () => {
   useEffect(() => {
     if (loaded) {
       const refTimer = setInterval(() => {
-        console.log("In imtervel", active);
+        // console.log("In imtervel", active);
         onNext();
       }, 3500);
       setIntervalRef(refTimer);
@@ -53,10 +56,29 @@ const CarouselSlider = () => {
 
   useEffect(() => {
     if (active == images.length) {
-      console.log("active is last");
+      // console.log("active is last");
       setActive(0);
     }
   }, [active]);
+
+  // useEffect(() => {
+  //   console.log("Adds is in carousel is", data);
+  // }, [data]);
+
+  useEffect(() => {
+    const getAds = async () => {
+      try {
+        const resp = await baseInstance.post("/ads/get-ads/");
+        console.log("resp ads is...", resp.data.data);
+      } catch (error) {
+        if (error.response) {
+          console.log("An error has occured", error.response);
+        }
+      }
+    };
+
+    getAds();
+  }, []);
   return (
     <CarouselProvider isPlaying={play} interval={3500} infinite={true} className="relative" naturalSlideWidth={100} naturalSlideHeight={60} totalSlides={images.length}>
       {/* <div className="relative"> */}

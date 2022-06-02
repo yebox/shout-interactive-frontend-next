@@ -225,7 +225,7 @@ export const loadAllInvites = (id) => {
   };
 };
 
-export const createParty = (partyData) => {
+export const createParty = (partyData, token) => {
   return async (dispatch, getState) => {
     dispatch({ type: CREATING_PARTY, payload: true });
     // dispatch(setError(false));
@@ -234,7 +234,11 @@ export const createParty = (partyData) => {
     try {
       const user = getState().user;
       console.log("IN try catch...", user.user.id);
-      const resp = await baseInstance.post("/party/create", JSON.stringify(partyData));
+      const resp = await baseInstance.post("/party/create", JSON.stringify(partyData), {
+        headers: {
+          Authorization: localStorage.getItem("shout-token"),
+        },
+      });
       console.log("After creating Party: Response is:", resp.data.data);
       // dispatch(loadAllParties(user.user.id));
       dispatch(addParty(resp.data.data));

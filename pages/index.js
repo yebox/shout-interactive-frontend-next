@@ -16,10 +16,9 @@ import HomeSkeleton from "../components/Skeleton/Home";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { determineUnit } from "../utils/determineUnit(K,H,M,T)";
 import CarouselSlider from "../components/CarouselExt";
+import { getAds, getAdsThunk } from "../store/ads";
 
 export default function Home() {
-  // const token =
-  //   "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiMzE4MTM2ZGEtMzkzNC00MjI3LTk3YTEtNzkzNDFjOGQ1NGE1IiwiZmlyc3RuYW1lIjoiQ2h1a3MiLCJsYXN0bmFtZSI6Ik9naGViZSIsIm1pZGRsZW5hbWUiOm51bGwsInByb25vdW5jZSI6bnVsbCwiZW1haWwiOiJjaHVrc29nZW5lQGdtYWlsLmNvbSIsInBob25lIjpudWxsLCJyb2xlIjpbInVzZXIiXSwicGVybWlzc2lvbnMiOlsidXNlciJdLCJjb250YWN0cyI6bnVsbCwiaXNPbmJvYXJkZWQiOmZhbHNlLCJjcmVhdGVkQXQiOiIyMDIyLTAzLTMwVDEyOjM2OjA1LjQ3M1oiLCJ1cGRhdGVkQXQiOiIyMDIyLTAzLTMwVDEyOjM2OjA1LjQ3M1oiLCJDb250YWN0IjpudWxsfSwiaWF0IjoxNjQ4NjQzNzc0LCJleHAiOjE2ODAxNzk3NzR9.X68Ey2fdzwQmYHe5l5YE3yJhTTgWwpAvqBSozPrPKVnSvF-N5hhXi9cLYEfEnk73qrt_Rj3jaLk-6ApIQ9sgig";
   const config = {
     angle: 90,
     spread: 350,
@@ -39,6 +38,7 @@ export default function Home() {
   const authenticated = useSelector(getAuthStatus);
   const router = useRouter();
   const { getLocalStorage } = useLocalStorage();
+  const allAds = useSelector(getAds);
 
   const [splash, setSplash] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -112,6 +112,14 @@ export default function Home() {
     return shortValue + suffixes[suffixNum];
   }
 
+  useEffect(() => {
+    // dispatch(getAdsThunk());
+  }, []);
+
+  useEffect(() => {
+    console.log("All ads is in index is... ", allAds);
+  }, [allAds]);
+
   return (
     <BaseLayout>
       <Head>
@@ -154,7 +162,7 @@ export default function Home() {
           {/* Carousel */}
           <div>
             {/* <Carousel></Carousel> */}
-            <CarouselSlider></CarouselSlider>
+            <CarouselSlider data={allAds}></CarouselSlider>
           </div>
           <div className=" grid grid-cols-2 gap-6 mt-1">
             {/* Big Card */}
@@ -171,7 +179,7 @@ export default function Home() {
                   {/* <img src={"/images/Bottle.svg"}></img> */}
                 </div>
                 <h2 className="title_heavy !text-white ">Shout! Party</h2>
-                <p className="caption_light !text-white  relative">
+                <p className="caption_light !text-white relative">
                   Celebrate and party with your friends <br></br> everyday!
                 </p>
                 <button className="absolute top-1/2 -translate-y-1/2 right-[1.4rem] ">

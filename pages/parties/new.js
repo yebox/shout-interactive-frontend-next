@@ -80,7 +80,7 @@ const New = () => {
   };
   const onCanCharge = () => {
     if (3000 > 2000) {
-      dispatch(createParty(party));
+      dispatch(createParty(party, user.user.token));
       // setProcessingCharge(true);
     } else {
       setchargeRequest(false);
