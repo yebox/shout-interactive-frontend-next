@@ -249,7 +249,7 @@ export default function Home() {
               </div>
             </Link>
             <div
-              style={{ backgroundImage: `url(${allAds[0].image})`, backgroundPosition: "right 0px center" }}
+              style={{ backgroundImage: `url(${allAds[0] ? allAds[0].image : ""})`, backgroundPosition: "right 0px center" }}
               className="w-full rounded-[1.3rem] shadow-sm  object-cover object-bottom h-[7.4rem] grid place-items-center col-span-2 bg-gray-300 text-black text-2xl "
             >
               AD.
