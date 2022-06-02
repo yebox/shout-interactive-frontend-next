@@ -42,6 +42,7 @@ export default function Home() {
 
   const [splash, setSplash] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [ads, setAds] = useState([]);
 
   useEffect(() => {
     console.log("value unit in useEffect", determineUnit(parseInt(user.coins)));
@@ -114,6 +115,22 @@ export default function Home() {
 
   useEffect(() => {
     // dispatch(getAdsThunk());
+  }, []);
+
+  useEffect(() => {
+    const getAds = async () => {
+      try {
+        const resp = await baseInstance.post("/ads/get-ads/");
+        console.log("resp ads is...", resp.data.data);
+        setAds(resp.data.data);
+      } catch (error) {
+        if (error.response) {
+          console.log("An error has occured", error.response);
+        }
+      }
+    };
+
+    getAds();
   }, []);
 
   useEffect(() => {

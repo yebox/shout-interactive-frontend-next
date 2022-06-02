@@ -70,6 +70,7 @@ const CarouselSlider = ({ data }) => {
       try {
         const resp = await baseInstance.post("/ads/get-ads/");
         console.log("resp ads is...", resp.data.data);
+        setAds(resp.data.data);
       } catch (error) {
         if (error.response) {
           console.log("An error has occured", error.response);
@@ -84,11 +85,12 @@ const CarouselSlider = ({ data }) => {
       {/* <div className="relative"> */}
       <div className="rounded-[13px] overflow-hidden relative shadow-sm">
         <Slider>
-          {images.map((img, i) => {
+          {ads.map((ad, i) => {
             return (
               <Slide key={i} className="bg-red-400 " index={i}>
                 {/* I am the first Slide. */}
-                <CarouselImage className=" object-cover object-top" src={`/images/${img}`} />
+                {/* <CarouselImage className=" object-cover object-top" src={`/images/${img}`} /> */}
+                <CarouselImage className=" object-cover object-top" src={ad.image} />
               </Slide>
             );
           })}
