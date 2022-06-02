@@ -49,7 +49,7 @@ const New = () => {
   const [notifOpen, setNotifOpen] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [selectedValue, setSelectedValue] = useState("Self");
-  // const [processingCharge, setProcessingCharge] = useState(false);
+  const [processingCharge, setProcessingCharge] = useState(false);
 
   const isPartyInfoValid = () => {
     console.log(party.name);
@@ -104,11 +104,11 @@ const New = () => {
   };
 
   const onCanCharge = async () => {
+    setProcessingCharge(true);
     const balance = await checkBalance(encryptId(JSON.stringify({ user: user?.user.id })));
 
     if (balance > 2000) {
       dispatch(createParty(party, user.user.token));
-      // setProcessingCharge(true);
     } else {
       setchargeRequest(false);
       setInsufficientPopup(true);
@@ -116,6 +116,7 @@ const New = () => {
   };
 
   useEffect(() => {
+    router.prefetch(`/parties/id`);
     return () => {
       console.log("Destroying create party and dipatching setPartyCreated to fals");
       dispatch(setPartyCreated(false));
@@ -185,7 +186,7 @@ const New = () => {
           onAction={onCanCharge}
           toggle={toggleChargeRequestModal}
           open={chargeRequest}
-          processing={creatingParty || partyCreated?.id ? true : false}
+          processing={creatingParty || partyCreated?.id ? true : false || processingCharge}
           actionText="Okay"
         >
           <div className="grid place-items-center">
