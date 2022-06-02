@@ -205,18 +205,27 @@ export const loadAllInvites = (id) => {
     console.log("In dispath load invites");
     dispatch({ type: TOGGLE_INVITES_IS_LOADING, payload: true });
     try {
-      const inviteResp = await baseInstance.post("/party/invites", { user: id });
+      const inviteResp = await baseInstance.post(
+        "/party/invites",
+        { user: id },
+        {
+          headers: {
+            Authorization: localStorage.getItem("shout-token"),
+          },
+        }
+      );
       console.log("INvite respons...e", inviteResp);
 
-      const inviteParties = inviteResp.data.parties;
+      const inviteParties = inviteResp.data.invites;
       dispatch(loadInvitesParties(inviteParties.sort(compare)));
       dispatch({ type: TOGGLE_INVITES_LOADED, payload: true });
       dispatch({ type: TOGGLE_INVITES_IS_LOADING, payload: false });
     } catch (error) {
-      console.log("An error occured in load all invites", error.response);
+      console.log("An error occured in load all invites", error);
       if (error?.response && error?.response?.status == 400) {
         console.log("a 400 error has occured");
         // No Invites response from the server
+        console.log("An error occured in load all invites", error.response);
         dispatch({ type: TOGGLE_INVITES_LOADED, payload: true });
       } else {
         dispatch({ type: TOGGLE_INVITES_LOADED, payload: false });
