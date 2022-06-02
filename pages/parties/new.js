@@ -34,7 +34,7 @@ const New = () => {
   const [party, setParty] = useState({
     owner: "Self",
     name: "",
-    geusts: ["geust@gmail.com", "geust2@gmail.com"],
+    geusts: ["adebayo.benjamin2001@gmail.com", "geust2@gmail.com"],
     date: "",
     description: "",
     video: null,
