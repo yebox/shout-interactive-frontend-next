@@ -166,14 +166,16 @@ export default function Home() {
         <main className="px-[1.6rem]">
           {/* #000 Header */}
           <header className="flex items-center my-[2rem]">
-            <h2 className="headline_heavy text-primary whitespace-nowrap overflow-hidden text-ellipsis">Hi, {user.user ? user.user.lastname : "Guest"}</h2>
+            <h2 className="headline_heavy text-primary whitespace-nowrap overflow-hidden text-ellipsis !text-[1.8rem] mr-2">Hi, {user.user ? user.user.lastname : "Guest"}</h2>
             <div className="flex items-center ml-auto">
               <Link href={"/wallet"}>
                 <div className="p-[.952rem] flex items-center bg-gray-lighter rounded-2xl cursor-pointer">
                   {/* <Image src="/images/coin.png" height={24} width={24} alt="coins"></Image> */}
                   <img height={24} width={24} src="/images/coin.png" alt="coins"></img>
                   {/* <span className="subheader_heavy !text-gray-darker ml-[.5rem]">{formatCoinAmt(user.coins)}</span> */}
-                  <span className="subheader_heavy !text-gray-darker ml-[.5rem]">{user?.coins?.toString().substring(0, 3) + " " + determineUnit(parseInt(user.coins))}</span>
+                  <span className="subheader_heavy !text-gray-darker ml-[.5rem] whitespace-nowrap  overflow-hidden">
+                    {user?.coins?.toString().substring(0, 3) + " " + determineUnit(parseInt(user.coins))}
+                  </span>
                   {/* <span className="subheader_heavy !text-gray-darker ml-[.5rem]">100K</span> */}
                 </div>
               </Link>
