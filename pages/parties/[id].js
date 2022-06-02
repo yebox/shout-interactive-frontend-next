@@ -148,8 +148,8 @@ const PartyDetail = () => {
       setNotifOpen(true);
       setTimeout(() => {
         setNotifOpen(false);
-        router.replace(`/parties/${router?.query?.id}`, undefined, { shallow: true });
       }, 10000);
+      router.replace(`/parties/${router?.query?.id}`);
     }
   }, [router.query]);
 
