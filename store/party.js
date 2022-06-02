@@ -4,6 +4,7 @@ import { getUserBalanceThunk } from "./user";
 // ACTION TYPES
 const LOAD_SHOUT_PARTY = "party/load-shout";
 const LOAD_INDIVIDUAL_PARTY = "party/load-individual";
+const LOAD_INVITES_PARTY = "party/load-invites";
 const TOGGLE_PARTY_LOADED = "party/toggle-loaded";
 const TOGGLE_PARTY_IS_LOADING = "party/toggle-isloading";
 const TOGGLE_INVITES_LOADED = "invites/toggle-loaded";
@@ -59,6 +60,8 @@ export const PartyReducer = (state = initState, action) => {
       return { ...state, invitesIsLoaded: action.payload };
     case TOGGLE_INVITES_IS_LOADING:
       return { ...state, invitesIsLoading: action.payload };
+    case LOAD_INVITES_PARTY:
+      return { ...state, parties: { ...state.parties, invites: action.payload } };
 
     case SET_ERROR:
       return { ...state, errorMessage: action.payload };
@@ -135,7 +138,8 @@ export const loadIndividualParty = (party) => {
   return { type: LOAD_INDIVIDUAL_PARTY, payload: party };
 };
 export const loadInvitesParties = (party) => {
-  return { type: LOAD_INDIVIDUAL_PARTY, payload: party };
+  console.log("should load indivdual party--------------------------", party);
+  return { type: LOAD_INVITES_PARTY, payload: party };
 };
 
 export const setUpdatedIds = (ids) => {

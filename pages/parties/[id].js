@@ -12,7 +12,7 @@ import BaseLayout from "../../components/Layouts/Layout";
 import BtnPrimary from "../../components/Buttons/BtnPrimary";
 import FixedBottom from "../../components/Layouts/FixedBottom";
 import { useDispatch, useSelector } from "react-redux";
-import { getIndividualParties, getPartiesLoadedStatus, getUpdatedPartiesDetailsId, updateParty } from "../../store/party";
+import { getIndividualParties, getInvitesParties, getPartiesLoadedStatus, getUpdatedPartiesDetailsId, updateParty } from "../../store/party";
 import Upload from "../../components/Upload/Upload";
 import Protect from "../../components/Protect";
 import useWebShare from "../../hooks/useWebShare";
@@ -44,6 +44,7 @@ const ActivityBox = ({ text, icon, color, link = "/parties/id", action = () => {
 const PartyDetail = () => {
   const router = useRouter();
   const individualParties = useSelector(getIndividualParties);
+  const invitesParties = useSelector(getInvitesParties);
   const partiesLoaded = useSelector(getPartiesLoadedStatus);
   const [party, setParty] = useState({});
   const [updateError, setUpdateError] = useState(false);
@@ -133,7 +134,8 @@ const PartyDetail = () => {
       console.log("party detail is", partyArr);
       return partyArr[0];
     };
-    const party = getPartyDetail(individualParties, router.query.id);
+    // if(rout)
+    const party = getPartyDetail(router.query.type == "invites" ? individualParties : invitesParties, router.query.id);
     setParty(party);
     console.log(party);
   }, [router.query, partiesLoaded, user]);

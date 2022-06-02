@@ -95,6 +95,7 @@ const Parties = () => {
     console.log("All parties loaded", allPartyLoaded);
     console.log("Shout Parties", shoutParties);
     console.log("Individual Parties", individualParties);
+    // console.log("Invites88gskdjkskdg;ksd Parties", invitesParties);
   }, [allPartyLoaded]);
 
   return (
@@ -144,7 +145,7 @@ const Parties = () => {
                   {individualParties.map((party, i) => {
                     return (
                       <div className="mb-[2.2rem]" key={i}>
-                        <TabCard date={new Date(party?.date)} key={i} color={"#110066"} text={party.name} btnColor={"#3CC13B"} link={`/parties/${party.id}`}></TabCard>{" "}
+                        <TabCard date={new Date(party?.date)} key={i} color={"#110066"} text={party.name} btnColor={"#3CC13B"} link={`/parties/${party.id}?type=individual`}></TabCard>{" "}
                       </div>
                     );
                   })}
@@ -164,7 +165,7 @@ const Parties = () => {
                   {invitesParties.map((party, i) => {
                     return (
                       <div className="mb-[2.2rem]" key={i}>
-                        <TabCard color={"#3CC13B"} text={party.name} link="/parties/id"></TabCard>
+                        <TabCard color={"#3CC13B"} text={party.name} link={`/parties/${party.id}?type=invite`}></TabCard>
                       </div>
                     );
                   })}
