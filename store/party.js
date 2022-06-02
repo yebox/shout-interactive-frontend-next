@@ -1,4 +1,5 @@
 import { baseInstance } from "../axios";
+import { getUserBalanceThunk } from "./user";
 
 // ACTION TYPES
 const LOAD_SHOUT_PARTY = "party/load-shout";
@@ -247,6 +248,7 @@ export const createParty = (partyData, token) => {
       dispatch({ type: CREATING_PARTY, payload: false });
       dispatch(loadIndividualParty(getState().allParties.parties.individual.sort(compare)));
       dispatch(setError(""));
+      dispatch(getUserBalanceThunk(user.user.id));
       // setTimeout(() => {
       //   dispatch(setPartyCreated(false));
       // }, 8000);

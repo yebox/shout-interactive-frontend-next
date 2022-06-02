@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import AES from "crypto-js/aes";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import BtnPrimary from "../../components/Buttons/BtnPrimary";
@@ -20,6 +21,7 @@ import Notification from "../../components/Notification";
 import Protect from "../../components/Protect";
 import MyRadio from "../../components/Radio";
 import { FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import { baseInstance } from "../../axios";
 
 const New = () => {
   // States
@@ -78,8 +80,33 @@ const New = () => {
 
     setchargeRequest(true);
   };
-  const onCanCharge = () => {
-    if (3000 > 2000) {
+
+  const checkBalance = async (value) => {
+    const body = { data: value };
+    console.log("data is", body);
+    try {
+      const resp = await baseInstance.post("/billing/check-coin", JSON.stringify(body));
+      console.log("coins left is in create new party is ", resp.data.data.coins);
+      return resp.data.data.coins;
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response);
+      } else {
+        console.log("Error response is: ", error);
+      }
+    }
+  };
+
+  const encryptId = (str) => {
+    const ciphertext = AES.encrypt(str, "mOhL95dmdjdpdYpgYTf8qLmssV5Px7sUpj");
+    // return encodeURIComponent(ciphertext.toString());
+    return ciphertext.toString();
+  };
+
+  const onCanCharge = async () => {
+    const balance = await checkBalance(encryptId(JSON.stringify({ user: user?.user.id })));
+
+    if (balance > 2000) {
       dispatch(createParty(party, user.user.token));
       // setProcessingCharge(true);
     } else {
