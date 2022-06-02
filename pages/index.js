@@ -173,7 +173,7 @@ export default function Home() {
                   {/* <Image src="/images/coin.png" height={24} width={24} alt="coins"></Image> */}
                   <img height={24} width={24} src="/images/coin.png" alt="coins"></img>
                   {/* <span className="subheader_heavy !text-gray-darker ml-[.5rem]">{formatCoinAmt(user.coins)}</span> */}
-                  <span className="subheader_heavy !text-gray-darker ml-[.5rem]">{user.coins + " " + determineUnit(parseInt(user.coins))}</span>
+                  <span className="subheader_heavy !text-gray-darker ml-[.5rem]">{user?.coins?.toString().substring(0, 3) + " " + determineUnit(parseInt(user.coins))}</span>
                   {/* <span className="subheader_heavy !text-gray-darker ml-[.5rem]">100K</span> */}
                 </div>
               </Link>
