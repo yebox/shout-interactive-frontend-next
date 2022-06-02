@@ -6,7 +6,10 @@ const initialState = {
 
 // Ads Reducer
 export const AdsReducer = (state = initialState, action) => {
-  return { ...state, data: action.payload };
+  if (action.type == "set-ads") {
+    return { ...state, data: action.payload };
+  }
+  return { ...state };
 };
 
 // Selector

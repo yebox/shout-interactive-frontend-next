@@ -114,28 +114,40 @@ export default function Home() {
   }
 
   useEffect(() => {
-    // dispatch(getAdsThunk());
-  }, []);
+    // if (!allAds[0]) {
+    //   dispatch(getAdsThunk());
+    // }
+    dispatch(getAdsThunk());
 
-  useEffect(() => {
-    const getAds = async () => {
-      try {
-        const resp = await baseInstance.post("/ads/get-ads/");
-        console.log("resp ads is...", resp.data.data);
-        setAds(resp.data.data);
-      } catch (error) {
-        if (error.response) {
-          console.log("An error has occured", error.response);
-        }
-      }
+    let intervalRef = setInterval(() => {
+      dispatch(getAdsThunk());
+    }, 14000);
+
+    return () => {
+      console.log("Destroying interval");
+      clearInterval(intervalRef);
     };
-
-    getAds();
   }, []);
 
-  useEffect(() => {
-    console.log("All ads is in index is... ", allAds);
-  }, [allAds]);
+  // useEffect(() => {
+  //   const getAds = async () => {
+  //     try {
+  //       const resp = await baseInstance.post("/ads/get-ads/");
+  //       console.log("resp ads is...", resp.data.data);
+  //       setAds(resp.data.data);
+  //     } catch (error) {
+  //       if (error.response) {
+  //         console.log("An error has occured", error.response);
+  //       }
+  //     }
+  //   };
+
+  //   getAds();
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log("All ads is in index is... ", allAds);
+  // }, [allAds]);
 
   return (
     <BaseLayout>
@@ -236,7 +248,12 @@ export default function Home() {
                 </button>
               </div>
             </Link>
-            <div className="w-full rounded-[1.3rem] h-[7.4rem] grid place-items-center col-span-2 bg-gray-300 text-black text-2xl ">AD</div>
+            <div
+              style={{ backgroundImage: `url(${allAds[0].image})`, backgroundPosition: "right 0px center" }}
+              className="w-full rounded-[1.3rem] shadow-sm  object-cover object-bottom h-[7.4rem] grid place-items-center col-span-2 bg-gray-300 text-black text-2xl "
+            >
+              AD.
+            </div>
           </div>
         </main>
       )}

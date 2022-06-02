@@ -135,6 +135,7 @@ const PartyDetail = () => {
       return partyArr[0];
     };
     // if(rout)
+
     let party = [];
     if (router.query.type == "invite") {
       party = getPartyDetail(invitesParties, router.query.id);

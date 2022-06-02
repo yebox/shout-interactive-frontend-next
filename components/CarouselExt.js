@@ -11,11 +11,10 @@ const CarouselSlider = ({ data }) => {
   const [loaded, setLoaded] = useState(false);
   const [intervalRef, setIntervalRef] = useState(null);
   const [play, setPlay] = useState(true);
-  const [ads, setAds] = useState([]);
 
   const onNext = () => {
     setPlay(true);
-    console.log("onNext, setActive is", active);
+    // console.log("onNext, setActive is", active);
     if (active < images.length - 1) {
       setActive((val) => val + 1);
     } else {
@@ -37,7 +36,7 @@ const CarouselSlider = ({ data }) => {
   const clearIntervalFunc = () => {
     setPlay(true);
     if (intervalRef) {
-      console.log("clear interval", intervalRef);
+      // console.log("clear interval", intervalRef);
       clearInterval(intervalRef);
     }
   };
@@ -56,7 +55,6 @@ const CarouselSlider = ({ data }) => {
 
   useEffect(() => {
     if (active == images.length) {
-      // console.log("active is last");
       setActive(0);
     }
   }, [active]);
@@ -65,32 +63,17 @@ const CarouselSlider = ({ data }) => {
   //   console.log("Adds is in carousel is", data);
   // }, [data]);
 
-  useEffect(() => {
-    const getAds = async () => {
-      try {
-        const resp = await baseInstance.post("/ads/get-ads/");
-        console.log("resp ads is...", resp.data.data);
-        setAds(resp.data.data);
-      } catch (error) {
-        if (error.response) {
-          console.log("An error has occured", error.response);
-        }
-      }
-    };
-
-    getAds();
-  }, []);
   return (
     <CarouselProvider isPlaying={play} interval={3500} infinite={true} className="relative" naturalSlideWidth={100} naturalSlideHeight={60} totalSlides={images.length}>
       {/* <div className="relative"> */}
       <div className="rounded-[13px] overflow-hidden relative shadow-sm">
         <Slider>
-          {ads.map((ad, i) => {
+          {data.map((ad, i) => {
             return (
               <Slide key={i} className="bg-red-400 " index={i}>
                 {/* I am the first Slide. */}
                 {/* <CarouselImage className=" object-cover object-top" src={`/images/${img}`} /> */}
-                <CarouselImage className=" object-cover object-top" src={ad.image} />
+                <CarouselImage className=" object-cover object-center" src={ad.image} />
               </Slide>
             );
           })}
