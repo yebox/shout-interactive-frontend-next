@@ -272,7 +272,7 @@ const PartyDetail = () => {
           </section>
 
           <FixedBottom>
-            <BtnPrimary text={"Join Party"} color={"#14B363"} link={`/livestream/${router.query.id}`}></BtnPrimary>
+            <BtnPrimary text={"Join Party"} color={"#14B363"} link={`/livestream/${router.query.id}?type=${router.query.type}`}></BtnPrimary>
           </FixedBottom>
         </BaseLayout>
       </Protect>
