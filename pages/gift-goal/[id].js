@@ -410,7 +410,7 @@ const GiftGoal = () => {
               ></BtnPrimary>
             </div>
           )}
-          {!party?.GiftGoal && !selectedGiftGoal && !isPartiesLoading && router.query.type == "invite" && <EmptyState></EmptyState>}
+          {!party?.GiftGoal && !selectedGiftGoal && !isPartiesLoading && router.query.type == "invite" && <EmptyState text="No gift goal yet!"></EmptyState>}
 
           {/* Image-Picture */}
           {selectedGiftGoal && (
