@@ -10,6 +10,7 @@ import { getCalendar, getCalendarError, getIsCalendarLoading } from "../../store
 import CalendarSkeleton from "../../components/Skeleton/Calendar";
 import Notification from "../../components/Notification";
 import { useRouter } from "next/router";
+import EmptyState from "../../components/EmptyState";
 
 const CalendarCard = ({ color, text, icon }) => {
   return (
@@ -105,6 +106,7 @@ const Calendar = () => {
               </Container>
             </>
           )}
+          {allCalendar && allCalendar.length == 0 && <EmptyState caption="No calendar" text="Add calendar"></EmptyState>}
           {calendarError && !allCalendar && <p>An error has occured</p>}
         </BaseLayout>
       </Protect>
