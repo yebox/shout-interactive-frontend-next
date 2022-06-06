@@ -34,6 +34,7 @@ import GiftGoalSkeleton from "../../components/Skeleton/Gift-Goal";
 import { baseInstance } from "../../axios";
 import ModalContainer from "../../components/ModalContainer";
 import FixedBottom from "../../components/Layouts/FixedBottom";
+import EmptyState from "../../components/EmptyState";
 
 const GiftGoal = () => {
   const { getParams, getUrl } = useGetParams();
@@ -395,7 +396,7 @@ const GiftGoal = () => {
           </Drawer>
 
           {/* Empty State */}
-          {!party?.GiftGoal && !selectedGiftGoal && !isPartiesLoading && (
+          {!party?.GiftGoal && !selectedGiftGoal && !isPartiesLoading && router.query.type == "individual" && (
             <div className="grid place-content-center place-items-center mt-[9.2rem] relative">
               <Image width={88} height={88} alt="musical-notes" src={"/images/gift-box.png"}></Image>
               <h2 className="headline_heavy text-black-default mb-[.8rem] mt-[3.2rem]">No gift goal</h2>
@@ -409,6 +410,7 @@ const GiftGoal = () => {
               ></BtnPrimary>
             </div>
           )}
+          {!party?.GiftGoal && !selectedGiftGoal && !isPartiesLoading && router.query.type == "invite" && <EmptyState></EmptyState>}
 
           {/* Image-Picture */}
           {selectedGiftGoal && (
