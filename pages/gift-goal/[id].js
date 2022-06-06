@@ -381,7 +381,7 @@ const GiftGoal = () => {
 
             <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-full p-[1.6rem]">
               <BtnPrimary
-                link={`/gift-goal/${router?.query?.id}`}
+                link={`/gift-goal/${router?.query?.id}?type=${router.query.type}`}
                 loading={creatingGoalStatus}
                 disabled={creatingGoalStatus || btnDisabled}
                 handleClick={() => {
@@ -401,7 +401,7 @@ const GiftGoal = () => {
               <h2 className="headline_heavy text-black-default mb-[.8rem] mt-[3.2rem]">No gift goal</h2>
               <p className="body_light mb-[4.8rem]">You have not selected a gift goal</p>
               <BtnPrimary
-                link={`/gift-goal/${router?.query?.id}`}
+                link={`/gift-goal/${router?.query?.id}?type=${router.query.type}`}
                 handleClick={() => {
                   setIsDrawerOpened(true);
                 }}

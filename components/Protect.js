@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUser, getAuthStatus, getUser } from "../store/user";
-import { getPartiesLoadedStatus, loadAllParties } from "../store/party";
+import { getInvitesLoadedStatus, getPartiesLoadedStatus, loadAllInvites, loadAllParties } from "../store/party";
 import { useRouter } from "next/router";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { getCalendar, loadCalendarThunk } from "../store/calendar";
@@ -11,6 +11,7 @@ const Protect = ({ children }) => {
   const { getLocalStorage } = useLocalStorage();
   const authenticated = useSelector(getAuthStatus);
   const partiesLoaded = useSelector(getPartiesLoadedStatus);
+  const invitesLoaded = useSelector(getInvitesLoadedStatus);
   const calendar = useSelector(getCalendar);
   const gifts = useSelector(getGifts);
   const user = useSelector(getUser);
@@ -30,6 +31,11 @@ const Protect = ({ children }) => {
     if (authenticated && !partiesLoaded) {
       console.log("auth but no party loaded");
       dispatch(loadAllParties(user.user.id));
+      dispatch(loadCalendarThunk(user.user.id));
+    }
+    if (authenticated && !invitesLoaded) {
+      console.log("auth but no invites loaded");
+      dispatch(loadAllInvites(user.user.id));
       dispatch(loadCalendarThunk(user.user.id));
     }
     if (authenticated && !calendar) {
