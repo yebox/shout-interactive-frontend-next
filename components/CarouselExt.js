@@ -68,12 +68,12 @@ const CarouselSlider = ({ data }) => {
       {/* <div className="relative"> */}
       <div className="rounded-[13px] overflow-hidden relative shadow-sm">
         <Slider>
-          {data.map((ad, i) => {
+          {images.map((img, i) => {
             return (
               <Slide key={i} className="bg-red-400 " index={i}>
                 {/* I am the first Slide. */}
-                {/* <CarouselImage className=" object-cover object-top" src={`/images/${img}`} /> */}
-                <CarouselImage className=" object-cover object-center" src={ad.image} />
+                <CarouselImage className=" object-cover object-top" src={`/images/${img}`} />
+                {/* <CarouselImage className=" object-cover object-center" src={ad.image} /> */}
               </Slide>
             );
           })}
