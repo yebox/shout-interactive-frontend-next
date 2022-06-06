@@ -337,7 +337,7 @@ const GiftGoal = () => {
       </ModalContainer>
       <Protect>
         <BaseLayout>
-          <HeadersV1 link={`/parties/${router?.query?.id}`} text={"Gift goal"}>
+          <HeadersV1 link={`/parties/${router?.query?.id}?type=${router.query.type}`} text={"Gift goal"}>
             <div></div>
           </HeadersV1>
 

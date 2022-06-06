@@ -247,9 +247,9 @@ const PartyDetail = () => {
             <Container>
               <p className="subheader_heavy mb-3">Activities</p>
               <div className="grid grid-cols-2 gap-4">
-                <ActivityBox color={"#FA9330"} icon="icon-users-profile" text="Guestlist" link={`/guest-list?id=${party?.id}`}></ActivityBox>
-                <ActivityBox color={"#FA4A0C"} icon="icon-gift-box" text="Gift goal" link={`/gift-goal/${party?.id}`}></ActivityBox>
-                <ActivityBox color={"#B57BFF"} icon="icon-music" text="Musicpost" link={`/music-post?id=${party?.id}`}></ActivityBox>
+                <ActivityBox color={"#FA9330"} icon="icon-users-profile" text="Guestlist" link={`/guest-list?id=${party?.id}?type=${router.query.type}`}></ActivityBox>
+                <ActivityBox color={"#FA4A0C"} icon="icon-gift-box" text="Gift goal" link={`/gift-goal/${party?.id}?type=${router.query.type}`}></ActivityBox>
+                <ActivityBox color={"#B57BFF"} icon="icon-music" text="Musicpost" link={`/music-post?id=${party?.id}?type=${router.query.type}`}></ActivityBox>
                 <ActivityBox
                   action={() => {
                     onShare({ url: "Party Link", text: "Shout Party link", title: "Shout Party Link" });
@@ -257,7 +257,7 @@ const PartyDetail = () => {
                   color="#110066"
                   icon="icon-share"
                   text="Share"
-                  link={`/parties/${getParams("id")}`}
+                  link={`/parties/${getParams("id")}?type=${router.query.type}`}
                 ></ActivityBox>
               </div>
             </Container>
