@@ -159,8 +159,8 @@ const GiftGoal = () => {
                 contributed: party?.GiftGoal?.contributed ? parseInt(party?.GiftGoal?.contributed) + parseInt(coinAmount) : parseInt(coinAmount),
                 // contributors: party?.GiftGoal?.contributors ? [...party?.GiftGoal?.contributors, user.user.id] : [user.user.id],
                 contributors: party?.GiftGoal?.contributors
-                  ? [...party?.GiftGoal?.contributors, { id: user.user.id, firstname: user.user.firstname, lastname: user.user.lastname, amount: parseInt(coinAmount) }]
-                  : [{ id: user.user.id, firstname: user.user.firstname, lastname: user.user.lastname, amount: parseInt(coinAmount) }],
+                  ? [...party?.GiftGoal?.contributors, { id: user.user.id, user: { firstname: user.user.firstname, lastname: user.user.lastname }, amount: parseInt(coinAmount) }]
+                  : [{ id: user.user.id, user: { firstname: user.user.firstname, lastname: user.user.lastname }, amount: parseInt(coinAmount) }],
               },
             };
           } else {
@@ -436,18 +436,25 @@ const GiftGoal = () => {
                         return (
                           <div key={i} className="flex items-center mb-[1.6rem]">
                             {/* <img className="h-[3.4rem] w-[3.4rem]" src="/"></img> */}
-                            <Avatar sx={{ borderRadius: "10px" }} alt={e.name} src="/broken-image.jpg" />
+                            <Avatar sx={{ borderRadius: "10px" }} alt={e.user.firstname} src="/broken-image.jpg" />
                             <p className="ml-[1rem] caption_heavy text-[#90979E] max-w-[22.8rem]">
-                              <span className="text-[#C0C9D2] mr-3">{e.firstname + " " + e.lastname}</span>
+                              <span className="text-[#C0C9D2] mr-3">{e.user.firstname + " " + e.user.lastname}</span>
                               <span>Sent you {e?.amount} coins 🎉🎉</span>
                             </p>
                           </div>
                         );
                       })}
+
                     {!party?.GiftGoal?.contributors && <p>No contributors yet</p>}
                   </BoxContainer>
 
-                  <form className="mb-[3rem] mt-[1.6rem]">
+                  <form
+                    onSubmit={(e) => {
+                      console.log("Submitting...");
+                      e.preventDefault();
+                    }}
+                    className="mb-[3rem] mt-[1.6rem]"
+                  >
                     <Text
                       reference={inputRef}
                       onChange={(e) => {
@@ -484,7 +491,7 @@ const GiftGoal = () => {
               ></FixedBtn> */}
               <FixedBottom>
                 <BtnPrimary
-                  handleClick={async (e) => {
+                  handleClick={async () => {
                     if (!onlyNumbers(coinAmount)) {
                       return setCoinValueError("Please enter a valid amount");
                     }
@@ -494,7 +501,7 @@ const GiftGoal = () => {
                     sendGiftCoins(coinAmount);
                   }}
                   text={"Send coins"}
-                  link={`/gift-goal/${router.query.id}`}
+                  link={`/gift-goal/${router.query.id}?type=${router.query.type}`}
                 ></BtnPrimary>
               </FixedBottom>
             </>

@@ -2,7 +2,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const BtnPrimary = ({ text, loading, handleClick, link = "", color = "#110066", disabled = false }) => {
+const BtnPrimary = ({ text, loading, handleClick = () => {}, link = "", color = "#110066", disabled = false }) => {
   const router = useRouter();
   return (
     <div className="w-full">
@@ -21,7 +21,10 @@ const BtnPrimary = ({ text, loading, handleClick, link = "", color = "#110066", 
             height: "48px",
             color: "white !important",
           }}
-          onClick={handleClick}
+          onClick={(e) => {
+            // e.preventDefault();
+            handleClick();
+          }}
           disabled={disabled}
           loading={loading}
           loadingPosition="start"

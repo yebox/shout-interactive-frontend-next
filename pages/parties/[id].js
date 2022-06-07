@@ -56,14 +56,15 @@ const PartyDetail = () => {
   const user = useSelector(getUser);
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [shared, setShared] = useState(false);
 
   const onShare = async (data) => {
     console.log("in sharing");
     const result = await shareLink(data);
     if (result == "success") {
-      setNotifOpen(true);
+      setShared(true);
       setTimeout(() => {
-        setNotifOpen(false);
+        setShared(false);
       }, 7000);
       // alert("Link shared successfully!");
     } else if (result == "AbortError") {
@@ -164,6 +165,7 @@ const PartyDetail = () => {
   return (
     <>
       <Notification open={copied} icon={<i className="icon-info-circle"></i>} title={"Copy Link"} message="Link copied to clipboard" color="green"></Notification>
+      <Notification open={shared} icon={<i className="icon-info-circle"></i>} title={"Share Shout Link"} message="Shared successfully" color="green"></Notification>
       <Notification open={notifOpen} icon={<i className="icon-info-circle text-[1.6rem]"></i>} title={"Party Created"} message="Party Created successfully!" color="green"></Notification>
 
       <ModalContainer
