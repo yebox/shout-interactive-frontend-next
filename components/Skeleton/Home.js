@@ -7,9 +7,9 @@ const HomeSkeleton = () => {
   return (
     <div className="py-[1.6rem] px-[1.6rem]">
       <Stack spacing={3}>
-        <div className="flex ">
+        <div className="flex h-[4rem] ">
           <Skeleton width={100} variant="text" />
-          <div className="ml-auto flex items-center gap-5">
+          <div className="ml-auto flex items-center gap-5 h-[4rem]">
             <Skeleton animation="wave" variant="circular" width={40} height={40} />
             <Skeleton variant="circular" width={40} height={40} />
             <Skeleton variant="circular" width={40} height={40} />
