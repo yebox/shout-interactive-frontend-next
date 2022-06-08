@@ -48,6 +48,16 @@ const TabCard = ({ color, date, text, btnColor, link, partyLink = "https://link"
     }, 4000);
   };
 
+  const getBgColorPatternType = (color) => {
+    if (color == "#FA9330") {
+      return "url(/images/bg-orange.png)";
+    } else if (color == "#3CC13B") {
+      return "url(/images/bg-green.png)";
+    } else {
+      return "url(/images/bg-blue.png)";
+    }
+  };
+
   useEffect(() => {
     // console.log("Date is ..", date);
     // console.log("date.now is", Date.now());
@@ -94,7 +104,7 @@ const TabCard = ({ color, date, text, btnColor, link, partyLink = "https://link"
       <div
         style={{
           backgroundColor: "red !important",
-          backgroundImage: `${color == "#3CC13B" ? "url(/images/bg-green.png)" : "url(/images/bg-blue.png)"}`,
+          backgroundImage: getBgColorPatternType(color),
         }}
         className={`p-[1.8rem] py-[2.2rem] rounded-3xl !bg-cover bg-no-repeat bg-red-400 ${color == "#3CC13B" ? "bg-[#258825]" : " bg-primary"}`}
       >

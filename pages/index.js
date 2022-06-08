@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import useDecodeJWT from "../hooks/useDecodeJWT";
 import { baseInstance } from "../axios";
-import { fetchUser, getAuthStatus, getUser, loadUser } from "../store/user";
+import { fetchUser, getAuthStatus, getLoadingStatus, getUser, loadUser } from "../store/user";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import HomeSkeleton from "../components/Skeleton/Home";
@@ -36,12 +36,13 @@ export default function Home() {
   const dispatch = useDispatch();
   const user = useSelector(getUser);
   const authenticated = useSelector(getAuthStatus);
+  const loading = useSelector(getLoadingStatus);
   const router = useRouter();
   const { getLocalStorage } = useLocalStorage();
   const allAds = useSelector(getAds);
 
   const [splash, setSplash] = useState(false);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [ads, setAds] = useState([]);
 
   useEffect(() => {
@@ -95,13 +96,13 @@ export default function Home() {
     //   }
     // }
   }, [router.query.token]);
-  useEffect(() => {
-    console.log("user chage", user);
-    // if (user.user) {
-    //   setLoading(false);
-    // }
-    setLoading(false);
-  }, [user]);
+  // useEffect(() => {
+  //   console.log("user chage", user);
+  //   if (user.user) {
+  //     setLoading(false);
+  //   }
+  //   // setLoading(false);
+  // }, [user]);
 
   function formatCoinAmt(value) {
     var suffixes = ["", "K", "M", "B", "T"];
@@ -158,11 +159,11 @@ export default function Home() {
       </Head>
       {/* <HomeSkeleton></HomeSkeleton> */}
       {/* if loading data from server show loading skeleton state */}
-      {loading && !user.user && <HomeSkeleton></HomeSkeleton>}
+      {loading && <HomeSkeleton></HomeSkeleton>}
       {/* If not loading data and There is not user due to invalid token or and error */}
-      {!loading && !user.user && <p>Invalid Token</p>}
+      {!loading && !authenticated && <p>Invalid Token</p>}
 
-      {!loading && user.user && (
+      {authenticated && (
         <main className="px-[1.6rem]">
           {/* #000 Header */}
           <header className="flex items-center my-[2rem]">

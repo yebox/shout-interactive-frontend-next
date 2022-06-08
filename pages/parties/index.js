@@ -165,7 +165,7 @@ const Parties = () => {
                   {invitesParties.map((party, i) => {
                     return (
                       <div className="mb-[2.2rem]" key={i}>
-                        <TabCard color={"#3CC13B"} text={party.name} link={`/parties/${party.id}?type=invite`}></TabCard>
+                        <TabCard date={new Date(party?.date)} color={"#FA9330"} text={party.name} link={`/parties/${party.id}?type=invite`}></TabCard>
                       </div>
                     );
                   })}
