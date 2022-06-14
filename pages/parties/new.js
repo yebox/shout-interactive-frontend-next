@@ -22,6 +22,7 @@ import Protect from "../../components/Protect";
 import MyRadio from "../../components/Radio";
 import { FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { baseInstance } from "../../axios";
+import InputTag from "../../components/InputTag";
 
 const New = () => {
   // States
@@ -34,7 +35,8 @@ const New = () => {
   const [party, setParty] = useState({
     owner: "Self",
     name: "",
-    geusts: ["adebayo.benjamin2001@gmail.com", "geust2@gmail.com"],
+    geusts: [],
+    // geusts: ["adebayo.benjamin2001@gmail.com", "geust2@gmail.com"],
     date: "",
     description: "",
     video: null,
@@ -287,6 +289,14 @@ const New = () => {
                 <i className="icon-add-user absolute right-3 text-gray-dark font-[2.2rem] top-1/2 -translate-y-1/2 cursor-pointer"></i>
               </div>
             </div> */}
+            <div className="">
+              <label className="caption_heavy text-black-default flex mb-[8px] mt-[1.6rem]">Guests</label>
+              <InputTag
+                onChange={(values) => {
+                  setParty((val) => ({ ...val, geusts: values }));
+                }}
+              ></InputTag>
+            </div>
             <Calendar
               required={true}
               errorStatus={dateError}
